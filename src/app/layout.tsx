@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "HelperTools - Free Online Tools for Everyone",
+  title: "ToolsMani - Free Online Tools for Everyone",
   description:
     "Free online tools: PDF merger, image compressor, text counter, JSON formatter, QR generator and more. Fast, private, and easy to use.",
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "free tools",
   ],
   openGraph: {
-    title: "HelperTools - Free Online Tools for Everyone",
+    title: "ToolsMani - Free Online Tools for Everyone",
     description:
       "Free online tools: PDF merger, image compressor, text counter, JSON formatter, QR generator and more.",
     type: "website",

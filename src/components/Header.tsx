@@ -12,10 +12,10 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">HT</span>
+              <span className="text-white font-bold text-sm">TM</span>
             </div>
             <span className="font-bold text-xl text-gray-900">
-              HelperTools
+              ToolsMani
             </span>
           </Link>
 

@@ -8,10 +8,10 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">HT</span>
+                <span className="text-white font-bold text-sm">TM</span>
               </div>
               <span className="font-bold text-xl text-gray-900">
-                HelperTools
+                ToolsMani
               </span>
             </div>
             <p className="text-gray-500 max-w-md">
@@ -76,7 +76,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-100 mt-8 pt-8 text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} HelperTools. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} ToolsMani. All rights reserved.</p>
           <p className="mt-1">
             Built with ethical principles. Providing value, earning honestly.
           </p>

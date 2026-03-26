@@ -1,4 +1,4 @@
-# HelperTools - Business Plan
+# ToolsMani - Business Plan
 
 ## Mission
 Provide free, privacy-focused online tools that process data in the browser.

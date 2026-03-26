@@ -1,4 +1,4 @@
-# HelperTools - Firebase Deployment Guide
+# ToolsMani - Firebase Deployment Guide
 
 ## Prerequisites
 
@@ -15,10 +15,10 @@
 firebase login
 
 # Create a new project (or use existing one)
-firebase projects:create helpertools-app
+firebase projects:create toolsmani-app
 
 # Link this repo to your Firebase project
-firebase use helpertools-app
+firebase use toolsmani-app
 ```
 
 ### 2. Build & Deploy
@@ -44,7 +44,7 @@ npm run deploy
 After deployment, go to Firebase Console:
 1. Go to **Hosting** > **Custom domains**
 2. Click **Add custom domain**
-3. Enter your domain (e.g., `toolnest.com`)
+3. Enter your domain (e.g., `toolsmani.com`)
 4. Add the DNS records shown to your domain registrar (Namecheap)
 5. Wait for SSL certificate provisioning (usually < 1 hour)
 
