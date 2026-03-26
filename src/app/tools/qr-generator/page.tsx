@@ -1,0 +1,119 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+
+export default function QrGeneratorPage() {
+  const [text, setText] = useState("");
+  const [size, setSize] = useState(256);
+  const [qrUrl, setQrUrl] = useState("");
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (text.trim()) {
+      // Using a free QR code API for generation
+      const url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&format=png`;
+      setQrUrl(url);
+    } else {
+      setQrUrl("");
+    }
+  }, [text, size]);
+
+  const downloadQr = () => {
+    if (!qrUrl) return;
+    const link = document.createElement("a");
+    link.href = qrUrl;
+    link.download = `qr-code-${Date.now()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mb-6">
+        <Link
+          href="/"
+          className="text-primary-600 hover:text-primary-700 text-sm"
+        >
+          &larr; Back to Tools
+        </Link>
+      </div>
+
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        QR Code Generator
+      </h1>
+      <p className="text-gray-600 mb-8">
+        Generate QR codes for URLs, text, and more. Free and instant.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Enter text or URL
+          </label>
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="https://example.com or any text..."
+            className="w-full h-32 p-4 bg-white border border-gray-200 rounded-xl resize-y focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+
+          <div className="mt-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Size: {size}x{size}
+            </label>
+            <input
+              type="range"
+              min={128}
+              max={512}
+              step={64}
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+              className="w-full"
+            />
+          </div>
+
+          <div className="mt-6 flex gap-3">
+            <button
+              onClick={downloadQr}
+              disabled={!qrUrl}
+              className="btn-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Download PNG
+            </button>
+            <button
+              onClick={() => setText("")}
+              className="btn-secondary text-sm"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+            {qrUrl ? (
+              <img
+                src={qrUrl}
+                alt="Generated QR Code"
+                width={size}
+                height={size}
+                className="max-w-full"
+              />
+            ) : (
+              <div
+                className="flex items-center justify-center text-gray-300 border-2 border-dashed border-gray-200 rounded-xl"
+                style={{ width: size, height: size, maxWidth: "100%" }}
+              >
+                <span className="text-sm">Enter text to generate QR</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <canvas ref={canvasRef} className="hidden" />
+    </div>
+  );
+}
