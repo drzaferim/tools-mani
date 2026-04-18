@@ -1,4 +1,7 @@
 {
+  "firestore": {
+    "rules": "firestore.rules"
+  },
   "hosting": {
     "site": "toolsmani",
     "public": "out",
@@ -7,10 +10,11 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "cleanUrls": true,
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/404.html"
       }
     ],
     "headers": [
