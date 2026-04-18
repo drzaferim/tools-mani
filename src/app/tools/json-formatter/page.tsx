@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/lib/language-context";
 import Link from "next/link";
+import { trackToolUse } from "@/lib/track";
 
 export default function JsonFormatterPage() {
+  const { locale } = useLanguage();
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
@@ -14,6 +17,7 @@ export default function JsonFormatterPage() {
       const parsed = JSON.parse(input);
       setOutput(JSON.stringify(parsed, null, indentSize));
       setError("");
+      void trackToolUse("json-formatter");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Invalid JSON");
       setOutput("");
@@ -25,6 +29,7 @@ export default function JsonFormatterPage() {
       const parsed = JSON.parse(input);
       setOutput(JSON.stringify(parsed));
       setError("");
+      void trackToolUse("json-formatter");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Invalid JSON");
       setOutput("");
@@ -36,6 +41,7 @@ export default function JsonFormatterPage() {
       JSON.parse(input);
       setError("");
       setOutput("Valid JSON!");
+      void trackToolUse("json-formatter");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Invalid JSON");
       setOutput("");
@@ -130,6 +136,26 @@ export default function JsonFormatterPage() {
           </button>
         </div>
       )}
+
+      {/* FAQ */}
+      <div className="mt-16 border-t border-gray-100 pt-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+        </h2>
+        <div className="space-y-5">
+          {[
+            { q: locale === "tr" ? "JSON Biçimlendirici ne yapar?" : "What does the JSON Formatter do?", a: locale === "tr" ? "Ham veya sıkıştırılmış JSON'u insan tarafından okunabilir girintili bir biçime dönüştürür ve JSON'un geçerli olup olmadığını doğrular." : "It formats (pretty-prints) raw or minified JSON into a human-readable indented format, and validates whether the JSON is valid." },
+            { q: locale === "tr" ? "JSON'u küçültebilir mi?" : "Can it minify JSON too?", a: locale === "tr" ? "Evet. JSON'unuzu tek satıra sıkıştırmak için Küçült seçeneğini kullanın; API'lerde yük boyutunu azaltmak için idealdir." : "Yes. Use the Minify option to compress your JSON into a single line, ideal for reducing payload size in APIs." },
+            { q: locale === "tr" ? "JSON girişi için boyut sınırı var mı?" : "Is there a size limit for JSON input?", a: locale === "tr" ? "Hayır. İstediğiniz boyuttaki JSON'u yapıştırabilirsiniz. İşlem tamamen tarayıcınızda gerçekleşir." : "No. You can paste JSON of any size. Processing happens entirely in your browser." },
+            { q: locale === "tr" ? "JSON verilerim sunucuya gönderiliyor mu?" : "Is my JSON data sent to a server?", a: locale === "tr" ? "Hayır. Tüm biçimlendirme ve doğrulama tarayıcınızda yerel olarak gerçekleşir. Verileriniz cihazınızdan ayrılmaz." : "No. All formatting and validation happens locally in your browser. Your data never leaves your device." },
+          ].map(({ q, a }, i) => (
+            <div key={i} className="bg-gray-50 rounded-xl p-5">
+              <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

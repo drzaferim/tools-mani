@@ -2,10 +2,11 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { trackToolUse } from "@/lib/track";
 
 interface CompressedImage {
   original: { name: string; size: number; url: string };
-  compressed: { size: number; url: string };
+  compressed: { name: string; size: number; url: string; mimeType: string };
   savings: number;
 }
 
@@ -21,6 +22,19 @@ export default function ImageCompressPage() {
       const ctx = canvas.getContext("2d")!;
       const img = new Image();
       const originalUrl = URL.createObjectURL(file);
+      const outputMimeType =
+        file.type === "image/webp"
+          ? "image/webp"
+          : file.type === "image/png"
+            ? "image/png"
+            : "image/jpeg";
+      const outputExtension =
+        outputMimeType === "image/webp"
+          ? "webp"
+          : outputMimeType === "image/png"
+            ? "png"
+            : "jpg";
+      const outputName = `${file.name.replace(/\.[^.]+$/, "")}.${outputExtension}`;
 
       img.onload = () => {
         canvas.width = img.width;
@@ -33,13 +47,18 @@ export default function ImageCompressPage() {
               const compressedUrl = URL.createObjectURL(blob);
               resolve({
                 original: { name: file.name, size: file.size, url: originalUrl },
-                compressed: { size: blob.size, url: compressedUrl },
+                compressed: {
+                  name: outputName,
+                  size: blob.size,
+                  url: compressedUrl,
+                  mimeType: outputMimeType,
+                },
                 savings: Math.round((1 - blob.size / file.size) * 100),
               });
             }
           },
-          "image/jpeg",
-          quality / 100
+          outputMimeType,
+          outputMimeType === "image/png" ? undefined : quality / 100
         );
       };
       img.src = originalUrl;
@@ -59,6 +78,9 @@ export default function ImageCompressPage() {
     }
     setImages((prev) => [...prev, ...results]);
     setProcessing(false);
+    if (results.length > 0) {
+      void trackToolUse("image-compress");
+    }
   };
 
   const formatSize = (bytes: number) => {
@@ -70,7 +92,7 @@ export default function ImageCompressPage() {
   const downloadImage = (image: CompressedImage) => {
     const link = document.createElement("a");
     link.href = image.compressed.url;
-    link.download = `compressed-${image.original.name}`;
+    link.download = `compressed-${image.compressed.name}`;
     link.click();
   };
 

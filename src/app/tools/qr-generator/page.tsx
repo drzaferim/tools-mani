@@ -1,13 +1,17 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useLanguage } from "@/lib/language-context";
 import Link from "next/link";
+import { useTrackToolUseOnce } from "@/lib/track";
 
 export default function QrGeneratorPage() {
+  const { locale } = useLanguage();
   const [text, setText] = useState("");
   const [size, setSize] = useState(256);
   const [qrUrl, setQrUrl] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const markToolUsed = useTrackToolUseOnce("qr-generator");
 
   useEffect(() => {
     if (text.trim()) {
@@ -21,6 +25,7 @@ export default function QrGeneratorPage() {
 
   const downloadQr = () => {
     if (!qrUrl) return;
+    markToolUsed();
     const link = document.createElement("a");
     link.href = qrUrl;
     link.download = `qr-code-${Date.now()}.png`;
@@ -54,7 +59,12 @@ export default function QrGeneratorPage() {
           </label>
           <textarea
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => {
+              setText(e.target.value);
+              if (e.target.value.trim()) {
+                markToolUsed();
+              }
+            }}
             placeholder="https://example.com or any text..."
             className="w-full h-32 p-4 bg-white border border-gray-200 rounded-xl resize-y focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
@@ -114,6 +124,26 @@ export default function QrGeneratorPage() {
       </div>
 
       <canvas ref={canvasRef} className="hidden" />
+
+      {/* FAQ */}
+      <div className="mt-16 border-t border-gray-100 pt-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+        </h2>
+        <div className="space-y-5">
+          {[
+            { q: locale === "tr" ? "Hangi tür QR kodları oluşturabilirim?" : "What types of QR codes can I generate?", a: locale === "tr" ? "URL, düz metin, e-posta adresi, telefon numarası, SMS ve Wi-Fi kimlik bilgileri için QR kodu oluşturabilirsiniz." : "You can generate QR codes for URLs, plain text, email addresses, phone numbers, SMS, and Wi-Fi credentials." },
+            { q: locale === "tr" ? "Hangi dosya formatlarında indirebilirim?" : "What file formats can I download?", a: locale === "tr" ? "QR kodu PNG resim veya SVG vektör dosyası olarak indirebilirsiniz." : "You can download the QR code as a PNG image or SVG vector file." },
+            { q: locale === "tr" ? "Oluşturabileceğim QR kodu sayısında sınır var mı?" : "Is there a limit on how many QR codes I can generate?", a: locale === "tr" ? "Hayır. İstediğiniz kadar QR kodu tamamen ücretsiz olarak oluşturabilirsiniz." : "No. You can generate as many QR codes as you need, completely free." },
+            { q: locale === "tr" ? "QR kodlarım herhangi bir yerde saklanıyor mu?" : "Are my QR codes stored anywhere?", a: locale === "tr" ? "Hayır. QR kodları tarayıcınızda yerel olarak oluşturulur. Hiçbir şey sunucuya gönderilmez." : "No. QR codes are generated locally in your browser. Nothing is sent to any server." },
+          ].map(({ q, a }, i) => (
+            <div key={i} className="bg-gray-50 rounded-xl p-5">
+              <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

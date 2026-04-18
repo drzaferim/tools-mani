@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useLanguage } from "@/lib/language-context";
 import Link from "next/link";
+import { trackToolUse } from "@/lib/track";
 
 export default function PasswordGeneratorPage() {
+  const { locale } = useLanguage();
   const [password, setPassword] = useState("");
   const [length, setLength] = useState(16);
   const [includeUppercase, setIncludeUppercase] = useState(true);
@@ -29,6 +32,7 @@ export default function PasswordGeneratorPage() {
     const result = Array.from(array, (x) => chars[x % chars.length]).join("");
     setPassword(result);
     setCopied(false);
+    void trackToolUse("password-generator");
   }, [length, includeUppercase, includeLowercase, includeNumbers, includeSymbols]);
 
   const copyPassword = () => {
@@ -151,6 +155,26 @@ export default function PasswordGeneratorPage() {
       <button onClick={generatePassword} className="btn-primary w-full text-lg">
         Generate Password
       </button>
+
+      {/* FAQ */}
+      <div className="mt-16 border-t border-gray-100 pt-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+        </h2>
+        <div className="space-y-5">
+          {[
+            { q: locale === "tr" ? "Oluşturulan şifreler güvenli mi?" : "Are the generated passwords secure?", a: locale === "tr" ? "Evet. Şifreler, kriptografik olarak güvenli olan Web Crypto API (crypto.getRandomValues) kullanılarak oluşturulur." : "Yes. Passwords are generated using the Web Crypto API (crypto.getRandomValues), which is cryptographically secure." },
+            { q: locale === "tr" ? "Şifrelerim sunucuya gönderiliyor mu?" : "Are my passwords sent to a server?", a: locale === "tr" ? "Hayır. Şifre oluşturma tamamen tarayıcınızda gerçekleşir. İnternet üzerinden hiçbir şey iletilmez." : "No. Password generation happens entirely in your browser. Nothing is transmitted over the internet." },
+            { q: locale === "tr" ? "Hangi karakter türlerini dahil edebilirim?" : "What character types can I include?", a: locale === "tr" ? "Büyük harfler, küçük harfler, sayılar ve özel semboller ekleyebilirsiniz. Her tür açılıp kapatılabilir." : "You can include uppercase letters, lowercase letters, numbers, and special symbols. Each type can be toggled on or off." },
+            { q: locale === "tr" ? "Maksimum şifre uzunluğu nedir?" : "What is the maximum password length?", a: locale === "tr" ? "128 karaktere kadar şifre oluşturabilirsiniz." : "You can generate passwords up to 128 characters long." },
+          ].map(({ q, a }, i) => (
+            <div key={i} className="bg-gray-50 rounded-xl p-5">
+              <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

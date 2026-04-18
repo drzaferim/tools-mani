@@ -2,13 +2,105 @@ export interface Tool {
   id: string;
   name: string;
   description: string;
-  category: "text" | "developer" | "generator" | "file";
+  category: "text" | "developer" | "generator" | "file" | "pdf";
   href: string;
   icon: string;
   isFree: boolean;
 }
 
 export const tools: Tool[] = [
+  // PDF Tools
+  {
+    id: "pdf-merge",
+    name: "PDF Merger",
+    description:
+      "Merge multiple PDF files into one. Reorder pages and customize output. No file size limit.",
+    category: "pdf",
+    href: "/tools/pdf-merge",
+    icon: "FileText",
+    isFree: true,
+  },
+  {
+    id: "pdf-split",
+    name: "PDF Splitter",
+    description:
+      "Split a PDF into multiple files. Extract pages, split by range, or split every N pages.",
+    category: "pdf",
+    href: "/tools/pdf-split",
+    icon: "Scissors",
+    isFree: true,
+  },
+  {
+    id: "pdf-compress",
+    name: "PDF Compress",
+    description:
+      "Reduce PDF file size by optimizing structure and removing unused data. No file size limit.",
+    category: "pdf",
+    href: "/tools/pdf-compress",
+    icon: "FileDown",
+    isFree: true,
+  },
+  {
+    id: "pdf-rotate",
+    name: "PDF Rotate",
+    description:
+      "Rotate PDF pages individually or all at once. Fix scanned documents easily.",
+    category: "pdf",
+    href: "/tools/pdf-rotate",
+    icon: "RotateCw",
+    isFree: true,
+  },
+  {
+    id: "pdf-pages",
+    name: "PDF Page Manager",
+    description:
+      "Extract or delete specific pages from a PDF. Select the pages you need and download.",
+    category: "pdf",
+    href: "/tools/pdf-pages",
+    icon: "Files",
+    isFree: true,
+  },
+  {
+    id: "pdf-watermark",
+    name: "PDF Watermark",
+    description:
+      "Add text watermarks to your PDF files. Customize text, size, color, and opacity.",
+    category: "pdf",
+    href: "/tools/pdf-watermark",
+    icon: "Droplets",
+    isFree: true,
+  },
+  {
+    id: "pdf-pagenumber",
+    name: "PDF Page Numbers",
+    description:
+      "Add page numbers to your PDF. Choose position, format, and starting number.",
+    category: "pdf",
+    href: "/tools/pdf-pagenumber",
+    icon: "Hash",
+    isFree: true,
+  },
+  {
+    id: "pdf-to-image",
+    name: "PDF to Image",
+    description:
+      "Convert PDF pages to high-quality JPG or PNG images. Extract every page as an image. No file size limit.",
+    category: "pdf",
+    href: "/tools/pdf-to-image",
+    icon: "ImageDown",
+    isFree: true,
+  },
+  {
+    id: "image-to-pdf",
+    name: "Image to PDF",
+    description:
+      "Convert JPG, PNG, WebP, or BMP images to a PDF document. Combine multiple images into one PDF.",
+    category: "pdf",
+    href: "/tools/image-to-pdf",
+    icon: "FileImage",
+    isFree: true,
+  },
+  // Text Tools
   {
     id: "text-counter",
     name: "Text Counter",
@@ -20,6 +112,27 @@ export const tools: Tool[] = [
     isFree: true,
   },
   {
+    id: "lorem-ipsum",
+    name: "Lorem Ipsum Generator",
+    description:
+      "Generate placeholder text in paragraphs, sentences, or words. Perfect for design mockups.",
+    category: "text",
+    href: "/tools/lorem-ipsum",
+    icon: "TextCursorInput",
+    isFree: true,
+  },
+  {
+    id: "markdown-preview",
+    name: "Markdown Preview",
+    description:
+      "Write Markdown and see a live preview. Supports headings, lists, code blocks, and more.",
+    category: "text",
+    href: "/tools/markdown-preview",
+    icon: "Eye",
+    isFree: true,
+  },
+  // Developer Tools
+  {
     id: "json-formatter",
     name: "JSON Formatter",
     description:
@@ -29,6 +142,27 @@ export const tools: Tool[] = [
     icon: "Braces",
     isFree: true,
   },
+  {
+    id: "base64",
+    name: "Base64 Encoder/Decoder",
+    description:
+      "Encode text to Base64 or decode Base64 back to text. Supports UTF-8 encoding.",
+    category: "developer",
+    href: "/tools/base64",
+    icon: "Binary",
+    isFree: true,
+  },
+  {
+    id: "color-picker",
+    name: "Color Picker & Converter",
+    description:
+      "Pick colors and convert between HEX, RGB, and HSL formats. Copy color values instantly.",
+    category: "developer",
+    href: "/tools/color-picker",
+    icon: "Palette",
+    isFree: true,
+  },
+  // Generators
   {
     id: "qr-generator",
     name: "QR Code Generator",
@@ -50,6 +184,17 @@ export const tools: Tool[] = [
     isFree: true,
   },
   {
+    id: "unit-converter",
+    name: "Unit Converter",
+    description:
+      "Convert between units of length, weight, temperature, volume, and more. Fast and accurate.",
+    category: "generator",
+    href: "/tools/unit-converter",
+    icon: "Ruler",
+    isFree: true,
+  },
+  // File Tools
+  {
     id: "image-compress",
     name: "Image Compressor",
     description:
@@ -60,19 +205,50 @@ export const tools: Tool[] = [
     isFree: true,
   },
   {
-    id: "pdf-merge",
-    name: "PDF Merger",
+    id: "image-convert",
+    name: "Image Converter",
     description:
-      "Merge multiple PDF files into one. Reorder pages and customize output.",
+      "Convert images between PNG, JPEG, WebP, and BMP formats. Batch convert multiple files.",
     category: "file",
-    href: "/tools/pdf-merge",
-    icon: "FileText",
-    isFree: false,
+    href: "/tools/image-convert",
+    icon: "ArrowRightLeft",
+    isFree: true,
+  },
+  {
+    id: "heic-convert",
+    name: "HEIC to JPG / PNG",
+    description:
+      "Convert iPhone HEIC/HEIF photos to JPG, PNG or WebP. Batch convert multiple files. No upload needed.",
+    category: "file",
+    href: "/tools/heic-convert",
+    icon: "Smartphone",
+    isFree: true,
+  },
+  {
+    id: "pdf-to-image",
+    name: "PDF to Image",
+    description:
+      "Convert PDF pages to JPG or PNG images. Extract every page as a high-quality image.",
+    category: "pdf",
+    href: "/tools/pdf-to-image",
+    icon: "ImageDown",
+    isFree: true,
+  },
+  {
+    id: "image-to-pdf",
+    name: "Image to PDF",
+    description:
+      "Convert JPG, PNG, WebP images to a PDF file. Combine multiple images into one PDF.",
+    category: "pdf",
+    href: "/tools/image-to-pdf",
+    icon: "FileImage",
+    isFree: true,
   },
 ];
 
 export const categories = [
   { id: "all", name: "All Tools" },
+  { id: "pdf", name: "PDF Tools" },
   { id: "text", name: "Text" },
   { id: "developer", name: "Developer" },
   { id: "generator", name: "Generators" },
