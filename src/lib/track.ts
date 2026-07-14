@@ -8,6 +8,28 @@ import { useCallback, useRef } from "react";
 import { db } from "./firebase";
 import { doc, setDoc, increment, serverTimestamp } from "firebase/firestore";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+/**
+ * GA4'e özel etkinlik gönderir. GA yüklü değilse sessizce atlanır.
+ */
+export function trackEvent(
+  eventName: string,
+  params?: Record<string, string | number | boolean>
+): void {
+  try {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", eventName, params ?? {});
+    }
+  } catch {
+    // Tracking hatası kullanıcıyı etkilememeli
+  }
+}
+
 export const STATS_TIME_ZONE = "Europe/Istanbul";
 
 function getDatePartsInStatsTimeZone(date: Date) {
@@ -60,6 +82,7 @@ export function getRecentStatsDateKeys(dayCount: number, endDate = new Date()): 
  * @param toolId — tools.ts'deki id (örn. "pdf-merge")
  */
 export async function trackToolUse(toolId: string): Promise<void> {
+  trackEvent("tool_used", { tool_id: toolId });
   try {
     const today = getStatsDateKey();
     const docRef = doc(db, "toolStats", today);

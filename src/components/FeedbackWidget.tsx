@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { trackEvent } from "@/lib/track";
 
 export function FeedbackWidget() {
   const [open, setOpen] = useState(false);
@@ -56,6 +57,7 @@ export function FeedbackWidget() {
         locale,
         createdAt: serverTimestamp(),
       });
+      trackEvent("feedback_submitted", { feedback_type: type });
       setSent(true);
       setTimeout(() => { setSent(false); setOpen(false); }, 3000);
     } catch {
