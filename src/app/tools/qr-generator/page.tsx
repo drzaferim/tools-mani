@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import QRCode from "qrcode";
 import { useLanguage } from "@/lib/language-context";
 import Link from "next/link";
 import { useTrackToolUseOnce } from "@/lib/track";
@@ -14,13 +15,22 @@ export default function QrGeneratorPage() {
   const markToolUsed = useTrackToolUseOnce("qr-generator");
 
   useEffect(() => {
+    let cancelled = false;
     if (text.trim()) {
-      // Using a free QR code API for generation
-      const url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&format=png`;
-      setQrUrl(url);
+      // QR tamamen tarayıcıda üretilir; metin hiçbir sunucuya gönderilmez.
+      QRCode.toDataURL(text, { width: size, margin: 2 })
+        .then((url) => {
+          if (!cancelled) setQrUrl(url);
+        })
+        .catch(() => {
+          if (!cancelled) setQrUrl("");
+        });
     } else {
       setQrUrl("");
     }
+    return () => {
+      cancelled = true;
+    };
   }, [text, size]);
 
   const downloadQr = () => {

@@ -29,12 +29,6 @@ const content = {
         ],
       },
       {
-        h: "One exception: the QR code generator",
-        p: [
-          "The QR code generator uses a third-party service (api.qrserver.com by goQR.me) to render the QR image. The text you enter in that tool is sent to that service to generate the image. If your QR content is sensitive, please be aware of this. All other tools process data locally.",
-        ],
-      },
-      {
         h: "Cookies",
         p: [
           "We use cookies only for Google Analytics measurement and a single localStorage key that remembers your language choice. You can block cookies in your browser settings; the tools will keep working normally.",
@@ -43,7 +37,7 @@ const content = {
       {
         h: "Third-party services",
         p: [
-          "Google Analytics (usage measurement), Google Fonts (font delivery), Firebase Hosting and Firestore by Google (site hosting and storage of anonymous counters and feedback), and goQR.me (QR image rendering, only in the QR tool). Each processes data under its own privacy policy.",
+          "Google Analytics (usage measurement), Google Fonts (font delivery), and Firebase Hosting and Firestore by Google (site hosting and storage of anonymous counters and feedback). Each processes data under its own privacy policy. No tool sends your content to any third-party service — all processing, including QR code generation, happens locally in your browser.",
         ],
       },
       {
@@ -86,12 +80,6 @@ const content = {
         ],
       },
       {
-        h: "Tek istisna: QR kod oluşturucu",
-        p: [
-          "QR kod oluşturucu, QR görselini üretmek için üçüncü taraf bir servis (goQR.me'ye ait api.qrserver.com) kullanır. Bu araçta girdiğiniz metin, görselin oluşturulması için o servise gönderilir. QR içeriğiniz hassassa lütfen bunu göz önünde bulundurun. Diğer tüm araçlar veriyi yerel olarak işler.",
-        ],
-      },
-      {
         h: "Çerezler",
         p: [
           "Çerezleri yalnızca Google Analytics ölçümü için kullanırız; ayrıca dil seçiminizi hatırlayan tek bir localStorage kaydı vardır. Tarayıcı ayarlarınızdan çerezleri engelleyebilirsiniz; araçlar normal çalışmaya devam eder.",
@@ -100,7 +88,7 @@ const content = {
       {
         h: "Üçüncü taraf servisler",
         p: [
-          "Google Analytics (kullanım ölçümü), Google Fonts (yazı tipi), Google Firebase Hosting ve Firestore (site barındırma, anonim sayaçların ve geri bildirimlerin saklanması) ve goQR.me (yalnızca QR aracında görsel üretimi). Her biri veriyi kendi gizlilik politikasına göre işler.",
+          "Google Analytics (kullanım ölçümü), Google Fonts (yazı tipi) ve Google Firebase Hosting ile Firestore (site barındırma, anonim sayaçların ve geri bildirimlerin saklanması). Her biri veriyi kendi gizlilik politikasına göre işler. Hiçbir araç içeriğinizi üçüncü taraf bir servise göndermez — QR kod üretimi dahil tüm işlemler tarayıcınızda yerel olarak yapılır.",
         ],
       },
       {
