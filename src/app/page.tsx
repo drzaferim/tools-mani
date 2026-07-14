@@ -38,6 +38,8 @@ const toolNameKeys: Record<string, TranslationKey> = {
   "pdf-to-image": "tool.pdfToImage",
   "image-to-pdf": "tool.imageToPdf",
   "heic-convert": "tool.heicConvert",
+  "image-resize": "tool.imageResize",
+  "uuid-generator": "tool.uuidGenerator",
 };
 
 const toolDescKeys: Record<string, TranslationKey> = {
@@ -62,6 +64,8 @@ const toolDescKeys: Record<string, TranslationKey> = {
   "pdf-to-image": "tool.pdfToImage.desc",
   "image-to-pdf": "tool.imageToPdf.desc",
   "heic-convert": "tool.heicConvert.desc",
+  "image-resize": "tool.imageResize.desc",
+  "uuid-generator": "tool.uuidGenerator.desc",
 };
 
 export default function HomePage() {

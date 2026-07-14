@@ -325,6 +325,16 @@ const translations = {
   },
 
   "tool.heicConvert": { en: "HEIC to JPG / PNG", tr: "HEIC → JPG / PNG" },
+  "tool.imageResize": { en: "Image Resizer", tr: "Resim Boyutlandırma" },
+  "tool.imageResize.desc": {
+    en: "Resize JPG, PNG and WebP images by width or percentage. Batch support, aspect ratio preserved.",
+    tr: "JPG, PNG ve WebP resimleri genişliğe veya yüzdeye göre boyutlandırın. Toplu işlem, en-boy oranı korunur.",
+  },
+  "tool.uuidGenerator": { en: "UUID Generator & Hash", tr: "UUID Üretici & Hash" },
+  "tool.uuidGenerator.desc": {
+    en: "Generate random UUID v4 identifiers in bulk and compute SHA-256 hashes of any text.",
+    tr: "Toplu UUID v4 kimlikleri üretin ve herhangi bir metnin SHA-256 hash'ini hesaplayın.",
+  },
   "tool.heicConvert.desc": {
     en: "Convert iPhone HEIC/HEIF photos to JPG, PNG or WebP. Batch convert multiple files. No upload needed.",
     tr: "iPhone HEIC/HEIF fotoğraflarını JPG, PNG veya WebP'ye dönüştürün. Toplu dönüştürme, yükleme gerekmez.",

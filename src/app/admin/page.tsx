@@ -30,6 +30,8 @@ const TOOL_LABELS: Record<string, string> = {
   "lorem-ipsum": "Lorem Ipsum",
   "markdown-preview": "Markdown",
   "unit-converter": "Birim Çevirici",
+  "image-resize": "Resim Boyutlandır",
+  "uuid-generator": "UUID & Hash",
 };
 
 interface Feedback {

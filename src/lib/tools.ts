@@ -244,6 +244,26 @@ export const tools: Tool[] = [
     icon: "FileImage",
     isFree: true,
   },
+  {
+    id: "image-resize",
+    name: "Image Resizer",
+    description:
+      "Resize JPG, PNG and WebP images by width or percentage. Batch support, aspect ratio preserved.",
+    category: "file",
+    href: "/tools/image-resize",
+    icon: "Scaling",
+    isFree: true,
+  },
+  {
+    id: "uuid-generator",
+    name: "UUID Generator & Hash",
+    description:
+      "Generate random UUID v4 identifiers in bulk and compute SHA-256 hashes of any text.",
+    category: "developer",
+    href: "/tools/uuid-generator",
+    icon: "Fingerprint",
+    isFree: true,
+  },
 ];
 
 export const categories = [

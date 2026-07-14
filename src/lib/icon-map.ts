@@ -20,6 +20,8 @@ import {
   ImageDown,
   FileImage,
   Smartphone,
+  Scaling,
+  Fingerprint,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -45,4 +47,6 @@ export const iconMap: Record<string, LucideIcon> = {
   ImageDown,
   FileImage,
   Smartphone,
+  Scaling,
+  Fingerprint,
 };

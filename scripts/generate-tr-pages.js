@@ -123,6 +123,16 @@ const TR_META = {
     description:
       "Uzunluk, ağırlık, sıcaklık, alan ve hacim birimlerini anında çevirin. Ücretsiz online birim dönüştürücü, tarayıcıda çalışır.",
   },
+  "/tools/image-resize": {
+    title: "Resim Boyutlandırma - Fotoğraf Boyutu Değiştirme | ToolsMani",
+    description:
+      "JPG, PNG ve WebP resimleri piksel genişliğine veya yüzdeye göre boyutlandırın. Toplu işlem, en-boy oranı korunur. Ücretsiz, tarayıcıda çalışır.",
+  },
+  "/tools/uuid-generator": {
+    title: "UUID Üretici ve Metin Hash (SHA-256) | ToolsMani",
+    description:
+      "Toplu rastgele UUID v4 kimlikleri üretin; SHA-256, SHA-512 veya SHA-1 hash hesaplayın. Ücretsiz geliştirici aracı, tamamen tarayıcıda.",
+  },
   "/about": {
     title: "Hakkımızda | ToolsMani",
     description:
