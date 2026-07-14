@@ -32,6 +32,8 @@ const TOOL_LABELS: Record<string, string> = {
   "unit-converter": "Birim Çevirici",
   "image-resize": "Resim Boyutlandır",
   "uuid-generator": "UUID & Hash",
+  "pdf-sign": "PDF İmzalama",
+  "exif-cleaner": "EXIF Temizleyici",
 };
 
 interface Feedback {

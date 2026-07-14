@@ -22,6 +22,8 @@ import {
   Smartphone,
   Scaling,
   Fingerprint,
+  PenTool,
+  ShieldCheck,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -49,4 +51,6 @@ export const iconMap: Record<string, LucideIcon> = {
   Smartphone,
   Scaling,
   Fingerprint,
+  PenTool,
+  ShieldCheck,
 };

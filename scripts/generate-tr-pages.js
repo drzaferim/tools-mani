@@ -123,6 +123,16 @@ const TR_META = {
     description:
       "Uzunluk, ağırlık, sıcaklık, alan ve hacim birimlerini anında çevirin. Ücretsiz online birim dönüştürücü, tarayıcıda çalışır.",
   },
+  "/tools/pdf-sign": {
+    title: "PDF İmzalama - Online İmza Ekleme (Ücretsiz) | ToolsMani",
+    description:
+      "İmzanızı çizin ve PDF'in istediğiniz sayfasına yerleştirin. %100 gizli — belge ve imzanız tarayıcınızdan çıkmaz. Ücretsiz, kayıtsız.",
+  },
+  "/tools/exif-cleaner": {
+    title: "EXIF Silme - Fotoğraf Meta Verisi Temizleme | ToolsMani",
+    description:
+      "Fotoğraflardan GPS konumu, kamera modeli, tarih gibi gizli meta verileri silin. Ücretsiz ve gizli — fotoğraf tarayıcıda temizlenir, yüklenmez.",
+  },
   "/tools/image-resize": {
     title: "Resim Boyutlandırma - Fotoğraf Boyutu Değiştirme | ToolsMani",
     description:

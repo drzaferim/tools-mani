@@ -331,6 +331,16 @@ const translations = {
     tr: "JPG, PNG ve WebP resimleri genişliğe veya yüzdeye göre boyutlandırın. Toplu işlem, en-boy oranı korunur.",
   },
   "tool.uuidGenerator": { en: "UUID Generator & Hash", tr: "UUID Üretici & Hash" },
+  "tool.pdfSign": { en: "Sign PDF", tr: "PDF İmzalama" },
+  "tool.pdfSign.desc": {
+    en: "Draw your signature and place it on any PDF page. The document never leaves your browser.",
+    tr: "İmzanızı çizin ve PDF'in istediğiniz sayfasına yerleştirin. Belge tarayıcınızdan çıkmaz.",
+  },
+  "tool.exifCleaner": { en: "EXIF Remover", tr: "EXIF Temizleyici" },
+  "tool.exifCleaner.desc": {
+    en: "Strip hidden metadata from photos: GPS location, camera model, capture date and more.",
+    tr: "Fotoğraflardaki gizli meta veriyi silin: GPS konumu, kamera modeli, çekim tarihi ve daha fazlası.",
+  },
   "tool.uuidGenerator.desc": {
     en: "Generate random UUID v4 identifiers in bulk and compute SHA-256 hashes of any text.",
     tr: "Toplu UUID v4 kimlikleri üretin ve herhangi bir metnin SHA-256 hash'ini hesaplayın.",
