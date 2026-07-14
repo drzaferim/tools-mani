@@ -3,8 +3,14 @@
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 
+const legalLabels = {
+  en: { about: "About", contact: "Contact", privacy: "Privacy Policy", terms: "Terms of Use" },
+  tr: { about: "Hakkında", contact: "İletişim", privacy: "Gizlilik Politikası", terms: "Kullanım Şartları" },
+};
+
 export function Footer() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const legal = legalLabels[locale];
 
   return (
     <footer className="bg-white border-t border-gray-100 mt-16">
@@ -51,6 +57,12 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-100 mt-10 pt-8 text-center text-gray-400 text-sm">
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4">
+            <Link href="/about" className="hover:text-primary-600 transition-colors">{legal.about}</Link>
+            <Link href="/contact" className="hover:text-primary-600 transition-colors">{legal.contact}</Link>
+            <Link href="/privacy" className="hover:text-primary-600 transition-colors">{legal.privacy}</Link>
+            <Link href="/terms" className="hover:text-primary-600 transition-colors">{legal.terms}</Link>
+          </nav>
           <p>&copy; {new Date().getFullYear()} ToolsMani. {t("footer.rights")}</p>
           <p className="mt-1">{t("footer.tagline")}</p>
         </div>
