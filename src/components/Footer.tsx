@@ -9,7 +9,7 @@ const legalLabels = {
 };
 
 export function Footer() {
-  const { t, locale } = useLanguage();
+  const { t, locale, localePath } = useLanguage();
   const legal = legalLabels[locale];
 
   return (
@@ -33,35 +33,35 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-gray-900 mb-3">{t("footer.pdfTools")}</h3>
             <ul className="space-y-2 text-sm text-gray-500">
-              <li><Link href="/tools/pdf-merge" className="hover:text-primary-600 transition-colors">{t("pdf.merge.name")}</Link></li>
-              <li><Link href="/tools/pdf-split" className="hover:text-primary-600 transition-colors">{t("pdf.split.name")}</Link></li>
-              <li><Link href="/tools/pdf-compress" className="hover:text-primary-600 transition-colors">{t("pdf.compress.name")}</Link></li>
-              <li><Link href="/tools/pdf-rotate" className="hover:text-primary-600 transition-colors">{t("pdf.rotate.name")}</Link></li>
-              <li><Link href="/tools/pdf-pages" className="hover:text-primary-600 transition-colors">{t("pdf.pages.name")}</Link></li>
-              <li><Link href="/tools/pdf-watermark" className="hover:text-primary-600 transition-colors">{t("pdf.watermark.name")}</Link></li>
-              <li><Link href="/tools/pdf-pagenumber" className="hover:text-primary-600 transition-colors">{t("pdf.pagenumber.name")}</Link></li>
+              <li><Link href={localePath("/tools/pdf-merge")} className="hover:text-primary-600 transition-colors">{t("pdf.merge.name")}</Link></li>
+              <li><Link href={localePath("/tools/pdf-split")} className="hover:text-primary-600 transition-colors">{t("pdf.split.name")}</Link></li>
+              <li><Link href={localePath("/tools/pdf-compress")} className="hover:text-primary-600 transition-colors">{t("pdf.compress.name")}</Link></li>
+              <li><Link href={localePath("/tools/pdf-rotate")} className="hover:text-primary-600 transition-colors">{t("pdf.rotate.name")}</Link></li>
+              <li><Link href={localePath("/tools/pdf-pages")} className="hover:text-primary-600 transition-colors">{t("pdf.pages.name")}</Link></li>
+              <li><Link href={localePath("/tools/pdf-watermark")} className="hover:text-primary-600 transition-colors">{t("pdf.watermark.name")}</Link></li>
+              <li><Link href={localePath("/tools/pdf-pagenumber")} className="hover:text-primary-600 transition-colors">{t("pdf.pagenumber.name")}</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-semibold text-gray-900 mb-3">{t("footer.otherTools")}</h3>
             <ul className="space-y-2 text-sm text-gray-500">
-              <li><Link href="/tools/text-counter" className="hover:text-primary-600 transition-colors">{t("tool.textCounter")}</Link></li>
-              <li><Link href="/tools/json-formatter" className="hover:text-primary-600 transition-colors">{t("tool.jsonFormatter")}</Link></li>
-              <li><Link href="/tools/qr-generator" className="hover:text-primary-600 transition-colors">{t("tool.qrGenerator")}</Link></li>
-              <li><Link href="/tools/password-generator" className="hover:text-primary-600 transition-colors">{t("tool.passwordGenerator")}</Link></li>
-              <li><Link href="/tools/image-compress" className="hover:text-primary-600 transition-colors">{t("tool.imageCompress")}</Link></li>
-              <li><Link href="/tools/base64" className="hover:text-primary-600 transition-colors">{t("tool.base64")}</Link></li>
+              <li><Link href={localePath("/tools/text-counter")} className="hover:text-primary-600 transition-colors">{t("tool.textCounter")}</Link></li>
+              <li><Link href={localePath("/tools/json-formatter")} className="hover:text-primary-600 transition-colors">{t("tool.jsonFormatter")}</Link></li>
+              <li><Link href={localePath("/tools/qr-generator")} className="hover:text-primary-600 transition-colors">{t("tool.qrGenerator")}</Link></li>
+              <li><Link href={localePath("/tools/password-generator")} className="hover:text-primary-600 transition-colors">{t("tool.passwordGenerator")}</Link></li>
+              <li><Link href={localePath("/tools/image-compress")} className="hover:text-primary-600 transition-colors">{t("tool.imageCompress")}</Link></li>
+              <li><Link href={localePath("/tools/base64")} className="hover:text-primary-600 transition-colors">{t("tool.base64")}</Link></li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-100 mt-10 pt-8 text-center text-gray-400 text-sm">
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4">
-            <Link href="/about" className="hover:text-primary-600 transition-colors">{legal.about}</Link>
-            <Link href="/contact" className="hover:text-primary-600 transition-colors">{legal.contact}</Link>
-            <Link href="/privacy" className="hover:text-primary-600 transition-colors">{legal.privacy}</Link>
-            <Link href="/terms" className="hover:text-primary-600 transition-colors">{legal.terms}</Link>
+            <Link href={localePath("/about")} className="hover:text-primary-600 transition-colors">{legal.about}</Link>
+            <Link href={localePath("/contact")} className="hover:text-primary-600 transition-colors">{legal.contact}</Link>
+            <Link href={localePath("/privacy")} className="hover:text-primary-600 transition-colors">{legal.privacy}</Link>
+            <Link href={localePath("/terms")} className="hover:text-primary-600 transition-colors">{legal.terms}</Link>
           </nav>
           <p>&copy; {new Date().getFullYear()} ToolsMani. {t("footer.rights")}</p>
           <p className="mt-1">{t("footer.tagline")}</p>

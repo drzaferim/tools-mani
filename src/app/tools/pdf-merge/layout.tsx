@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Merge multiple PDF files into one document online for free. Drag and drop PDFs to combine them in any order. No upload limits, processed in your browser.",
   alternates: {
     canonical: "/tools/pdf-merge/",
+    languages: {
+      en: "/tools/pdf-merge/",
+      tr: "/tr/tools/pdf-merge/",
+      "x-default": "/tools/pdf-merge/",
+    },
   },
   openGraph: {
     title: "PDF Merger - Combine PDF Files Online | ToolsMani",

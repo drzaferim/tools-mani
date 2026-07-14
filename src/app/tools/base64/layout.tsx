@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Encode and decode Base64 strings online for free. Convert text, files, and images to Base64 and back instantly. Supports UTF-8 and binary data encoding.",
   alternates: {
     canonical: "/tools/base64/",
+    languages: {
+      en: "/tools/base64/",
+      tr: "/tr/tools/base64/",
+      "x-default": "/tools/base64/",
+    },
   },
   openGraph: {
     title: "Base64 Encoder & Decoder - Encode Decode Online | ToolsMani",

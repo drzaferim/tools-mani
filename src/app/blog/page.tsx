@@ -6,6 +6,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Blog & Guides | ToolsMani",
   description: "Learn how to manage your PDFs, format code, and optimize your daily workflows safely.",
+  alternates: {
+    canonical: "/blog/",
+  },
 };
 
 export default function BlogPage() {

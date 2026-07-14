@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Get in touch with ToolsMani. Report a bug, suggest a new tool, or send feedback — we read every message.",
   alternates: {
     canonical: "/contact/",
+    languages: {
+      en: "/contact/",
+      tr: "/tr/contact/",
+      "x-default": "/contact/",
+    },
   },
 };
 

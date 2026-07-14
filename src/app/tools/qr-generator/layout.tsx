@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Generate QR codes for URLs, text, Wi-Fi, and more. Free online QR code generator with customizable size and download options. No signup required.",
   alternates: {
     canonical: "/tools/qr-generator/",
+    languages: {
+      en: "/tools/qr-generator/",
+      tr: "/tr/tools/qr-generator/",
+      "x-default": "/tools/qr-generator/",
+    },
   },
   openGraph: {
     title: "QR Code Generator - Create QR Codes Free | ToolsMani",

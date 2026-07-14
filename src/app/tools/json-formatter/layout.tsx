@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Format, validate, and beautify JSON data online for free. Minify or pretty-print JSON with syntax highlighting and error detection. Fast and easy to use.",
   alternates: {
     canonical: "/tools/json-formatter/",
+    languages: {
+      en: "/tools/json-formatter/",
+      tr: "/tr/tools/json-formatter/",
+      "x-default": "/tools/json-formatter/",
+    },
   },
   openGraph: {
     title: "JSON Formatter & Validator - Beautify JSON Online | ToolsMani",

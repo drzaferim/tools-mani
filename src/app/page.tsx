@@ -67,7 +67,7 @@ const toolDescKeys: Record<string, TranslationKey> = {
 export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const { t, locale } = useLanguage();
+  const { t, locale, localePath } = useLanguage();
 
   const filteredTools = tools.filter(tool => {
     const matchesCategory = activeCategory === "all" || tool.category === activeCategory;
@@ -104,7 +104,7 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/tools/pdf" className="btn-primary text-lg !px-8 !py-4">
+            <Link href={localePath("/tools/pdf")} className="btn-primary text-lg !px-8 !py-4">
               {t("hero.explorePdf")}
               <span className="ml-2 opacity-70">&rarr;</span>
             </Link>
@@ -205,7 +205,7 @@ export default function HomePage() {
               const Icon = iconMap[tool.icon];
               const isPdf = tool.category === "pdf";
               return (
-                <Link key={tool.id} href={tool.href} className="tool-card group">
+                <Link key={tool.id} href={localePath(tool.href)} className="tool-card group">
                   <div className="flex items-start justify-between mb-4">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-md ${
                       isPdf

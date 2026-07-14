@@ -29,6 +29,9 @@ export function generateMetadata({ params }: PostPageProps): Metadata {
   return {
     title: `${post.title} | ToolsMani`,
     description: post.description,
+    alternates: {
+      canonical: `/blog/${post.slug}/`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,

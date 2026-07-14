@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Convert PDF pages to JPG or PNG images online for free. Extract every page as a high-quality image. No file size limit, processed entirely in your browser.",
   alternates: {
     canonical: "/tools/pdf-to-image/",
+    languages: {
+      en: "/tools/pdf-to-image/",
+      tr: "/tr/tools/pdf-to-image/",
+      "x-default": "/tools/pdf-to-image/",
+    },
   },
   openGraph: {
     title: "PDF to JPG/PNG - Convert PDF Pages to Images Online | ToolsMani",

@@ -6,13 +6,13 @@ import { useLanguage } from "@/lib/language-context";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { locale, setLocale, t } = useLanguage();
+  const { locale, setLocale, t, localePath } = useLanguage();
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href={localePath("/")} className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-md shadow-primary-200/50 group-hover:shadow-lg group-hover:shadow-primary-300/50 transition-shadow">
               <span className="text-white font-bold text-sm">TM</span>
             </div>
@@ -23,7 +23,7 @@ export function Header() {
 
           <nav className="hidden md:flex items-center gap-1">
             <Link
-              href="/#tools"
+              href={localePath("/#tools")}
               className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
             >
               {t("nav.allTools")}
@@ -35,7 +35,7 @@ export function Header() {
               {t("nav.blog")}
             </Link>
             <Link
-              href="/tools/pdf"
+              href={localePath("/tools/pdf")}
               className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
             >
               {t("nav.pdfTools")}
@@ -53,7 +53,7 @@ export function Header() {
               <span>{locale === "en" ? "TR" : "EN"}</span>
             </button>
 
-            <Link href="/tools/pdf" className="btn-primary text-sm !py-2.5 !px-5">
+            <Link href={localePath("/tools/pdf")} className="btn-primary text-sm !py-2.5 !px-5">
               {t("nav.tryPdf")}
             </Link>
           </div>
@@ -77,7 +77,7 @@ export function Header() {
           <div className="md:hidden pb-4 border-t border-gray-100 mt-2 pt-4 animate-fade-in-up">
             <nav className="flex flex-col gap-1">
               <Link
-                href="/#tools"
+                href={localePath("/#tools")}
                 className="px-4 py-2.5 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
                 onClick={() => setMenuOpen(false)}
               >
@@ -91,7 +91,7 @@ export function Header() {
                 {t("nav.blog")}
               </Link>
               <Link
-                href="/tools/pdf"
+                href={localePath("/tools/pdf")}
                 className="px-4 py-2.5 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
                 onClick={() => setMenuOpen(false)}
               >
@@ -105,7 +105,7 @@ export function Header() {
                 {locale === "en" ? "Türkçe" : "English"}
               </button>
               <Link
-                href="/tools/pdf"
+                href={localePath("/tools/pdf")}
                 className="btn-primary text-sm text-center mt-2"
                 onClick={() => setMenuOpen(false)}
               >

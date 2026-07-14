@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Generate strong, secure, and random passwords instantly. Customize length, include symbols, numbers, and uppercase letters. Free online password generator tool.",
   alternates: {
     canonical: "/tools/password-generator/",
+    languages: {
+      en: "/tools/password-generator/",
+      tr: "/tr/tools/password-generator/",
+      "x-default": "/tools/password-generator/",
+    },
   },
   openGraph: {
     title: "Password Generator - Create Strong Secure Passwords | ToolsMani",

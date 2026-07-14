@@ -17,7 +17,7 @@ const pdfTools: { nameKey: TranslationKey; descKey: TranslationKey; href: string
 ];
 
 export default function PdfHubPage() {
-  const { t } = useLanguage();
+  const { t, localePath } = useLanguage();
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -51,7 +51,7 @@ export default function PdfHubPage() {
         {pdfTools.map((tool) => (
           <Link
             key={tool.href}
-            href={tool.href}
+            href={localePath(tool.href)}
             className={`block rounded-2xl border-2 p-6 transition-all duration-200 hover:shadow-md ${tool.color}`}
           >
             <div className="text-3xl mb-3" dangerouslySetInnerHTML={{ __html: tool.icon }} />

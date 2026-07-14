@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Extract or delete specific pages from PDF files online for free. Select pages visually and download. Privacy-first — no data uploaded.",
   alternates: {
     canonical: "/tools/pdf-pages/",
+    languages: {
+      en: "/tools/pdf-pages/",
+      tr: "/tr/tools/pdf-pages/",
+      "x-default": "/tools/pdf-pages/",
+    },
   },
   openGraph: {
     title: "PDF Page Manager - Extract & Delete PDF Pages | ToolsMani",

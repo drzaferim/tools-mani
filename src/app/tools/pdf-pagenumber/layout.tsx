@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Add page numbers to your PDF files online for free. Customize position, format, and starting number. No upload limits, 100% browser-based.",
   alternates: {
     canonical: "/tools/pdf-pagenumber/",
+    languages: {
+      en: "/tools/pdf-pagenumber/",
+      tr: "/tr/tools/pdf-pagenumber/",
+      "x-default": "/tools/pdf-pagenumber/",
+    },
   },
   openGraph: {
     title: "Add Page Numbers to PDF Free",

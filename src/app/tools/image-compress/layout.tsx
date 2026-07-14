@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Compress JPEG, PNG, and WebP images online without losing quality. Reduce file size up to 80% for faster websites. Free browser-based image compression tool.",
   alternates: {
     canonical: "/tools/image-compress/",
+    languages: {
+      en: "/tools/image-compress/",
+      tr: "/tr/tools/image-compress/",
+      "x-default": "/tools/image-compress/",
+    },
   },
   openGraph: {
     title: "Image Compressor - Compress JPEG, PNG & WebP | ToolsMani",

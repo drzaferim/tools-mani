@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "ToolsMani privacy policy. Your files are processed entirely in your browser and never uploaded. Learn what limited data we collect and why.",
   alternates: {
     canonical: "/privacy/",
+    languages: {
+      en: "/privacy/",
+      tr: "/tr/privacy/",
+      "x-default": "/privacy/",
+    },
   },
 };
 

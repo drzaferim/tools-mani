@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Pick colors and convert between HEX, RGB, and HSL formats instantly. Free online color picker with palette generator and color code converter for designers.",
   alternates: {
     canonical: "/tools/color-picker/",
+    languages: {
+      en: "/tools/color-picker/",
+      tr: "/tr/tools/color-picker/",
+      "x-default": "/tools/color-picker/",
+    },
   },
   openGraph: {
     title: "Color Picker & Converter - HEX RGB HSL | ToolsMani",

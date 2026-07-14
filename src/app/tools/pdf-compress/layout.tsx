@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Compress PDF files online for free. Reduce file size by stripping metadata and optimizing structure. No upload limits, 100% browser-based.",
   alternates: {
     canonical: "/tools/pdf-compress/",
+    languages: {
+      en: "/tools/pdf-compress/",
+      tr: "/tr/tools/pdf-compress/",
+      "x-default": "/tools/pdf-compress/",
+    },
   },
   openGraph: {
     title: "PDF Compress - Reduce PDF File Size Free",

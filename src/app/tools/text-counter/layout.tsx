@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Free online text counter tool. Instantly count words, characters, sentences, and paragraphs in your text. Perfect for writers, students, and SEO professionals.",
   alternates: {
     canonical: "/tools/text-counter/",
+    languages: {
+      en: "/tools/text-counter/",
+      tr: "/tr/tools/text-counter/",
+      "x-default": "/tools/text-counter/",
+    },
   },
   openGraph: {
     title: "Text Counter - Count Words, Characters & Sentences | ToolsMani",

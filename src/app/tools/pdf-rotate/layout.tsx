@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Rotate PDF pages individually or all at once for free. Fix scanned documents easily. No upload — all processing in your browser.",
   alternates: {
     canonical: "/tools/pdf-rotate/",
+    languages: {
+      en: "/tools/pdf-rotate/",
+      tr: "/tr/tools/pdf-rotate/",
+      "x-default": "/tools/pdf-rotate/",
+    },
   },
   openGraph: {
     title: "PDF Rotate - Rotate PDF Pages Online Free | ToolsMani",

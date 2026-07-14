@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Split PDF files into multiple documents online for free. Extract pages, split by range, or split every N pages. No upload needed — works in your browser.",
   alternates: {
     canonical: "/tools/pdf-split/",
+    languages: {
+      en: "/tools/pdf-split/",
+      tr: "/tr/tools/pdf-split/",
+      "x-default": "/tools/pdf-split/",
+    },
   },
   openGraph: {
     title: "PDF Splitter - Split PDF Files Online Free | ToolsMani",

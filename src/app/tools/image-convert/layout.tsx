@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Convert images between PNG, JPG, WebP, and BMP formats online for free. Batch convert multiple files. No upload limits, 100% browser-based.",
   alternates: {
     canonical: "/tools/image-convert/",
+    languages: {
+      en: "/tools/image-convert/",
+      tr: "/tr/tools/image-convert/",
+      "x-default": "/tools/image-convert/",
+    },
   },
   openGraph: {
     title: "Free Image Converter - PNG JPG WebP BMP",

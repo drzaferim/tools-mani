@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     languages: {
-      "en": "https://toolsmani.com",
-      "tr": "https://toolsmani.com",
-      "x-default": "https://toolsmani.com",
+      en: "/",
+      tr: "/tr/",
+      "x-default": "/",
     },
   },
   robots: {

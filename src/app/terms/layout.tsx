@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Terms of use for ToolsMani's free online tools. Plain-language rules for using the site.",
   alternates: {
     canonical: "/terms/",
+    languages: {
+      en: "/terms/",
+      tr: "/tr/terms/",
+      "x-default": "/terms/",
+    },
   },
 };
 

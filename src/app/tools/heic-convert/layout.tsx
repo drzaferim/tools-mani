@@ -4,7 +4,14 @@ export const metadata: Metadata = {
   title: "HEIC to JPG/PNG Converter - Convert iPhone Photos Online | ToolsMani",
   description:
     "Convert HEIC photos from iPhone to JPG, PNG or WebP online for free. Batch convert multiple HEIC files instantly. No upload, processed in your browser.",
-  alternates: { canonical: "/tools/heic-convert/" },
+  alternates: {
+    canonical: "/tools/heic-convert/",
+    languages: {
+      en: "/tools/heic-convert/",
+      tr: "/tr/tools/heic-convert/",
+      "x-default": "/tools/heic-convert/",
+    },
+  },
   openGraph: {
     title: "HEIC to JPG/PNG Converter - Convert iPhone Photos Online | ToolsMani",
     description:

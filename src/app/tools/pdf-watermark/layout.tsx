@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Add text watermarks to PDF files for free. Customize text, size, color, and opacity. No upload — 100% browser-based processing.",
   alternates: {
     canonical: "/tools/pdf-watermark/",
+    languages: {
+      en: "/tools/pdf-watermark/",
+      tr: "/tr/tools/pdf-watermark/",
+      "x-default": "/tools/pdf-watermark/",
+    },
   },
   openGraph: {
     title: "PDF Watermark - Add Watermark to PDF Online Free | ToolsMani",

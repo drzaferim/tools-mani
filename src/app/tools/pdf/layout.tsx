@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "All-in-one PDF toolkit. Merge, split, compress, rotate, add watermarks, page numbers, and manage pages. No file size limits, 100% free and browser-based.",
   alternates: {
     canonical: "/tools/pdf/",
+    languages: {
+      en: "/tools/pdf/",
+      tr: "/tr/tools/pdf/",
+      "x-default": "/tools/pdf/",
+    },
   },
   openGraph: {
     title: "Free Online PDF Tools | ToolsMani",

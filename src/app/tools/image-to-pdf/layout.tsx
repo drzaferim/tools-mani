@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Convert JPG, PNG, WebP, and BMP images to PDF online for free. Combine multiple images into one PDF document. No file size limit, processed in your browser.",
   alternates: {
     canonical: "/tools/image-to-pdf/",
+    languages: {
+      en: "/tools/image-to-pdf/",
+      tr: "/tr/tools/image-to-pdf/",
+      "x-default": "/tools/image-to-pdf/",
+    },
   },
   openGraph: {
     title: "Image to PDF - Convert JPG/PNG to PDF Online | ToolsMani",

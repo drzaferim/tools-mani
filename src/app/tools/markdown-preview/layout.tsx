@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Write and preview Markdown in real time with this free online editor. Supports GitHub Flavored Markdown with live rendering, syntax highlighting, and export options.",
   alternates: {
     canonical: "/tools/markdown-preview/",
+    languages: {
+      en: "/tools/markdown-preview/",
+      tr: "/tr/tools/markdown-preview/",
+      "x-default": "/tools/markdown-preview/",
+    },
   },
   openGraph: {
     title: "Markdown Preview - Live Editor & Renderer | ToolsMani",

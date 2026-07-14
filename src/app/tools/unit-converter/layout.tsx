@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Convert units of length, weight, temperature, volume, and more. Free online unit converter with instant results. Supports metric, imperial, and scientific units.",
   alternates: {
     canonical: "/tools/unit-converter/",
+    languages: {
+      en: "/tools/unit-converter/",
+      tr: "/tr/tools/unit-converter/",
+      "x-default": "/tools/unit-converter/",
+    },
   },
   openGraph: {
     title: "Unit Converter - Length, Weight, Temperature | ToolsMani",

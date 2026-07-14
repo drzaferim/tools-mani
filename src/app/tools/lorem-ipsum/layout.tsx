@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     "Generate Lorem Ipsum placeholder text for your designs and layouts. Create paragraphs, sentences, or words of dummy text. Free online Lorem Ipsum generator.",
   alternates: {
     canonical: "/tools/lorem-ipsum/",
+    languages: {
+      en: "/tools/lorem-ipsum/",
+      tr: "/tr/tools/lorem-ipsum/",
+      "x-default": "/tools/lorem-ipsum/",
+    },
   },
   openGraph: {
     title: "Lorem Ipsum Generator - Placeholder Text | ToolsMani",
