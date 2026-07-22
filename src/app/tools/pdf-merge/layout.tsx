@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/pdf-merge/",
       tr: "/tr/tools/pdf-merge/",
+      es: "/es/tools/pdf-merge/",
+      de: "/de/tools/pdf-merge/",
+      pt: "/pt/tools/pdf-merge/",
+      fr: "/fr/tools/pdf-merge/",
       "x-default": "/tools/pdf-merge/",
     },
   },

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -52,7 +52,7 @@ const labels = {
   },
 };
 
-function relative(ms: number, locale: "en" | "tr", l: (typeof labels)["en"]): string {
+function relative(ms: number, locale: string, l: (typeof labels)["en"]): string {
   const diff = Date.now() - ms;
   const abs = Math.abs(diff);
   const units: [number, string, string][] = [
@@ -76,7 +76,7 @@ function relative(ms: number, locale: "en" | "tr", l: (typeof labels)["en"]): st
 
 export default function TimestampConverterPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
   const markToolUsed = useTrackToolUseOnce("timestamp-converter");
 
   const [nowSec, setNowSec] = useState(() => Math.floor(Date.now() / 1000));

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -107,7 +107,7 @@ function enIntToWords(n: number): string {
 
 export default function NumberToWordsPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
   const markToolUsed = useTrackToolUseOnce("number-to-words");
 
   const [input, setInput] = useState("");

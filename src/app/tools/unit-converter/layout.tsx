@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/unit-converter/",
       tr: "/tr/tools/unit-converter/",
+      es: "/es/tools/unit-converter/",
+      de: "/de/tools/unit-converter/",
+      pt: "/pt/tools/unit-converter/",
+      fr: "/fr/tools/unit-converter/",
       "x-default": "/tools/unit-converter/",
     },
   },

@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/text-counter/",
       tr: "/tr/tools/text-counter/",
+      es: "/es/tools/text-counter/",
+      de: "/de/tools/text-counter/",
+      pt: "/pt/tools/text-counter/",
+      fr: "/fr/tools/text-counter/",
       "x-default": "/tools/text-counter/",
     },
   },

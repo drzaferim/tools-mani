@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick as pickLocale } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 const labels = {
@@ -100,7 +100,7 @@ function buildIco(entries: { size: number; data: ArrayBuffer }[]): Blob {
 
 export default function FaviconGeneratorPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pickLocale(labels, locale);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [file, setFile] = useState<File | null>(null);

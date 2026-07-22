@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -40,7 +40,7 @@ const PRESET_RATES = [1, 10, 20];
 
 export default function VatCalculatorPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
   const markToolUsed = useTrackToolUseOnce("vat-calculator");
 
   const [amount, setAmount] = useState("");

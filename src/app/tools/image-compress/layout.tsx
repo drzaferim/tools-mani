@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/image-compress/",
       tr: "/tr/tools/image-compress/",
+      es: "/es/tools/image-compress/",
+      de: "/de/tools/image-compress/",
+      pt: "/pt/tools/image-compress/",
+      fr: "/fr/tools/image-compress/",
       "x-default": "/tools/image-compress/",
     },
   },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { trackEvent } from "@/lib/track";
@@ -37,7 +37,7 @@ export function FeedbackWidget() {
     },
   };
 
-  const l = labels[locale];
+  const l = pick(labels, locale);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

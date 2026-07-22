@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -53,7 +53,7 @@ interface MatchInfo {
 
 export default function RegexTesterPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
   const markToolUsed = useTrackToolUseOnce("regex-tester");
 
   const [pattern, setPattern] = useState("");

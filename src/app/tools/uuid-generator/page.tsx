@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 const labels = {
@@ -52,7 +52,7 @@ const ALGORITHMS = ["SHA-256", "SHA-512", "SHA-1"] as const;
 
 export default function UuidGeneratorPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
 
   const [tab, setTab] = useState<"uuid" | "hash">("uuid");
   const [count, setCount] = useState(5);

@@ -1,0 +1,21 @@
+import type { Metadata } from "next";
+
+export { default } from "@/app/tools/pdf-split/page";
+
+export const metadata: Metadata = {
+  title: "Diviser PDF - Gratuit en Ligne | ToolsMani",
+  description:
+    "Divisez un PDF en plusieurs fichiers par plages de pages ou extrayez toutes les pages.",
+  alternates: {
+    canonical: "/fr/tools/pdf-split/",
+    languages: {
+      en: "/tools/pdf-split/",
+      tr: "/tr/tools/pdf-split/",
+      es: "/es/tools/pdf-split/",
+      de: "/de/tools/pdf-split/",
+      pt: "/pt/tools/pdf-split/",
+      fr: "/fr/tools/pdf-split/",
+      "x-default": "/tools/pdf-split/",
+    },
+  },
+};

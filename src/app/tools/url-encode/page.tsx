@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 const labels = {
@@ -44,7 +44,7 @@ const labels = {
 
 export default function UrlEncodePage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
 
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");

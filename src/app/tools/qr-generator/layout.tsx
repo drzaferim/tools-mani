@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/qr-generator/",
       tr: "/tr/tools/qr-generator/",
+      es: "/es/tools/qr-generator/",
+      de: "/de/tools/qr-generator/",
+      pt: "/pt/tools/qr-generator/",
+      fr: "/fr/tools/qr-generator/",
       "x-default": "/tools/qr-generator/",
     },
   },

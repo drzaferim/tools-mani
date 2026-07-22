@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/pdf-sign/",
       tr: "/tr/tools/pdf-sign/",
+      es: "/es/tools/pdf-sign/",
+      de: "/de/tools/pdf-sign/",
+      pt: "/pt/tools/pdf-sign/",
+      fr: "/fr/tools/pdf-sign/",
       "x-default": "/tools/pdf-sign/",
     },
   },

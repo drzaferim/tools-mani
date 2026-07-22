@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 
 const content = {
   en: {
@@ -81,7 +81,7 @@ const content = {
 
 export default function TermsPage() {
   const { locale } = useLanguage();
-  const c = content[locale];
+  const c = pick(content, locale);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

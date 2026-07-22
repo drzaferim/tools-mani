@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/case-converter/",
       tr: "/tr/tools/case-converter/",
+      es: "/es/tools/case-converter/",
+      de: "/de/tools/case-converter/",
+      pt: "/pt/tools/case-converter/",
+      fr: "/fr/tools/case-converter/",
       "x-default": "/tools/case-converter/",
     },
   },

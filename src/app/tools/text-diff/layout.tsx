@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/text-diff/",
       tr: "/tr/tools/text-diff/",
+      es: "/es/tools/text-diff/",
+      de: "/de/tools/text-diff/",
+      pt: "/pt/tools/text-diff/",
+      fr: "/fr/tools/text-diff/",
       "x-default": "/tools/text-diff/",
     },
   },

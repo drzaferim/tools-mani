@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/exif-cleaner/",
       tr: "/tr/tools/exif-cleaner/",
+      es: "/es/tools/exif-cleaner/",
+      de: "/de/tools/exif-cleaner/",
+      pt: "/pt/tools/exif-cleaner/",
+      fr: "/fr/tools/exif-cleaner/",
       "x-default": "/tools/exif-cleaner/",
     },
   },

@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/pdf-to-image/",
       tr: "/tr/tools/pdf-to-image/",
+      es: "/es/tools/pdf-to-image/",
+      de: "/de/tools/pdf-to-image/",
+      pt: "/pt/tools/pdf-to-image/",
+      fr: "/fr/tools/pdf-to-image/",
       "x-default": "/tools/pdf-to-image/",
     },
   },

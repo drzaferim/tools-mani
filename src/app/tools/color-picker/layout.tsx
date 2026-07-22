@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/color-picker/",
       tr: "/tr/tools/color-picker/",
+      es: "/es/tools/color-picker/",
+      de: "/de/tools/color-picker/",
+      pt: "/pt/tools/color-picker/",
+      fr: "/fr/tools/color-picker/",
       "x-default": "/tools/color-picker/",
     },
   },

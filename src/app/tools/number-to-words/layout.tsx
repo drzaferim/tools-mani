@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/number-to-words/",
       tr: "/tr/tools/number-to-words/",
+      es: "/es/tools/number-to-words/",
+      de: "/de/tools/number-to-words/",
+      pt: "/pt/tools/number-to-words/",
+      fr: "/fr/tools/number-to-words/",
       "x-default": "/tools/number-to-words/",
     },
   },

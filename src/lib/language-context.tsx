@@ -19,40 +19,74 @@ const LanguageContext = createContext<LanguageContextType>({
   localePath: (href) => href,
 });
 
-/** "/tr" öneki kaldırılmış eşdeğer yolu döner. */
-export function stripTrPrefix(pathname: string): string {
-  if (pathname === "/tr" || pathname === "/tr/") return "/";
-  if (pathname.startsWith("/tr/")) return pathname.slice(3);
-  return pathname;
+/** URL öneki taşıyan diller (İngilizce önek almaz). */
+export const PREFIXED_LOCALES = ["tr", "es", "de", "pt", "fr"] as const;
+
+/**
+ * TR sitenin tamamını aynalar; es/de/pt/fr şimdilik yalnızca
+ * ana sayfa + /tools/* rotalarını aynalar (kurumsal/blog sayfaları EN kalır).
+ */
+const FULL_MIRROR: ReadonlySet<string> = new Set(["tr"]);
+
+/** Yol adından locale ve öneksiz taban yolu çıkarır. */
+export function splitLocalePath(pathname: string): { locale: Locale; base: string } {
+  for (const loc of PREFIXED_LOCALES) {
+    if (pathname === `/${loc}` || pathname === `/${loc}/`) return { locale: loc, base: "/" };
+    if (pathname.startsWith(`/${loc}/`)) return { locale: loc, base: pathname.slice(loc.length + 1) };
+  }
+  return { locale: "en", base: pathname };
 }
 
-/** Yolun /tr eşdeğerini döner. */
-export function toTrPath(pathname: string): string {
-  const base = stripTrPrefix(pathname);
-  return base === "/" ? "/tr/" : `/tr${base}`;
+/** en/tr dışı diller için hangi taban yolların aynası var? */
+function isMirrored(locale: Locale, base: string): boolean {
+  if (locale === "en" || FULL_MIRROR.has(locale)) return true;
+  return base === "/" || base.startsWith("/tools");
+}
+
+/**
+ * Sadece en+tr içeren sözlüklerde diğer diller için İngilizceye düşen seçici.
+ * Araç sayfalarındaki yerel `labels` nesneleri bu yardımcıyla okunur.
+ */
+export function pick<T>(dict: { en: T } & Partial<Record<Locale, T>>, locale: Locale): T {
+  return dict[locale] ?? dict.en;
 }
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "/";
   const router = useRouter();
 
-  // Dil, URL'den belirlenir: /tr altındaki sayfalar Türkçe, diğerleri İngilizce.
-  // Böylece sunucuda üretilen HTML ile istemci aynı dili gösterir (SEO + hydration uyumu).
-  const locale: Locale =
-    pathname === "/tr" || pathname.startsWith("/tr/") ? "tr" : "en";
+  // Dil, URL'den belirlenir — sunucuda üretilen HTML ile istemci aynı dili gösterir.
+  const { locale, base } = splitLocalePath(pathname);
 
-  // <html lang> kök layout'ta statik "en"; TR sayfalarında istemcide düzelt.
+  // <html lang> kök layout'ta statik "en"; diğer dillerde istemcide düzelt.
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
 
   const setLocale = useCallback(
-    (newLocale: Locale) => {
-      if (newLocale === locale) return;
-      localStorage.setItem("toolsmani-lang", newLocale);
-      router.push(newLocale === "tr" ? toTrPath(pathname) : stripTrPrefix(pathname));
+    (next: Locale) => {
+      if (next === locale) return;
+      localStorage.setItem("toolsmani-lang", next);
+      if (next === "en") {
+        router.push(base);
+        return;
+      }
+      // TR'de blog/admin aynası yok; diğer dillerde yalnızca / ve /tools/* var.
+      const target =
+        next === "tr"
+          ? base.startsWith("/blog") || base.startsWith("/admin")
+            ? base
+            : base === "/"
+            ? "/tr/"
+            : `/tr${base}`
+          : isMirrored(next, base)
+          ? base === "/"
+            ? `/${next}/`
+            : `/${next}${base}`
+          : `/${next}/`;
+      router.push(target);
     },
-    [locale, pathname, router]
+    [locale, base, router]
   );
 
   const tFunc = useCallback(
@@ -62,11 +96,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const localePath = useCallback(
     (href: string) => {
-      if (locale !== "tr") return href;
-      if (!href.startsWith("/") || href === "/tr" || href.startsWith("/tr/")) return href;
-      // Blog ve admin'in /tr karşılığı yok; onları öneksiz bırak.
-      if (href.startsWith("/blog") || href.startsWith("/admin")) return href;
-      return href === "/" ? "/tr/" : `/tr${href}`;
+      if (locale === "en" || !href.startsWith("/")) return href;
+      // Zaten önekliyse dokunma
+      for (const loc of PREFIXED_LOCALES) {
+        if (href === `/${loc}` || href.startsWith(`/${loc}/`)) return href;
+      }
+      if (locale === "tr") {
+        if (href.startsWith("/blog") || href.startsWith("/admin")) return href;
+        return href === "/" ? "/tr/" : `/tr${href}`;
+      }
+      // es/de/pt/fr: yalnızca aynalanan rotaları öne ekle
+      if (!isMirrored(locale, href.split("#")[0])) return href;
+      return href === "/" ? `/${locale}/` : `/${locale}${href}`;
     },
     [locale]
   );

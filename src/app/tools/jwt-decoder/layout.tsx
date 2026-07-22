@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/jwt-decoder/",
       tr: "/tr/tools/jwt-decoder/",
+      es: "/es/tools/jwt-decoder/",
+      de: "/de/tools/jwt-decoder/",
+      pt: "/pt/tools/jwt-decoder/",
+      fr: "/fr/tools/jwt-decoder/",
       "x-default": "/tools/jwt-decoder/",
     },
   },

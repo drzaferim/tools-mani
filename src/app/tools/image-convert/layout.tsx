@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/image-convert/",
       tr: "/tr/tools/image-convert/",
+      es: "/es/tools/image-convert/",
+      de: "/de/tools/image-convert/",
+      pt: "/pt/tools/image-convert/",
+      fr: "/fr/tools/image-convert/",
       "x-default": "/tools/image-convert/",
     },
   },

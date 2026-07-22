@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/ocr/",
       tr: "/tr/tools/ocr/",
+      es: "/es/tools/ocr/",
+      de: "/de/tools/ocr/",
+      pt: "/pt/tools/ocr/",
+      fr: "/fr/tools/ocr/",
       "x-default": "/tools/ocr/",
     },
   },

@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/image-resize/",
       tr: "/tr/tools/image-resize/",
+      es: "/es/tools/image-resize/",
+      de: "/de/tools/image-resize/",
+      pt: "/pt/tools/image-resize/",
+      fr: "/fr/tools/image-resize/",
       "x-default": "/tools/image-resize/",
     },
   },

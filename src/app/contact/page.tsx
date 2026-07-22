@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { trackEvent } from "@/lib/track";
@@ -39,7 +39,7 @@ const content = {
 
 export default function ContactPage() {
   const { locale } = useLanguage();
-  const c = content[locale];
+  const c = pick(content, locale);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 

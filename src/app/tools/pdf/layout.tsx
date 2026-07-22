@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/pdf/",
       tr: "/tr/tools/pdf/",
+      es: "/es/tools/pdf/",
+      de: "/de/tools/pdf/",
+      pt: "/pt/tools/pdf/",
+      fr: "/fr/tools/pdf/",
       "x-default": "/tools/pdf/",
     },
   },

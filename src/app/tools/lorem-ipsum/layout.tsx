@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/lorem-ipsum/",
       tr: "/tr/tools/lorem-ipsum/",
+      es: "/es/tools/lorem-ipsum/",
+      de: "/de/tools/lorem-ipsum/",
+      pt: "/pt/tools/lorem-ipsum/",
+      fr: "/fr/tools/lorem-ipsum/",
       "x-default": "/tools/lorem-ipsum/",
     },
   },

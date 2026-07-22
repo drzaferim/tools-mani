@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 
 const legalLabels = {
   en: { about: "About", contact: "Contact", privacy: "Privacy Policy", terms: "Terms of Use" },
@@ -10,7 +10,7 @@ const legalLabels = {
 
 export function Footer() {
   const { t, locale, localePath } = useLanguage();
-  const legal = legalLabels[locale];
+  const legal = pick(legalLabels, locale);
 
   return (
     <footer className="bg-white border-t border-gray-100 mt-16">

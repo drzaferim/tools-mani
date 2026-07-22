@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/pdf-split/",
       tr: "/tr/tools/pdf-split/",
+      es: "/es/tools/pdf-split/",
+      de: "/de/tools/pdf-split/",
+      pt: "/pt/tools/pdf-split/",
+      fr: "/fr/tools/pdf-split/",
       "x-default": "/tools/pdf-split/",
     },
   },

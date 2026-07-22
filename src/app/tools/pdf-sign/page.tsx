@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 const labels = {
@@ -59,7 +59,7 @@ const PAD_H = 240;
 
 export default function PdfSignPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const padRef = useRef<HTMLCanvasElement>(null);

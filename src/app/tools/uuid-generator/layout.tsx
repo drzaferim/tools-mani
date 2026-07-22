@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/uuid-generator/",
       tr: "/tr/tools/uuid-generator/",
+      es: "/es/tools/uuid-generator/",
+      de: "/de/tools/uuid-generator/",
+      pt: "/pt/tools/uuid-generator/",
+      fr: "/fr/tools/uuid-generator/",
       "x-default": "/tools/uuid-generator/",
     },
   },

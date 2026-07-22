@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/percentage-calculator/",
       tr: "/tr/tools/percentage-calculator/",
+      es: "/es/tools/percentage-calculator/",
+      de: "/de/tools/percentage-calculator/",
+      pt: "/pt/tools/percentage-calculator/",
+      fr: "/fr/tools/percentage-calculator/",
       "x-default": "/tools/percentage-calculator/",
     },
   },

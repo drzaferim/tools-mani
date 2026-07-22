@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/regex-tester/",
       tr: "/tr/tools/regex-tester/",
+      es: "/es/tools/regex-tester/",
+      de: "/de/tools/regex-tester/",
+      pt: "/pt/tools/regex-tester/",
+      fr: "/fr/tools/regex-tester/",
       "x-default": "/tools/regex-tester/",
     },
   },

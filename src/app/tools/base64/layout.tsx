@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/base64/",
       tr: "/tr/tools/base64/",
+      es: "/es/tools/base64/",
+      de: "/de/tools/base64/",
+      pt: "/pt/tools/base64/",
+      fr: "/fr/tools/base64/",
       "x-default": "/tools/base64/",
     },
   },

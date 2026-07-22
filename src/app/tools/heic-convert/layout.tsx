@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/heic-convert/",
       tr: "/tr/tools/heic-convert/",
+      es: "/es/tools/heic-convert/",
+      de: "/de/tools/heic-convert/",
+      pt: "/pt/tools/heic-convert/",
+      fr: "/fr/tools/heic-convert/",
       "x-default": "/tools/heic-convert/",
     },
   },

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -51,7 +51,7 @@ const inputCls =
 
 export default function PercentageCalculatorPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
   const markToolUsed = useTrackToolUseOnce("percentage-calculator");
 
   const [a1, setA1] = useState(""); const [b1, setB1] = useState("");
@@ -88,7 +88,7 @@ export default function PercentageCalculatorPage() {
       <div className="space-y-6">
         <div className={card}>
           <div className="flex flex-wrap items-center gap-3 text-gray-700">
-            {locale === "en" ? (
+            {locale !== "tr" ? (
               <>
                 <span>{l.m1a}</span>
                 <input type="text" inputMode="decimal" value={a1} onChange={wrap(setA1)} placeholder="25" className={inputCls} />

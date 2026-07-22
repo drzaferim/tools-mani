@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/url-encode/",
       tr: "/tr/tools/url-encode/",
+      es: "/es/tools/url-encode/",
+      de: "/de/tools/url-encode/",
+      pt: "/pt/tools/url-encode/",
+      fr: "/fr/tools/url-encode/",
       "x-default": "/tools/url-encode/",
     },
   },

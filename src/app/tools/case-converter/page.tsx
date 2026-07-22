@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -79,7 +79,7 @@ function convert(text: string, mode: Mode, locale: string): string {
 
 export default function CaseConverterPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
   const markToolUsed = useTrackToolUseOnce("case-converter");
 
   const [text, setText] = useState("");
@@ -127,7 +127,7 @@ export default function CaseConverterPage() {
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
-            {modeNames[m][locale]}
+            {pick(modeNames[m], locale)}
           </button>
         ))}
       </div>

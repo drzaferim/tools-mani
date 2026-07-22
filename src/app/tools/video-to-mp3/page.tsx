@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick as pickLocale } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 const labels = {
@@ -59,7 +59,7 @@ function formatBytes(bytes: number) {
 
 export default function VideoToMp3Page() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pickLocale(labels, locale);
   const inputRef = useRef<HTMLInputElement>(null);
   // FFmpeg örneğini oturum boyunca sakla — motor bir kez yüklensin
   const ffmpegRef = useRef<import("@ffmpeg/ffmpeg").FFmpeg | null>(null);

@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/vat-calculator/",
       tr: "/tr/tools/vat-calculator/",
+      es: "/es/tools/vat-calculator/",
+      de: "/de/tools/vat-calculator/",
+      pt: "/pt/tools/vat-calculator/",
+      fr: "/fr/tools/vat-calculator/",
       "x-default": "/tools/vat-calculator/",
     },
   },

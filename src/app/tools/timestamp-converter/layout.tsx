@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/timestamp-converter/",
       tr: "/tr/tools/timestamp-converter/",
+      es: "/es/tools/timestamp-converter/",
+      de: "/de/tools/timestamp-converter/",
+      pt: "/pt/tools/timestamp-converter/",
+      fr: "/fr/tools/timestamp-converter/",
       "x-default": "/tools/timestamp-converter/",
     },
   },

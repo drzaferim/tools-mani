@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/markdown-preview/",
       tr: "/tr/tools/markdown-preview/",
+      es: "/es/tools/markdown-preview/",
+      de: "/de/tools/markdown-preview/",
+      pt: "/pt/tools/markdown-preview/",
+      fr: "/fr/tools/markdown-preview/",
       "x-default": "/tools/markdown-preview/",
     },
   },

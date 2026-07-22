@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/password-generator/",
       tr: "/tr/tools/password-generator/",
+      es: "/es/tools/password-generator/",
+      de: "/de/tools/password-generator/",
+      pt: "/pt/tools/password-generator/",
+      fr: "/fr/tools/password-generator/",
       "x-default": "/tools/password-generator/",
     },
   },

@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/pdf-watermark/",
       tr: "/tr/tools/pdf-watermark/",
+      es: "/es/tools/pdf-watermark/",
+      de: "/de/tools/pdf-watermark/",
+      pt: "/pt/tools/pdf-watermark/",
+      fr: "/fr/tools/pdf-watermark/",
       "x-default": "/tools/pdf-watermark/",
     },
   },

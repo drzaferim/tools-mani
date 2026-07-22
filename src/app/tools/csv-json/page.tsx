@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 const labels = {
@@ -88,7 +88,7 @@ function toCsvField(v: unknown, delim: string): string {
 
 export default function CsvJsonPage() {
   const { locale, localePath } = useLanguage();
-  const l = labels[locale];
+  const l = pick(labels, locale);
 
   const [direction, setDirection] = useState<"c2j" | "j2c">("c2j");
   const [delim, setDelim] = useState(",");

@@ -3,9 +3,20 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useLanguage } from "@/lib/language-context";
+import { LOCALES, localeNames, type Locale } from "@/lib/translations";
+
+const localeFlags: Record<Locale, string> = {
+  en: "🇬🇧",
+  tr: "🇹🇷",
+  es: "🇪🇸",
+  de: "🇩🇪",
+  pt: "🇧🇷",
+  fr: "🇫🇷",
+};
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const { locale, setLocale, t, localePath } = useLanguage();
 
   return (
@@ -43,15 +54,42 @@ export function Header() {
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            {/* Language Switcher */}
-            <button
-              onClick={() => setLocale(locale === "en" ? "tr" : "en")}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all"
-              title={locale === "en" ? "Türkçe'ye geç" : "Switch to English"}
-            >
-              <span className="text-base">{locale === "en" ? "🇹🇷" : "🇬🇧"}</span>
-              <span>{locale === "en" ? "TR" : "EN"}</span>
-            </button>
+            {/* Dil menüsü */}
+            <div className="relative">
+              <button
+                onClick={() => setLangOpen(!langOpen)}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all"
+                aria-haspopup="listbox"
+                aria-expanded={langOpen}
+              >
+                <span className="text-base">{localeFlags[locale]}</span>
+                <span className="uppercase">{locale}</span>
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {langOpen && (
+                <>
+                  <div className="fixed inset-0 z-10" onClick={() => setLangOpen(false)} />
+                  <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-100 rounded-xl shadow-lg py-1.5 z-20">
+                    {LOCALES.map((loc) => (
+                      <button
+                        key={loc}
+                        onClick={() => { setLocale(loc); setLangOpen(false); }}
+                        className={`w-full flex items-center gap-2.5 px-4 py-2 text-sm text-left transition-colors ${
+                          loc === locale
+                            ? "text-primary-600 font-medium bg-primary-50"
+                            : "text-gray-600 hover:bg-gray-50"
+                        }`}
+                      >
+                        <span className="text-base">{localeFlags[loc]}</span>
+                        {localeNames[loc]}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
 
             <Link href={localePath("/tools/pdf")} className="btn-primary text-sm !py-2.5 !px-5">
               {t("nav.tryPdf")}
@@ -97,13 +135,22 @@ export function Header() {
               >
                 {t("nav.pdfTools")}
               </Link>
-              <button
-                onClick={() => { setLocale(locale === "en" ? "tr" : "en"); setMenuOpen(false); }}
-                className="flex items-center gap-2 px-4 py-2.5 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all text-left"
-              >
-                <span className="text-base">{locale === "en" ? "🇹🇷" : "🇬🇧"}</span>
-                {locale === "en" ? "Türkçe" : "English"}
-              </button>
+              <div className="border-t border-gray-100 mt-2 pt-2 grid grid-cols-2 gap-1">
+                {LOCALES.map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => { setLocale(loc); setMenuOpen(false); }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-left text-sm transition-all ${
+                      loc === locale
+                        ? "text-primary-600 font-medium bg-primary-50"
+                        : "text-gray-600 hover:bg-gray-50"
+                    }`}
+                  >
+                    <span className="text-base">{localeFlags[loc]}</span>
+                    {localeNames[loc]}
+                  </button>
+                ))}
+              </div>
               <Link
                 href={localePath("/tools/pdf")}
                 className="btn-primary text-sm text-center mt-2"

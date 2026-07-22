@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/tools/pdf-rotate/",
       tr: "/tr/tools/pdf-rotate/",
+      es: "/es/tools/pdf-rotate/",
+      de: "/de/tools/pdf-rotate/",
+      pt: "/pt/tools/pdf-rotate/",
+      fr: "/fr/tools/pdf-rotate/",
       "x-default": "/tools/pdf-rotate/",
     },
   },
