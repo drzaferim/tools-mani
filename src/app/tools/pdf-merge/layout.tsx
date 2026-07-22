@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "PDF Merger - Combine PDF Files Online | ToolsMani",
     description:
       "Combine multiple PDF files into one document online. Free, fast, and processed in your browser.",
+    images: ["/og-image.png"],
   },
 };
 

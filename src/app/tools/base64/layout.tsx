@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Base64 Encoder & Decoder - Encode Decode Online | ToolsMani",
     description:
       "Encode and decode Base64 strings online. Convert text, files and images to Base64 instantly.",
+    images: ["/og-image.png"],
   },
 };
 

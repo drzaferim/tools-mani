@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Color Picker & Converter - HEX RGB HSL | ToolsMani",
     description:
       "Pick colors and convert between HEX, RGB and HSL formats. Free color picker for designers.",
+    images: ["/og-image.png"],
   },
 };
 

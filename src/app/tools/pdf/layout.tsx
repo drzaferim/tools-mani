@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Free Online PDF Tools | ToolsMani",
     description: "Complete PDF toolkit — merge, split, compress, rotate and more. No limits.",
+    images: ["/og-image.png"],
   },
 };
 

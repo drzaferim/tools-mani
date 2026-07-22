@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "PDF Page Manager - Extract & Delete PDF Pages | ToolsMani",
     description:
       "Extract or delete specific pages from PDF files online for free. Privacy-first — no data uploaded.",
+    images: ["/og-image.png"],
   },
 };
 

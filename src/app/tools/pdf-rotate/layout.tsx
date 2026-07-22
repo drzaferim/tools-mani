@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "PDF Rotate - Rotate PDF Pages Online Free | ToolsMani",
     description:
       "Rotate PDF pages individually or all at once for free. No upload — all processing in your browser.",
+    images: ["/og-image.png"],
   },
 };
 

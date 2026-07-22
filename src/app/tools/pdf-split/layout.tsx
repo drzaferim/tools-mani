@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "PDF Splitter - Split PDF Files Online Free | ToolsMani",
     description:
       "Split PDF files into multiple documents online for free. No upload needed — works in your browser.",
+    images: ["/og-image.png"],
   },
 };
 

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "HEIC to JPG/PNG Converter - Convert iPhone Photos Online | ToolsMani",
     description:
       "Convert HEIC photos from iPhone to JPG, PNG or WebP for free. Batch convert, no upload needed.",
+    images: ["/og-image.png"],
   },
 };
 

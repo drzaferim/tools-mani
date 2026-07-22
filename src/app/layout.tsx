@@ -33,6 +33,14 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://toolsmani.com",
     siteName: "ToolsMani",
+    images: ["/og-image.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ToolsMani - Free Online Tools for Everyone",
+    description:
+      "Free online tools: PDF merger, splitter, compressor and more. 100% browser-based, no file uploads.",
+    images: ["/og-image.png"],
   },
   metadataBase: new URL("https://toolsmani.com"),
   alternates: {

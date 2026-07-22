@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "JSON Formatter & Validator - Beautify JSON Online | ToolsMani",
     description:
       "Format, validate and beautify JSON online with syntax highlighting and error detection.",
+    images: ["/og-image.png"],
   },
 };
 

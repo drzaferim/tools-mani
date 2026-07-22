@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "PDF Compress - Reduce PDF File Size Free",
     description: "Compress PDFs instantly in your browser. No file size limits.",
+    images: ["/og-image.png"],
   },
 };
 

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Add Page Numbers to PDF Free",
     description: "Add page numbers to PDFs instantly in your browser. No file size limits.",
+    images: ["/og-image.png"],
   },
 };
 

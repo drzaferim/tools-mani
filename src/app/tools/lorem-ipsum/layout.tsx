@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Lorem Ipsum Generator - Placeholder Text | ToolsMani",
     description:
       "Generate Lorem Ipsum placeholder text for designs and layouts. Create paragraphs, sentences or words.",
+    images: ["/og-image.png"],
   },
 };
 

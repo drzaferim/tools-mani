@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Image Compressor - Compress JPEG, PNG & WebP | ToolsMani",
     description:
       "Compress JPEG, PNG and WebP images online without losing quality. Reduce file size up to 80%.",
+    images: ["/og-image.png"],
   },
 };
 

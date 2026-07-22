@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Image to PDF - Convert JPG/PNG to PDF Online | ToolsMani",
     description:
       "Convert images to PDF online. Combine multiple JPG/PNG files into a single PDF. Free, instant, and 100% in your browser.",
+    images: ["/og-image.png"],
   },
 };
 

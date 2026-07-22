@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "UUID Generator & Text Hash (SHA-256) - Free Online | ToolsMani",
     description:
       "Generate random UUID v4 identifiers in bulk and compute SHA-256 hashes of any text. Free and fully client-side.",
+    images: ["/og-image.png"],
   },
 };
 

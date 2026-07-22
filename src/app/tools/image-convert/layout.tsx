@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Free Image Converter - PNG JPG WebP BMP",
     description: "Convert images between formats instantly in your browser. No limits.",
+    images: ["/og-image.png"],
   },
 };
 

@@ -11,6 +11,13 @@
       "**/node_modules/**"
     ],
     "cleanUrls": true,
+    "redirects": [
+      {
+        "source": "/imprint{,/**}",
+        "destination": "/about/",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "**",

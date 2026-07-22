@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Text Counter - Count Words, Characters & Sentences | ToolsMani",
     description:
       "Count words, characters, sentences and paragraphs instantly with this free online text counter.",
+    images: ["/og-image.png"],
   },
 };
 

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Unit Converter - Length, Weight, Temperature | ToolsMani",
     description:
       "Convert units of length, weight, temperature and more. Free online converter with instant results.",
+    images: ["/og-image.png"],
   },
 };
 

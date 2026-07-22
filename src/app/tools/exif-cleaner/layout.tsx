@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "EXIF Remover - Delete Photo Metadata (GPS, Camera) | ToolsMani",
     description:
       "Remove EXIF metadata from photos: GPS location, camera model, date and serial numbers. Cleaned in your browser, never uploaded.",
+    images: ["/og-image.png"],
   },
 };
 

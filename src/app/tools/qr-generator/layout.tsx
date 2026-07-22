@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "QR Code Generator - Create QR Codes Free | ToolsMani",
     description:
       "Generate free QR codes for URLs, text, Wi-Fi and more with customizable options.",
+    images: ["/og-image.png"],
   },
 };
 

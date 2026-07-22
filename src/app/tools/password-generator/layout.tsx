@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Password Generator - Create Strong Secure Passwords | ToolsMani",
     description:
       "Create strong, random passwords with customizable length and character options.",
+    images: ["/og-image.png"],
   },
 };
 

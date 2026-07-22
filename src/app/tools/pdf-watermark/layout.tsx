@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "PDF Watermark - Add Watermark to PDF Online Free | ToolsMani",
     description:
       "Add text watermarks to PDF files for free. No upload — 100% browser-based processing.",
+    images: ["/og-image.png"],
   },
 };
 

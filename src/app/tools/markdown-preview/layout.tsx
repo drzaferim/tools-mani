@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Markdown Preview - Live Editor & Renderer | ToolsMani",
     description:
       "Write and preview Markdown in real time. Free live editor with GitHub Flavored Markdown support.",
+    images: ["/og-image.png"],
   },
 };
 

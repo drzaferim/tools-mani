@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Image Resizer - Resize Photos Online Free | ToolsMani",
     description:
       "Resize JPG, PNG and WebP images by pixel width or percentage. Free and private — images never leave your browser.",
+    images: ["/og-image.png"],
   },
 };
 

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "Sign PDF Online - Draw & Place Your Signature Free | ToolsMani",
     description:
       "Draw your signature and place it on any PDF page. 100% private — the document never leaves your browser.",
+    images: ["/og-image.png"],
   },
 };
 

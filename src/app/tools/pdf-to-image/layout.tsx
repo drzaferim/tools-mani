@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: "PDF to JPG/PNG - Convert PDF Pages to Images Online | ToolsMani",
     description:
       "Convert PDF pages to high-quality JPG or PNG images. Free, fast, and 100% in your browser.",
+    images: ["/og-image.png"],
   },
 };
 
