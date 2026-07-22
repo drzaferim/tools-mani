@@ -324,6 +324,16 @@ export const tools: Tool[] = [
     icon: "AppWindow",
     isFree: true,
   },
+  {
+    id: "ocr",
+    name: "Image to Text (OCR)",
+    description:
+      "Extract text from photos, screenshots and scans. OCR runs in your browser — images are never uploaded.",
+    category: "file",
+    href: "/tools/ocr",
+    icon: "ScanText",
+    isFree: true,
+  },
 ];
 
 export const categories = [

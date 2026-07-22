@@ -48,6 +48,7 @@ const toolNameKeys: Record<string, TranslationKey> = {
   "csv-json": "tool.csvJson",
   "timestamp-converter": "tool.timestampConverter",
   "favicon-generator": "tool.faviconGenerator",
+  ocr: "tool.ocr",
 };
 
 const toolDescKeys: Record<string, TranslationKey> = {
@@ -82,6 +83,7 @@ const toolDescKeys: Record<string, TranslationKey> = {
   "csv-json": "tool.csvJson.desc",
   "timestamp-converter": "tool.timestampConverter.desc",
   "favicon-generator": "tool.faviconGenerator.desc",
+  ocr: "tool.ocr.desc",
 };
 
 export default function HomePage() {

@@ -363,6 +363,11 @@ const translations = {
     tr: "Unix zaman damgalarını okunabilir tarihe, tarihi zaman damgasına çevirin.",
   },
   "tool.faviconGenerator": { en: "Favicon Generator", tr: "Favicon Üretici" },
+  "tool.ocr": { en: "Image to Text (OCR)", tr: "Resimden Metin (OCR)" },
+  "tool.ocr.desc": {
+    en: "Extract text from photos, screenshots and scans. OCR runs in your browser — images are never uploaded.",
+    tr: "Fotoğraf, ekran görüntüsü ve taramalardan metin çıkarın. OCR tarayıcınızda çalışır — görsel yüklenmez.",
+  },
   "tool.faviconGenerator.desc": {
     en: "Turn any image into a full favicon set: ICO, all PNG sizes and HTML tags.",
     tr: "Herhangi bir görseli eksiksiz favicon setine dönüştürün: ICO, tüm PNG boyutları ve HTML etiketleri.",

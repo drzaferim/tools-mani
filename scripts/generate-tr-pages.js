@@ -173,6 +173,11 @@ const TR_META = {
     description:
       "Bir görselden eksiksiz favicon seti üretin: favicon.ico, tüm PNG boyutları ve hazır HTML etiketleri. Tamamen tarayıcıda çalışır.",
   },
+  "/tools/ocr": {
+    title: "Resimden Metin Çıkarma (OCR) - Ücretsiz | ToolsMani",
+    description:
+      "Fotoğraf, ekran görüntüsü ve taramalardaki yazıyı metne çevirin. Türkçe destekli OCR tamamen tarayıcınızda çalışır — görsel hiçbir yere yüklenmez.",
+  },
   "/about": {
     title: "Hakkımızda | ToolsMani",
     description:

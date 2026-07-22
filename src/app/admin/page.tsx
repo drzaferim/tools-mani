@@ -40,6 +40,7 @@ const TOOL_LABELS: Record<string, string> = {
   "csv-json": "CSV-JSON",
   "timestamp-converter": "Timestamp",
   "favicon-generator": "Favicon Üretici",
+  ocr: "OCR (Resimden Metin)",
 };
 
 interface Feedback {

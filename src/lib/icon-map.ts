@@ -30,6 +30,7 @@ import {
   Table,
   Clock,
   AppWindow,
+  ScanText,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -65,4 +66,5 @@ export const iconMap: Record<string, LucideIcon> = {
   Table,
   Clock,
   AppWindow,
+  ScanText,
 };
