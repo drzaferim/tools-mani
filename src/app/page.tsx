@@ -49,6 +49,7 @@ const toolNameKeys: Record<string, TranslationKey> = {
   "timestamp-converter": "tool.timestampConverter",
   "favicon-generator": "tool.faviconGenerator",
   ocr: "tool.ocr",
+  "video-to-mp3": "tool.videoToMp3",
 };
 
 const toolDescKeys: Record<string, TranslationKey> = {
@@ -84,6 +85,7 @@ const toolDescKeys: Record<string, TranslationKey> = {
   "timestamp-converter": "tool.timestampConverter.desc",
   "favicon-generator": "tool.faviconGenerator.desc",
   ocr: "tool.ocr.desc",
+  "video-to-mp3": "tool.videoToMp3.desc",
 };
 
 export default function HomePage() {

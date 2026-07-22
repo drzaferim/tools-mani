@@ -41,6 +41,7 @@ const TOOL_LABELS: Record<string, string> = {
   "timestamp-converter": "Timestamp",
   "favicon-generator": "Favicon Üretici",
   ocr: "OCR (Resimden Metin)",
+  "video-to-mp3": "Video → MP3",
 };
 
 interface Feedback {

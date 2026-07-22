@@ -178,6 +178,11 @@ const TR_META = {
     description:
       "Fotoğraf, ekran görüntüsü ve taramalardaki yazıyı metne çevirin. Türkçe destekli OCR tamamen tarayıcınızda çalışır — görsel hiçbir yere yüklenmez.",
   },
+  "/tools/video-to-mp3": {
+    title: "Video MP3 Dönüştürücü - MP4'ten Ses Çıkarma | ToolsMani",
+    description:
+      "MP4, MOV ve WebM videolardan sesi MP3 veya WAV olarak çıkarın. Ücretsiz ve tamamen tarayıcıda — videonuz hiçbir sunucuya yüklenmez.",
+  },
   "/about": {
     title: "Hakkımızda | ToolsMani",
     description:

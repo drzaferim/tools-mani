@@ -334,6 +334,16 @@ export const tools: Tool[] = [
     icon: "ScanText",
     isFree: true,
   },
+  {
+    id: "video-to-mp3",
+    name: "Video to MP3",
+    description:
+      "Extract audio from MP4, MOV and WebM videos as MP3 or WAV. Runs in your browser — no upload.",
+    category: "file",
+    href: "/tools/video-to-mp3",
+    icon: "Music",
+    isFree: true,
+  },
 ];
 
 export const categories = [

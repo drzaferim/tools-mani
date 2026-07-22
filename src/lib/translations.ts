@@ -364,6 +364,11 @@ const translations = {
   },
   "tool.faviconGenerator": { en: "Favicon Generator", tr: "Favicon Üretici" },
   "tool.ocr": { en: "Image to Text (OCR)", tr: "Resimden Metin (OCR)" },
+  "tool.videoToMp3": { en: "Video to MP3", tr: "Video → MP3" },
+  "tool.videoToMp3.desc": {
+    en: "Extract audio from MP4, MOV and WebM videos as MP3 or WAV. Runs in your browser — no upload.",
+    tr: "MP4, MOV ve WebM videolardan sesi MP3 veya WAV olarak çıkarın. Tarayıcıda çalışır — yükleme yok.",
+  },
   "tool.ocr.desc": {
     en: "Extract text from photos, screenshots and scans. OCR runs in your browser — images are never uploaded.",
     tr: "Fotoğraf, ekran görüntüsü ve taramalardan metin çıkarın. OCR tarayıcınızda çalışır — görsel yüklenmez.",

@@ -31,6 +31,7 @@ import {
   Clock,
   AppWindow,
   ScanText,
+  Music,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -67,4 +68,5 @@ export const iconMap: Record<string, LucideIcon> = {
   Clock,
   AppWindow,
   ScanText,
+  Music,
 };
