@@ -364,6 +364,36 @@ const translations = {
   },
   "tool.faviconGenerator": { en: "Favicon Generator", tr: "Favicon Üretici" },
   "tool.ocr": { en: "Image to Text (OCR)", tr: "Resimden Metin (OCR)" },
+  "tool.urlEncode": { en: "URL Encoder/Decoder", tr: "URL Kodlay\u0131c\u0131" },
+  "tool.urlEncode.desc": {
+    en: "Encode text for safe use in URLs or decode percent-encoded URLs back to readable text.",
+    tr: "Metni URL i\u00e7in kodlay\u0131n veya kodlanm\u0131\u015f URL'yi okunur h\u00e2line \u00e7\u00f6z\u00fcn.",
+  },
+  "tool.jwtDecoder": { en: "JWT Decoder", tr: "JWT \u00c7\u00f6z\u00fcc\u00fc" },
+  "tool.jwtDecoder.desc": {
+    en: "Decode JWT header and payload locally. Expiry check included; the token never leaves your browser.",
+    tr: "JWT ba\u015fl\u0131k ve i\u00e7eri\u011fini yerel \u00e7\u00f6z\u00fcn. Son ge\u00e7erlilik kontrol\u00fc dahil; token taray\u0131c\u0131dan \u00e7\u0131kmaz.",
+  },
+  "tool.regexTester": { en: "Regex Tester", tr: "Regex Test Arac\u0131" },
+  "tool.regexTester.desc": {
+    en: "Test regular expressions live with highlighted matches, capture groups and flags.",
+    tr: "D\u00fczenli ifadeleri vurgulu e\u015fle\u015fme ve grup g\u00f6sterimiyle canl\u0131 test edin.",
+  },
+  "tool.percentageCalculator": { en: "Percentage Calculator", tr: "Y\u00fczde Hesaplama" },
+  "tool.percentageCalculator.desc": {
+    en: "What is X% of Y, X is what percent of Y, and percentage change \u2014 answered instantly.",
+    tr: "Bir say\u0131n\u0131n y\u00fczdesi, oran ve y\u00fczde de\u011fi\u015fim hesaplar\u0131 \u2014 an\u0131nda sonu\u00e7.",
+  },
+  "tool.vatCalculator": { en: "VAT Calculator", tr: "KDV Hesaplama" },
+  "tool.vatCalculator.desc": {
+    en: "Add VAT to net prices or extract VAT from gross prices. Preset and custom rates.",
+    tr: "Net fiyata KDV ekleyin veya dahil fiyattan ay\u0131r\u0131n. Haz\u0131r ve \u00f6zel oranlar.",
+  },
+  "tool.numberToWords": { en: "Number to Words", tr: "Say\u0131y\u0131 Yaz\u0131ya \u00c7evirme" },
+  "tool.numberToWords.desc": {
+    en: "Spell out any number in Turkish and English \u2014 for invoices, cheques and official forms.",
+    tr: "Say\u0131lar\u0131n T\u00fcrk\u00e7e ve \u0130ngilizce okunu\u015funu yaz\u0131ya d\u00f6k\u00fcn \u2014 fatura ve \u00e7ekler i\u00e7in.",
+  },
   "tool.videoToMp3": { en: "Video to MP3", tr: "Video → MP3" },
   "tool.videoToMp3.desc": {
     en: "Extract audio from MP4, MOV and WebM videos as MP3 or WAV. Runs in your browser — no upload.",

@@ -42,6 +42,12 @@ const TOOL_LABELS: Record<string, string> = {
   "favicon-generator": "Favicon Üretici",
   ocr: "OCR (Resimden Metin)",
   "video-to-mp3": "Video → MP3",
+  "url-encode": "URL Kodlay\u0131c\u0131",
+  "jwt-decoder": "JWT \u00c7\u00f6z\u00fcc\u00fc",
+  "regex-tester": "Regex Test",
+  "percentage-calculator": "Y\u00fczde Hesaplama",
+  "vat-calculator": "KDV Hesaplama",
+  "number-to-words": "Yaz\u0131yla Say\u0131",
 };
 
 interface Feedback {

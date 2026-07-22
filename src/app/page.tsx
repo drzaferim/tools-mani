@@ -50,6 +50,12 @@ const toolNameKeys: Record<string, TranslationKey> = {
   "favicon-generator": "tool.faviconGenerator",
   ocr: "tool.ocr",
   "video-to-mp3": "tool.videoToMp3",
+  "url-encode": "tool.urlEncode",
+  "jwt-decoder": "tool.jwtDecoder",
+  "regex-tester": "tool.regexTester",
+  "percentage-calculator": "tool.percentageCalculator",
+  "vat-calculator": "tool.vatCalculator",
+  "number-to-words": "tool.numberToWords",
 };
 
 const toolDescKeys: Record<string, TranslationKey> = {
@@ -86,6 +92,12 @@ const toolDescKeys: Record<string, TranslationKey> = {
   "favicon-generator": "tool.faviconGenerator.desc",
   ocr: "tool.ocr.desc",
   "video-to-mp3": "tool.videoToMp3.desc",
+  "url-encode": "tool.urlEncode.desc",
+  "jwt-decoder": "tool.jwtDecoder.desc",
+  "regex-tester": "tool.regexTester.desc",
+  "percentage-calculator": "tool.percentageCalculator.desc",
+  "vat-calculator": "tool.vatCalculator.desc",
+  "number-to-words": "tool.numberToWords.desc",
 };
 
 export default function HomePage() {

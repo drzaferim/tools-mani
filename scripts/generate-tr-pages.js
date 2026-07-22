@@ -183,6 +183,36 @@ const TR_META = {
     description:
       "MP4, MOV ve WebM videolardan sesi MP3 veya WAV olarak çıkarın. Ücretsiz ve tamamen tarayıcıda — videonuz hiçbir sunucuya yüklenmez.",
   },
+  "/tools/url-encode": {
+    title: "URL Kodlay\u0131c\u0131 / \u00c7\u00f6z\u00fcc\u00fc (Encode - Decode) | ToolsMani",
+    description:
+      "Metni URL i\u00e7in y\u00fczde-kodlay\u0131n veya kodlanm\u0131\u015f URL'yi \u00e7\u00f6z\u00fcn. Bile\u015fen ve tam URL modlar\u0131. \u00dccretsiz, tamamen taray\u0131c\u0131da.",
+  },
+  "/tools/jwt-decoder": {
+    title: "JWT \u00c7\u00f6z\u00fcc\u00fc - Token \u0130\u00e7eri\u011fini G\u00f6r\u00fcnt\u00fcleme | ToolsMani",
+    description:
+      "JWT ba\u015fl\u0131k ve i\u00e7eri\u011fini taray\u0131c\u0131n\u0131zda \u00e7\u00f6z\u00fcn. Son ge\u00e7erlilik kontrol\u00fc dahil; token hi\u00e7bir yere g\u00f6nderilmez. \u00dccretsiz.",
+  },
+  "/tools/regex-tester": {
+    title: "Regex Test Arac\u0131 - D\u00fczenli \u0130fade Deneme | ToolsMani",
+    description:
+      "D\u00fczenli ifadeleri canl\u0131 test edin: vurgulu e\u015fle\u015fmeler, yakalama gruplar\u0131 ve bayraklar. \u00dccretsiz, tamamen taray\u0131c\u0131da.",
+  },
+  "/tools/percentage-calculator": {
+    title: "Y\u00fczde Hesaplama - Pratik Y\u00fczde Hesaplay\u0131c\u0131 | ToolsMani",
+    description:
+      "Bir say\u0131n\u0131n y\u00fczdesi, bir say\u0131n\u0131n ba\u015fka say\u0131ya oran\u0131 ve y\u00fczde de\u011fi\u015fim \u2014 an\u0131nda sonu\u00e7. \u00dccretsiz y\u00fczde hesaplama arac\u0131.",
+  },
+  "/tools/vat-calculator": {
+    title: "KDV Hesaplama - KDV Dahil / Hari\u00e7 Hesaplay\u0131c\u0131 | ToolsMani",
+    description:
+      "Net fiyata KDV ekleyin veya KDV dahil fiyattan ay\u0131r\u0131n. %1, %10, %20 haz\u0131r oranlar ve \u00f6zel oran. \u00dccretsiz KDV hesaplama.",
+  },
+  "/tools/number-to-words": {
+    title: "Say\u0131y\u0131 Yaz\u0131ya \u00c7evirme - Yaz\u0131yla Say\u0131 | ToolsMani",
+    description:
+      "Say\u0131lar\u0131n T\u00fcrk\u00e7e ve \u0130ngilizce okunu\u015funu yaz\u0131ya \u00e7evirin \u2014 fatura, \u00e7ek ve resmi formlar i\u00e7in. Ondal\u0131k deste\u011fi. \u00dccretsiz.",
+  },
   "/about": {
     title: "Hakkımızda | ToolsMani",
     description:

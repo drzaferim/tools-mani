@@ -344,6 +344,67 @@ export const tools: Tool[] = [
     icon: "Music",
     isFree: true,
   },
+
+  {
+    id: "url-encode",
+    name: "URL Encoder/Decoder",
+    description:
+      "Encode text for safe use in URLs or decode percent-encoded URLs back to readable text.",
+    category: "developer",
+    href: "/tools/url-encode",
+    icon: "Link2",
+    isFree: true,
+  },
+  {
+    id: "jwt-decoder",
+    name: "JWT Decoder",
+    description:
+      "Decode JWT header and payload locally. Expiry check included; the token never leaves your browser.",
+    category: "developer",
+    href: "/tools/jwt-decoder",
+    icon: "KeyRound",
+    isFree: true,
+  },
+  {
+    id: "regex-tester",
+    name: "Regex Tester",
+    description:
+      "Test regular expressions live with highlighted matches, capture groups and flags.",
+    category: "developer",
+    href: "/tools/regex-tester",
+    icon: "Regex",
+    isFree: true,
+  },
+  {
+    id: "percentage-calculator",
+    name: "Percentage Calculator",
+    description:
+      "What is X% of Y, X is what percent of Y, and percentage change \u2014 answered instantly.",
+    category: "generator",
+    href: "/tools/percentage-calculator",
+    icon: "Percent",
+    isFree: true,
+  },
+  {
+    id: "vat-calculator",
+    name: "VAT Calculator",
+    description:
+      "Add VAT to net prices or extract VAT from gross prices. Preset and custom rates.",
+    category: "generator",
+    href: "/tools/vat-calculator",
+    icon: "Receipt",
+    isFree: true,
+  },
+  {
+    id: "number-to-words",
+    name: "Number to Words",
+    description:
+      "Spell out any number in Turkish and English \u2014 for invoices, cheques and official forms.",
+    category: "text",
+    href: "/tools/number-to-words",
+    icon: "SpellCheck",
+    isFree: true,
+  },
 ];
 
 export const categories = [
