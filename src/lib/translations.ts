@@ -337,6 +337,36 @@ const translations = {
     tr: "İmzanızı çizin ve PDF'in istediğiniz sayfasına yerleştirin. Belge tarayıcınızdan çıkmaz.",
   },
   "tool.exifCleaner": { en: "EXIF Remover", tr: "EXIF Temizleyici" },
+  "tool.ageCalculator": { en: "Age Calculator", tr: "Yaş Hesaplama" },
+  "tool.ageCalculator.desc": {
+    en: "Calculate exact age in years, months and days, plus total days lived and next birthday.",
+    tr: "Yaşınızı yıl, ay ve gün olarak hesaplayın; toplam gün ve sonraki doğum gününüzü görün.",
+  },
+  "tool.caseConverter": { en: "Case Converter", tr: "Büyük/Küçük Harf Dönüştürücü" },
+  "tool.caseConverter.desc": {
+    en: "Convert text between UPPERCASE, lowercase, Title Case, camelCase, snake_case and more.",
+    tr: "Metni BÜYÜK HARF, küçük harf, Kelime Başı Büyük, camelCase, snake_case biçimlerine çevirin.",
+  },
+  "tool.textDiff": { en: "Text Compare (Diff)", tr: "Metin Karşılaştırma" },
+  "tool.textDiff.desc": {
+    en: "Compare two texts and see the differences line by line. Nothing is uploaded.",
+    tr: "İki metni karşılaştırın, farkları satır satır görün. Hiçbir şey yüklenmez.",
+  },
+  "tool.csvJson": { en: "CSV ↔ JSON Converter", tr: "CSV ↔ JSON Dönüştürücü" },
+  "tool.csvJson.desc": {
+    en: "Convert CSV data to JSON and JSON arrays back to CSV. Quoted fields and custom delimiters.",
+    tr: "CSV veriyi JSON'a, JSON dizilerini CSV'ye çevirin. Tırnaklı alan ve farklı ayırıcı desteği.",
+  },
+  "tool.timestampConverter": { en: "Unix Timestamp Converter", tr: "Unix Timestamp Çevirici" },
+  "tool.timestampConverter.desc": {
+    en: "Convert Unix timestamps to readable dates and back, in local time and UTC.",
+    tr: "Unix zaman damgalarını okunabilir tarihe, tarihi zaman damgasına çevirin.",
+  },
+  "tool.faviconGenerator": { en: "Favicon Generator", tr: "Favicon Üretici" },
+  "tool.faviconGenerator.desc": {
+    en: "Turn any image into a full favicon set: ICO, all PNG sizes and HTML tags.",
+    tr: "Herhangi bir görseli eksiksiz favicon setine dönüştürün: ICO, tüm PNG boyutları ve HTML etiketleri.",
+  },
   "tool.exifCleaner.desc": {
     en: "Strip hidden metadata from photos: GPS location, camera model, capture date and more.",
     tr: "Fotoğraflardaki gizli meta veriyi silin: GPS konumu, kamera modeli, çekim tarihi ve daha fazlası.",

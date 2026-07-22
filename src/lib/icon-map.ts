@@ -24,6 +24,12 @@ import {
   Fingerprint,
   PenTool,
   ShieldCheck,
+  Cake,
+  CaseSensitive,
+  GitCompare,
+  Table,
+  Clock,
+  AppWindow,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -53,4 +59,10 @@ export const iconMap: Record<string, LucideIcon> = {
   Fingerprint,
   PenTool,
   ShieldCheck,
+  Cake,
+  CaseSensitive,
+  GitCompare,
+  Table,
+  Clock,
+  AppWindow,
 };

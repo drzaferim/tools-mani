@@ -264,6 +264,66 @@ export const tools: Tool[] = [
     icon: "Fingerprint",
     isFree: true,
   },
+  {
+    id: "age-calculator",
+    name: "Age Calculator",
+    description:
+      "Calculate exact age in years, months and days, plus total days lived and next birthday.",
+    category: "generator",
+    href: "/tools/age-calculator",
+    icon: "Cake",
+    isFree: true,
+  },
+  {
+    id: "case-converter",
+    name: "Case Converter",
+    description:
+      "Convert text between UPPERCASE, lowercase, Title Case, camelCase, snake_case and more.",
+    category: "text",
+    href: "/tools/case-converter",
+    icon: "CaseSensitive",
+    isFree: true,
+  },
+  {
+    id: "text-diff",
+    name: "Text Compare (Diff)",
+    description:
+      "Compare two texts and see the differences line by line. Nothing is uploaded.",
+    category: "text",
+    href: "/tools/text-diff",
+    icon: "GitCompare",
+    isFree: true,
+  },
+  {
+    id: "csv-json",
+    name: "CSV ↔ JSON Converter",
+    description:
+      "Convert CSV data to JSON and JSON arrays back to CSV. Quoted fields and custom delimiters.",
+    category: "developer",
+    href: "/tools/csv-json",
+    icon: "Table",
+    isFree: true,
+  },
+  {
+    id: "timestamp-converter",
+    name: "Unix Timestamp Converter",
+    description:
+      "Convert Unix timestamps to readable dates and back, in local time and UTC.",
+    category: "developer",
+    href: "/tools/timestamp-converter",
+    icon: "Clock",
+    isFree: true,
+  },
+  {
+    id: "favicon-generator",
+    name: "Favicon Generator",
+    description:
+      "Turn any image into a full favicon set: ICO, all PNG sizes and HTML tags.",
+    category: "generator",
+    href: "/tools/favicon-generator",
+    icon: "AppWindow",
+    isFree: true,
+  },
 ];
 
 export const categories = [

@@ -42,6 +42,12 @@ const toolNameKeys: Record<string, TranslationKey> = {
   "uuid-generator": "tool.uuidGenerator",
   "pdf-sign": "tool.pdfSign",
   "exif-cleaner": "tool.exifCleaner",
+  "age-calculator": "tool.ageCalculator",
+  "case-converter": "tool.caseConverter",
+  "text-diff": "tool.textDiff",
+  "csv-json": "tool.csvJson",
+  "timestamp-converter": "tool.timestampConverter",
+  "favicon-generator": "tool.faviconGenerator",
 };
 
 const toolDescKeys: Record<string, TranslationKey> = {
@@ -70,6 +76,12 @@ const toolDescKeys: Record<string, TranslationKey> = {
   "uuid-generator": "tool.uuidGenerator.desc",
   "pdf-sign": "tool.pdfSign.desc",
   "exif-cleaner": "tool.exifCleaner.desc",
+  "age-calculator": "tool.ageCalculator.desc",
+  "case-converter": "tool.caseConverter.desc",
+  "text-diff": "tool.textDiff.desc",
+  "csv-json": "tool.csvJson.desc",
+  "timestamp-converter": "tool.timestampConverter.desc",
+  "favicon-generator": "tool.faviconGenerator.desc",
 };
 
 export default function HomePage() {

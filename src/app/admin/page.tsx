@@ -34,6 +34,12 @@ const TOOL_LABELS: Record<string, string> = {
   "uuid-generator": "UUID & Hash",
   "pdf-sign": "PDF İmzalama",
   "exif-cleaner": "EXIF Temizleyici",
+  "age-calculator": "Yaş Hesaplama",
+  "case-converter": "Harf Dönüştürücü",
+  "text-diff": "Metin Karşılaştırma",
+  "csv-json": "CSV-JSON",
+  "timestamp-converter": "Timestamp",
+  "favicon-generator": "Favicon Üretici",
 };
 
 interface Feedback {

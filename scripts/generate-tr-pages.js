@@ -143,6 +143,36 @@ const TR_META = {
     description:
       "Toplu rastgele UUID v4 kimlikleri üretin; SHA-256, SHA-512 veya SHA-1 hash hesaplayın. Ücretsiz geliştirici aracı, tamamen tarayıcıda.",
   },
+  "/tools/age-calculator": {
+    title: "Yaş Hesaplama - Doğum Tarihine Göre Yaş Bulma | ToolsMani",
+    description:
+      "Doğum tarihinize göre yaşınızı yıl, ay ve gün olarak hesaplayın. Toplam gün, hafta, saat ve sonraki doğum gününüze kalan süre. Ücretsiz.",
+  },
+  "/tools/case-converter": {
+    title: "Büyük Küçük Harf Dönüştürücü | ToolsMani",
+    description:
+      "Metni büyük harfe, küçük harfe, kelime başı büyüğe, camelCase ve snake_case biçimine çevirin. Türkçe karakter (İ/ı) desteği. Ücretsiz.",
+  },
+  "/tools/text-diff": {
+    title: "Metin Karşılaştırma - Fark Bulucu | ToolsMani",
+    description:
+      "İki metin arasındaki farkları satır satır görün. Ücretsiz online metin karşılaştırma aracı; hiçbir şey sunucuya yüklenmez.",
+  },
+  "/tools/csv-json": {
+    title: "CSV JSON Dönüştürücü | ToolsMani",
+    description:
+      "CSV'yi JSON'a, JSON'u CSV'ye çevirin. Tırnaklı alanlar ve noktalı virgül/sekme ayırıcı desteği. Ücretsiz geliştirici aracı.",
+  },
+  "/tools/timestamp-converter": {
+    title: "Unix Timestamp Çevirici - Epoch Tarih Dönüştürme | ToolsMani",
+    description:
+      "Unix zaman damgasını tarihe, tarihi timestamp'e çevirin. Yerel saat ve UTC gösterimi, canlı epoch saati. Ücretsiz.",
+  },
+  "/tools/favicon-generator": {
+    title: "Favicon Üretici - ICO ve PNG Oluşturma | ToolsMani",
+    description:
+      "Bir görselden eksiksiz favicon seti üretin: favicon.ico, tüm PNG boyutları ve hazır HTML etiketleri. Tamamen tarayıcıda çalışır.",
+  },
   "/about": {
     title: "Hakkımızda | ToolsMani",
     description:
