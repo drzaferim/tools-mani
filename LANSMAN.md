@@ -14,7 +14,7 @@ Genel ipuçları:
 ## 1) Reddit — r/privacy
 
 **Başlık:**
-I built 25 free file tools (PDF, images) that run 100% in your browser — no uploads, no ads, no accounts
+I built 39 free tools (PDF, OCR, video→MP3) that run 100% in your browser — no uploads, no ads, no accounts
 
 **Gövde:**
 
@@ -23,7 +23,8 @@ require uploading contracts, IDs and personal photos to some unknown server.
 
 So I built ToolsMani: https://toolsmani.com
 
-- 25 tools: PDF merge/split/compress/sign, EXIF remover, image compress/resize/convert, QR generator, password generator, and more
+- 39 tools: PDF merge/split/compress/sign, EXIF remover, image compress/resize/convert, OCR (image→text), video→MP3, QR generator, password generator, and more
+- Even the heavy stuff is client-side: OCR runs on a self-hosted tesseract.wasm and video conversion on ffmpeg.wasm — served from our own domain, so not even a CDN sees anything
 - Everything runs client-side in your browser (pdf-lib, canvas, Web Crypto). Your files never leave your device — the tools even work offline once the page loads.
 - No ads, no accounts, no file size limits, and I intend to keep it that way.
 - The EXIF remover might be the most relevant here: it strips GPS/camera/timestamp metadata locally — because a tool that removes private data shouldn't require uploading it first.
@@ -42,7 +43,7 @@ bazı sub'lar "Tool Tuesday" gibi belirli günler ister. Alternatif sub'lar: r/d
 ## 2) Hacker News — Show HN
 
 **Başlık:**
-Show HN: 25 file tools (PDF sign, EXIF remover) that run entirely in the browser
+Show HN: 39 tools (OCR, video to MP3, PDF sign) that run entirely in the browser
 
 **URL:** https://toolsmani.com
 
@@ -53,7 +54,8 @@ to their servers, and that always felt backwards.
 
 Everything is client-side: pdf-lib for PDF manipulation, canvas re-encoding for images
 (which is also how the EXIF remover works — metadata blocks simply aren't carried over),
-Web Crypto for hashing, and a local QR encoder. The site is a static Next.js export on
+Web Crypto for hashing, a local QR encoder, tesseract.wasm for OCR and ffmpeg.wasm for
+video→MP3 — all self-hosted, so there are zero third-party requests. The site is a static Next.js export on
 Firebase Hosting, so there's no backend that could even receive your files.
 
 Trade-offs I accepted: PDF compression is structure-only (no image downsampling yet),
@@ -75,13 +77,13 @@ Yorumlara ilk 2 saat içinde yanıt vermek kritik.
 **Ürün adı:** ToolsMani
 
 **Tagline (60 karakter sınırı):**
-25 free file tools that never upload your files
+39 free tools that never upload your files
 
 **Açıklama:**
 
-ToolsMani is a collection of 25 free tools for everyday file tasks — merge/split/compress/sign
-PDFs, remove EXIF metadata from photos, compress and resize images, generate QR codes and
-passwords, and more.
+ToolsMani is a collection of 39 free tools for everyday file tasks — merge/split/compress/sign
+PDFs, OCR (image to text), video to MP3, EXIF removal, image compress/resize, QR codes,
+passwords, and more. Available in 6 languages.
 
 The difference: everything runs 100% in your browser. Your files are processed on your own
 device and never touch a server. No ads, no accounts, no file size limits — and it stays free.
@@ -94,8 +96,8 @@ I started ToolsMani after one too many "upload your contract to compress it" exp
 It felt wrong that basic file operations require handing your documents to a stranger's server.
 
 So every tool here is client-side: the PDF signer embeds your drawn signature locally with
-pdf-lib, the EXIF remover strips photo metadata by re-encoding pixels on a canvas, and the
-QR generator encodes locally. Once the page loads, most tools work with your internet off —
+pdf-lib, the EXIF remover strips photo metadata by re-encoding pixels on a canvas, OCR runs
+on tesseract.wasm and video→MP3 on ffmpeg.wasm — both self-hosted, no CDN. Once the page loads, most tools work with your internet off —
 that's the proof.
 
 It's free, ad-free, and account-free. I make no money from it right now; hosting is nearly

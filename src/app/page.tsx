@@ -156,11 +156,11 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="stat-card">
-              <div className="text-3xl font-extrabold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">17+</div>
+              <div className="text-3xl font-extrabold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">{tools.length}</div>
               <div className="text-gray-500 text-sm mt-1">{t("stats.tools")}</div>
             </div>
             <div className="stat-card">
-              <div className="text-3xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-400 bg-clip-text text-transparent">7</div>
+              <div className="text-3xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-400 bg-clip-text text-transparent">{tools.filter((tl) => tl.category === "pdf").length}</div>
               <div className="text-gray-500 text-sm mt-1">{t("stats.pdfTools")}</div>
             </div>
             <div className="stat-card">
