@@ -34,6 +34,64 @@ const labels = {
     invalid: "Geçerli bir sayı girin (en fazla 15 basamak).",
     hint: "Ondalık için virgül veya nokta kullanabilirsiniz (örn. 1250,75).",
   },
+  // Not: araç sayıyı yalnızca Türkçe ve İngilizce okunuşa çeviriyor. Metinler
+  // bunu açıkça söylüyor — es/de/pt/fr okunuşu ayrı bir iş (bkz. AI_HANDOFF).
+  es: {
+    back: "← Volver a las herramientas",
+    title: "Números a letras",
+    subtitle:
+      "Escribe cualquier número en letras en inglés y turco — útil para facturas, cheques, contratos y formularios oficiales.",
+    input: "Número",
+    placeholder: "1250,75",
+    turkish: "Turco",
+    english: "Inglés",
+    copy: "Copiar",
+    copied: "¡Copiado!",
+    invalid: "Introduce un número válido (hasta 15 dígitos).",
+    hint: "Se admiten decimales con coma o punto (p. ej. 1250,75).",
+  },
+  de: {
+    back: "← Zurück zu den Tools",
+    title: "Zahl in Worten",
+    subtitle:
+      "Schreiben Sie eine beliebige Zahl auf Englisch und Türkisch aus – praktisch für Rechnungen, Schecks, Verträge und Formulare.",
+    input: "Zahl",
+    placeholder: "1250,75",
+    turkish: "Türkisch",
+    english: "Englisch",
+    copy: "Kopieren",
+    copied: "Kopiert!",
+    invalid: "Geben Sie eine gültige Zahl ein (bis zu 15 Stellen).",
+    hint: "Dezimalstellen mit Komma oder Punkt möglich (z. B. 1250,75).",
+  },
+  pt: {
+    back: "← Voltar às ferramentas",
+    title: "Número por extenso",
+    subtitle:
+      "Escreva qualquer número por extenso em inglês e turco — útil para faturas, cheques, contratos e formulários oficiais.",
+    input: "Número",
+    placeholder: "1250,75",
+    turkish: "Turco",
+    english: "Inglês",
+    copy: "Copiar",
+    copied: "Copiado!",
+    invalid: "Digite um número válido (até 15 dígitos).",
+    hint: "Decimais são aceitos com vírgula ou ponto (ex.: 1250,75).",
+  },
+  fr: {
+    back: "← Retour aux outils",
+    title: "Nombre en lettres",
+    subtitle:
+      "Écrivez n'importe quel nombre en lettres en anglais et en turc — pratique pour les factures, chèques, contrats et formulaires officiels.",
+    input: "Nombre",
+    placeholder: "1250,75",
+    turkish: "Turc",
+    english: "Anglais",
+    copy: "Copier",
+    copied: "Copié !",
+    invalid: "Saisissez un nombre valide (jusqu'à 15 chiffres).",
+    hint: "Les décimales sont acceptées avec une virgule ou un point (ex. 1250,75).",
+  },
 };
 
 const TR_ONES = ["", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"];

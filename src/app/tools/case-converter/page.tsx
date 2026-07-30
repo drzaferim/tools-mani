@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useLanguage, pick } from "@/lib/language-context";
+import type { Locale } from "@/lib/translations";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -28,15 +29,71 @@ const labels = {
     clear: "Temizle",
     trNote: "Türkçe karakterler (İ/ı) doğru işlenir.",
   },
+  es: {
+    back: "← Volver a las herramientas",
+    title: "Conversor de mayúsculas y minúsculas",
+    subtitle:
+      "Convierte texto a MAYÚSCULAS, minúsculas, Tipo Título, Tipo oración, camelCase, snake_case y kebab-case.",
+    placeholder: "Escribe o pega tu texto aquí...",
+    copy: "Copiar resultado",
+    copied: "¡Copiado!",
+    clear: "Limpiar",
+    trNote: "Los caracteres acentuados (á, é, ñ) se procesan correctamente.",
+  },
+  de: {
+    back: "← Zurück zu den Tools",
+    title: "Groß-/Kleinschreibung umwandeln",
+    subtitle:
+      "Wandeln Sie Text in GROSSBUCHSTABEN, kleinbuchstaben, Überschriften-Schreibweise, Satzschreibweise, camelCase, snake_case und kebab-case um.",
+    placeholder: "Text hier eingeben oder einfügen...",
+    copy: "Ergebnis kopieren",
+    copied: "Kopiert!",
+    clear: "Leeren",
+    trNote: "Umlaute (ä, ö, ü) und ß werden korrekt verarbeitet.",
+  },
+  pt: {
+    back: "← Voltar às ferramentas",
+    title: "Conversor de maiúsculas e minúsculas",
+    subtitle:
+      "Converta texto para MAIÚSCULAS, minúsculas, Formato Título, Formato de frase, camelCase, snake_case e kebab-case.",
+    placeholder: "Digite ou cole seu texto aqui...",
+    copy: "Copiar resultado",
+    copied: "Copiado!",
+    clear: "Limpar",
+    trNote: "Caracteres acentuados (á, ã, ç) são processados corretamente.",
+  },
+  fr: {
+    back: "← Retour aux outils",
+    title: "Convertisseur de casse",
+    subtitle:
+      "Convertissez du texte en MAJUSCULES, minuscules, Casse De Titre, Casse de phrase, camelCase, snake_case et kebab-case.",
+    placeholder: "Saisissez ou collez votre texte ici...",
+    copy: "Copier le résultat",
+    copied: "Copié !",
+    clear: "Effacer",
+    trNote: "Les caractères accentués (é, è, ç) sont traités correctement.",
+  },
 };
 
 type Mode = "upper" | "lower" | "title" | "sentence" | "camel" | "snake" | "kebab";
 
-const modeNames: Record<Mode, { en: string; tr: string }> = {
-  upper: { en: "UPPERCASE", tr: "BÜYÜK HARF" },
-  lower: { en: "lowercase", tr: "küçük harf" },
-  title: { en: "Title Case", tr: "Kelime Başı Büyük" },
-  sentence: { en: "Sentence case", tr: "Cümle düzeni" },
+const modeNames: Record<Mode, { en: string } & Partial<Record<Locale, string>>> = {
+  upper: {
+    en: "UPPERCASE", tr: "BÜYÜK HARF", es: "MAYÚSCULAS", de: "GROSSBUCHSTABEN",
+    pt: "MAIÚSCULAS", fr: "MAJUSCULES",
+  },
+  lower: {
+    en: "lowercase", tr: "küçük harf", es: "minúsculas", de: "kleinbuchstaben",
+    pt: "minúsculas", fr: "minuscules",
+  },
+  title: {
+    en: "Title Case", tr: "Kelime Başı Büyük", es: "Tipo Título", de: "Überschriften-Schreibweise",
+    pt: "Formato Título", fr: "Casse De Titre",
+  },
+  sentence: {
+    en: "Sentence case", tr: "Cümle düzeni", es: "Tipo oración", de: "Satzschreibweise",
+    pt: "Formato de frase", fr: "Casse de phrase",
+  },
   camel: { en: "camelCase", tr: "camelCase" },
   snake: { en: "snake_case", tr: "snake_case" },
   kebab: { en: "kebab-case", tr: "kebab-case" },

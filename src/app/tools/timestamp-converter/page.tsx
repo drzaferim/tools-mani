@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useLanguage, pick } from "@/lib/language-context";
+import { useLanguage, pick, localeTag } from "@/lib/language-context";
+import type { Locale } from "@/lib/translations";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -25,8 +26,7 @@ const labels = {
     millis: "Unix milliseconds",
     iso: "ISO 8601",
     invalid: "Invalid timestamp.",
-    agoS: (v: string) => `${v} ago`,
-    inS: (v: string) => `in ${v}`,
+    justNow: "just now",
   },
   tr: {
     back: "← Araçlara Dön",
@@ -47,31 +47,120 @@ const labels = {
     millis: "Unix milisaniye",
     iso: "ISO 8601",
     invalid: "Geçersiz zaman damgası.",
-    agoS: (v: string) => `${v} önce`,
-    inS: (v: string) => `${v} sonra`,
+    justNow: "az önce",
+  },
+  es: {
+    back: "← Volver a las herramientas",
+    title: "Conversor de marcas de tiempo Unix",
+    subtitle:
+      "Convierte marcas de tiempo Unix (segundos o milisegundos) a fechas legibles y viceversa, en tu zona horaria local y en UTC.",
+    now: "Hora Unix actual",
+    copy: "Copiar",
+    copied: "¡Copiado!",
+    tsToDate: "Marca de tiempo → Fecha",
+    dateToTs: "Fecha → Marca de tiempo",
+    tsInput: "Marca de tiempo Unix (s o ms)",
+    dateInput: "Fecha y hora",
+    local: "Hora local",
+    utc: "UTC",
+    relative: "Relativo",
+    seconds: "Segundos Unix",
+    millis: "Milisegundos Unix",
+    iso: "ISO 8601",
+    invalid: "Marca de tiempo no válida.",
+    justNow: "ahora mismo",
+  },
+  de: {
+    back: "← Zurück zu den Tools",
+    title: "Unix-Zeitstempel-Konverter",
+    subtitle:
+      "Wandeln Sie Unix-Zeitstempel (Sekunden oder Millisekunden) in lesbare Datumsangaben um und zurück – in Ihrer lokalen Zeitzone und in UTC.",
+    now: "Aktuelle Unix-Zeit",
+    copy: "Kopieren",
+    copied: "Kopiert!",
+    tsToDate: "Zeitstempel → Datum",
+    dateToTs: "Datum → Zeitstempel",
+    tsInput: "Unix-Zeitstempel (s oder ms)",
+    dateInput: "Datum und Uhrzeit",
+    local: "Ortszeit",
+    utc: "UTC",
+    relative: "Relativ",
+    seconds: "Unix-Sekunden",
+    millis: "Unix-Millisekunden",
+    iso: "ISO 8601",
+    invalid: "Ungültiger Zeitstempel.",
+    justNow: "gerade eben",
+  },
+  pt: {
+    back: "← Voltar às ferramentas",
+    title: "Conversor de timestamp Unix",
+    subtitle:
+      "Converta timestamps Unix (segundos ou milissegundos) em datas legíveis e vice-versa — no seu fuso horário local e em UTC.",
+    now: "Hora Unix atual",
+    copy: "Copiar",
+    copied: "Copiado!",
+    tsToDate: "Timestamp → Data",
+    dateToTs: "Data → Timestamp",
+    tsInput: "Timestamp Unix (s ou ms)",
+    dateInput: "Data e hora",
+    local: "Hora local",
+    utc: "UTC",
+    relative: "Relativo",
+    seconds: "Segundos Unix",
+    millis: "Milissegundos Unix",
+    iso: "ISO 8601",
+    invalid: "Timestamp inválido.",
+    justNow: "agora mesmo",
+  },
+  fr: {
+    back: "← Retour aux outils",
+    title: "Convertisseur de timestamp Unix",
+    subtitle:
+      "Convertissez des timestamps Unix (secondes ou millisecondes) en dates lisibles et inversement — dans votre fuseau horaire local et en UTC.",
+    now: "Heure Unix actuelle",
+    copy: "Copier",
+    copied: "Copié !",
+    tsToDate: "Timestamp → Date",
+    dateToTs: "Date → Timestamp",
+    tsInput: "Timestamp Unix (s ou ms)",
+    dateInput: "Date et heure",
+    local: "Heure locale",
+    utc: "UTC",
+    relative: "Relatif",
+    seconds: "Secondes Unix",
+    millis: "Millisecondes Unix",
+    iso: "ISO 8601",
+    invalid: "Timestamp non valide.",
+    justNow: "à l'instant",
   },
 };
 
-function relative(ms: number, locale: string, l: (typeof labels)["en"]): string {
+const RELATIVE_UNITS: [number, Intl.RelativeTimeFormatUnit][] = [
+  [31536000000, "year"],
+  [2592000000, "month"],
+  [86400000, "day"],
+  [3600000, "hour"],
+  [60000, "minute"],
+  [1000, "second"],
+];
+
+/**
+ * Göreli süreyi Intl.RelativeTimeFormat ile üretir — çoğul kuralları ve
+ * "önce/sonra" yönü her dil için tarayıcıdan gelir, elle çevrilmez.
+ */
+function relative(ms: number, locale: Locale, l: (typeof labels)["en"]): string {
   const diff = Date.now() - ms;
   const abs = Math.abs(diff);
-  const units: [number, string, string][] = [
-    [31536000000, "year", "yıl"],
-    [2592000000, "month", "ay"],
-    [86400000, "day", "gün"],
-    [3600000, "hour", "saat"],
-    [60000, "minute", "dakika"],
-    [1000, "second", "saniye"],
-  ];
-  for (const [unitMs, en, tr] of units) {
+  for (const [unitMs, unit] of RELATIVE_UNITS) {
     if (abs >= unitMs) {
       const v = Math.floor(abs / unitMs);
-      const name = locale === "tr" ? tr : v === 1 ? en : en + "s";
-      const s = `${v} ${name}`;
-      return diff >= 0 ? l.agoS(s) : l.inS(s);
+      return new Intl.RelativeTimeFormat(localeTag(locale), { numeric: "always" }).format(
+        diff >= 0 ? -v : v,
+        unit
+      );
     }
   }
-  return locale === "tr" ? "şimdi" : "just now";
+  return l.justNow;
 }
 
 export default function TimestampConverterPage() {
@@ -114,7 +203,7 @@ export default function TimestampConverterPage() {
   };
 
   const fmt = (d: Date, utc: boolean) =>
-    d.toLocaleString(locale === "tr" ? "tr-TR" : "en-US", {
+    d.toLocaleString(localeTag(locale), {
       dateStyle: "full",
       timeStyle: "medium",
       timeZone: utc ? "UTC" : undefined,

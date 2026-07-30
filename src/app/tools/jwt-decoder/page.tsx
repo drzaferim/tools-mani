@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useLanguage, pick } from "@/lib/language-context";
+import { useLanguage, pick, localeTag } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
 
 const labels = {
@@ -40,6 +40,74 @@ const labels = {
     issuedAt: "Oluşturulma",
     notBefore: "Başlangıç",
   },
+  es: {
+    back: "← Volver a las herramientas",
+    title: "Decodificador de JWT",
+    subtitle:
+      "Pega un JSON Web Token para inspeccionar su cabecera y su carga útil. La decodificación es local: el token nunca sale de tu navegador.",
+    note: "Esta herramienta decodifica pero no verifica la firma. Nunca consideres fiable un token solo por haberlo decodificado.",
+    placeholder: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.firma",
+    header: "Cabecera (header)",
+    payload: "Carga útil (payload)",
+    signature: "Firma (en bruto)",
+    invalid: "Esto no parece un JWT válido (se esperaban 3 partes base64url separadas por puntos).",
+    expired: "caducado",
+    valid: "válido",
+    expiresAt: "Caduca",
+    issuedAt: "Emitido",
+    notBefore: "No antes de",
+  },
+  de: {
+    back: "← Zurück zu den Tools",
+    title: "JWT-Decoder",
+    subtitle:
+      "Fügen Sie ein JSON Web Token ein, um Header und Payload zu untersuchen. Die Dekodierung erfolgt lokal – das Token verlässt Ihren Browser nicht.",
+    note: "Dieses Tool dekodiert, prüft aber die Signatur nicht. Betrachten Sie ein dekodiertes Token niemals als vertrauenswürdig.",
+    placeholder: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.signatur",
+    header: "Header",
+    payload: "Payload",
+    signature: "Signatur (roh)",
+    invalid: "Das sieht nicht nach einem gültigen JWT aus (erwartet werden 3 durch Punkte getrennte base64url-Teile).",
+    expired: "abgelaufen",
+    valid: "gültig",
+    expiresAt: "Läuft ab",
+    issuedAt: "Ausgestellt",
+    notBefore: "Nicht vor",
+  },
+  pt: {
+    back: "← Voltar às ferramentas",
+    title: "Decodificador de JWT",
+    subtitle:
+      "Cole um JSON Web Token para inspecionar o cabeçalho e o payload. A decodificação é local — o token nunca sai do seu navegador.",
+    note: "Esta ferramenta decodifica, mas não verifica a assinatura. Nunca trate um token decodificado como confiável.",
+    placeholder: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.assinatura",
+    header: "Cabeçalho (header)",
+    payload: "Payload",
+    signature: "Assinatura (bruta)",
+    invalid: "Isto não parece um JWT válido (esperavam-se 3 partes base64url separadas por pontos).",
+    expired: "expirado",
+    valid: "válido",
+    expiresAt: "Expira em",
+    issuedAt: "Emitido em",
+    notBefore: "Não antes de",
+  },
+  fr: {
+    back: "← Retour aux outils",
+    title: "Décodeur JWT",
+    subtitle:
+      "Collez un JSON Web Token pour inspecter son en-tête et sa charge utile. Le décodage est local — le token ne quitte jamais votre navigateur.",
+    note: "Cet outil décode mais ne vérifie pas la signature. Ne considérez jamais un token décodé comme fiable.",
+    placeholder: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.signature",
+    header: "En-tête (header)",
+    payload: "Charge utile (payload)",
+    signature: "Signature (brute)",
+    invalid: "Cela ne ressemble pas à un JWT valide (3 parties base64url séparées par des points sont attendues).",
+    expired: "expiré",
+    valid: "valide",
+    expiresAt: "Expire le",
+    issuedAt: "Émis le",
+    notBefore: "Pas avant le",
+  },
 };
 
 function b64urlDecode(s: string): string {
@@ -72,7 +140,7 @@ export default function JwtDecoderPage() {
   }, [token]);
 
   const fmtDate = (sec: number) =>
-    new Date(sec * 1000).toLocaleString(locale === "tr" ? "tr-TR" : "en-US", {
+    new Date(sec * 1000).toLocaleString(localeTag(locale), {
       dateStyle: "medium",
       timeStyle: "medium",
     });

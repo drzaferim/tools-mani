@@ -139,23 +139,55 @@ metinleri ise üç katmanda:
 
 | Katman | Sayı | Araçlar |
 |---|---|---|
-| 6 dilde tam | 10 | json-formatter, text-diff, base64, heic-convert, image-convert, lorem-ipsum, markdown-preview, password-generator, qr-generator, unit-converter |
+| 6 dilde tam (`labels` + `pick()`) | 25 | json-formatter, text-diff, base64, heic-convert, image-convert, lorem-ipsum, markdown-preview, password-generator, qr-generator, unit-converter, age-calculator, case-converter, csv-json, url-encode, uuid-generator, timestamp-converter, jwt-decoder, regex-tester, percentage-calculator, vat-calculator, number-to-words, image-resize, exif-cleaner, favicon-generator, ocr, video-to-mp3, pdf-sign |
 | 6 dilde arayüz (`t()` ile) | ~11 | Tüm PDF araçları + pdf-compress, text-counter, color-picker, image-compress |
-| Yalnızca EN+TR | ~20 | age-calculator, jwt-decoder, ocr, video-to-mp3, vat-calculator, regex-tester, url-encode, uuid-generator, exif-cleaner, pdf-sign, favicon-generator, csv-json, timestamp-converter, case-converter, number-to-words, percentage-calculator, image-resize |
+| Yalnızca EN+TR | **0** | — |
 | Hiç yerelleşmemiş | **0** | — |
 
-**30 Tem 2026'da kapatıldı:** Daha önce hiç yerelleşmemiş olan 8 araç (base64,
-heic-convert, image-convert, lorem-ipsum, markdown-preview, password-generator,
-qr-generator, unit-converter) 6 dile çevrildi. Kullanılan desen json-formatter ile
-aynı: dosya içinde 6 dilli `labels` nesnesi + `pick(labels, locale)`. Ayna sayfalar
-aynı bileşeni re-export ettiği için tek dosyayı çevirmek 6 rotayı birden düzeltir.
+**30 Tem 2026 — yerelleştirme borcu kapatıldı.** İki turda yapıldı:
 
-Bu iş sırasında ayrıca:
-- Bu 8 araçtaki "Araçlara Dön" linkleri `localePath("/")` kullanacak şekilde
-  düzeltildi (önceden TR/ES/DE/PT/FR sayfalarından İngilizce ana sayfaya atıyordu).
+1. Hiç yerelleşmemiş 8 araç (base64, heic-convert, image-convert, lorem-ipsum,
+   markdown-preview, password-generator, qr-generator, unit-converter).
+2. Yalnızca EN+TR olan 17 araç (age-calculator, case-converter, csv-json,
+   url-encode, uuid-generator, timestamp-converter, jwt-decoder, regex-tester,
+   percentage-calculator, vat-calculator, number-to-words, image-resize,
+   exif-cleaner, favicon-generator, ocr, video-to-mp3, pdf-sign).
+
+Desen her yerde aynı: dosya içinde 6 dilli `labels` nesnesi + `pick(labels, locale)`.
+Ayna sayfalar aynı bileşeni re-export ettiği için tek dosyayı çevirmek 6 rotayı
+birden düzeltir. **Dikkat:** `pick()` eksik dili sessizce İngilizceye düşürür — bir
+aracın `pick` kullanıyor olması 6 dilde olduğu anlamına gelmez, `labels` içinde
+altı anahtarın da bulunması gerekir.
+
+### Bu iş sırasında düzeltilen gerçek hatalar
+
+- **`localeTag()` eklendi** (`src/lib/language-context.tsx`). Araçlar
+  `toLocaleString(locale === "tr" ? "tr-TR" : "en-US")` yazıyordu; yani Almanca
+  sayfada sayı `1,234.56` (ABD biçimi) çıkıyordu. Artık altı dil de kendi
+  biçimini alıyor (pt → `pt-BR`, trafiğin çoğu Brezilya'dan).
+- **Yüzde işaretinin yeri** dile bağlandı: TR `%20`, EN/PT `20%`, ES/DE/FR `20 %`.
+  Önceden yüzde hesaplayıcı tüm dillerde Türkçe düzende (`%20`) basıyordu.
+- **KDV oranları ülkeye göre** ayarlandı: ES 4/10/21, DE 7/19, PT 6/13/23,
+  FR 5,5/10/20. Önceden her dilde Türkiye oranları (1/10/20) görünüyordu.
+  `en` uluslararası sayfa olduğu için Türkiye oranlarında bırakıldı — metin de
+  bunu böyle söylüyor. Her dilde özel oran girme seçeneği zaten var.
+- **Göreli zaman** `Intl.RelativeTimeFormat`'a taşındı (timestamp-converter);
+  çoğul kuralları ve "önce/sonra" yönü artık elle çevrilmiyor.
+- **"Araçlara Dön" linkleri** `localePath("/")` kullanıyor; önceden diğer
+  dillerden İngilizce ana sayfaya atıyordu.
 - İki SSS'deki yanlış bilgi düzeltildi: password-generator "128 karaktere kadar"
   diyordu ama kaydırıcı maksimumu 64; qr-generator "PNG veya SVG indirebilirsiniz"
   diyordu ama yalnızca PNG indirme var. Yanlış metin 6 dile kopyalanmadan düzeltildi.
+
+### Arayüzü çevrilmiş ama çıktısı hâlâ sınırlı iki araç
+
+Bunlar **çeviri işi değil, özellik işi** — arayüz 6 dilde ama motor değil:
+
+- **ocr**: sitede yalnızca `eng` + `tur` dil paketi var (`public/ocr/lang/`).
+  İspanyolca/Almanca/Portekizce/Fransızca metinde doğruluk düşük kalır. Metinler
+  bunu açıkça söylüyor. Paket başına ~8-11 MB ek varlık gerekir.
+- **number-to-words**: sayıyı yalnızca Türkçe ve İngilizce okunuşa çeviriyor.
+  Diğer dillerin okunuş algoritması ayrıca yazılmalı.
 
 Kurumsal sayfalar (`/about`, `/contact`, `/privacy`, `/terms`) yalnızca `/` ve `/tr/`
 altında var. Blog: 3 İngilizce + 3 Türkçe yazı.
@@ -225,10 +257,10 @@ Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
 
 1. **2 hafta sonra ölçüm al.** Derinleştirilen 7 sayfanın Search Console'daki ortalama
    konumu düştü mü? Düştüyse aynı yaklaşımı kalan araçlara uygula.
-2. **Kalan ~20 aracı EN+TR'den 6 dile çıkar.** Artık en büyük yerelleştirme açığı bu
-   grup (age-calculator, jwt-decoder, ocr, video-to-mp3, regex-tester, url-encode…).
-   Desen hazır: `labels` + `pick()`. ES/DE/PT/FR gösterimlerinin yüksek olduğu
-   araçlardan başla (bkz. bölüm 7 gösterim liderleri).
+2. **Kurumsal sayfaları ES/DE/PT/FR'ye aç.** Araçlar artık 6 dilde; en büyük
+   yerelleştirme açığı `/about`, `/contact`, `/privacy`, `/terms`. Şu an footer'dan
+   tıklayan İspanyol/Alman/Brezilyalı/Fransız kullanıcı İngilizceye düşüyor.
+   `language-context.tsx` içindeki `FULL_MIRROR` kümesi bunu yönetiyor.
 3. **Backlink çalışması.** Konum 65'ten çıkmak otorite gerektiriyor: AlternativeTo,
    Privacy Guides forumu, awesome-* listeleri (kod açık kaynak yapılırsa şansı artar).
 4. **Ertelenen dil genişlemesi.** İyi adaylar: Japonca (Google hâkim, rekabet zayıf),
@@ -242,9 +274,14 @@ Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
 
 ## 10. Bilinen eksikler ve teknik borç
 
-- **~20 araç yalnızca EN+TR** (bkz. bölüm 5) — kalan en büyük yerelleştirme açığı.
-  ES/DE/PT/FR ziyaretçisi bu araçlarda İngilizce arayüz görüyor.
 - **Kurumsal sayfalar** ES/DE/PT/FR'de yok; footer'dan tıklayınca İngilizceye düşülüyor.
+  Araç yerelleştirmesi bittiğine göre kalan en büyük dil açığı bu.
+- **OCR yalnızca eng+tur tanıyor**, number-to-words yalnızca TR+EN okunuşu üretiyor
+  (bkz. bölüm 5) — arayüzleri 6 dilde ama motorları değil.
+- **PDF araçlarının bir kısmında EN+TR ternary kalıntısı var** (`pdf-merge`,
+  `pdf-split`, `pdf-rotate`, `pdf-pages`, `pdf-watermark`, `pdf-pagenumber`,
+  `pdf-to-image`, `image-to-pdf`). Bu araçların gövdesi `t()` ile 6 dilde ama
+  bu ternary'lerin bastığı parçalar ES/DE/PT/FR'de İngilizce kalıyor. Denetlenmeli.
 - **PDF sıkıştırma yalnızca yapısaldır** — görsel örnekleme yapmaz, bu yüzden taranmış
   PDF'lerde kazanç azdır. Sayfa içeriğinde bu dürüstçe açıklanıyor.
 - **Metin karşılaştırma satır düzeyinde** çalışır; satır içi (kelime) vurgulama yok.

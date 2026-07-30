@@ -51,6 +51,25 @@ export function pick<T>(dict: { en: T } & Partial<Record<Locale, T>>, locale: Lo
   return dict[locale] ?? dict.en;
 }
 
+/**
+ * Locale kodunu Intl'in beklediği BCP 47 etiketine çevirir.
+ * `toLocaleString` çağrılarında kullanılır — aksi hâlde Almanca "1.234,56" yerine
+ * İngilizce "1,234.56" biçimi çıkar. Portekizce için Brezilya seçildi: trafiğin
+ * ezici çoğunluğu oradan geliyor.
+ */
+const LOCALE_TAGS: Record<Locale, string> = {
+  en: "en-US",
+  tr: "tr-TR",
+  es: "es-ES",
+  de: "de-DE",
+  pt: "pt-BR",
+  fr: "fr-FR",
+};
+
+export function localeTag(locale: Locale): string {
+  return LOCALE_TAGS[locale] ?? "en-US";
+}
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "/";
   const router = useRouter();
