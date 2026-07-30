@@ -1,316 +1,286 @@
-# ToolsMani - AI Handoff Document
-# Complete Project Context for AI Assistants
+# ToolsMani — Teknik El Kitabı ve Devir Dokümanı
 
-> **Last Updated:** 2026-03-27
-> **Author:** Claude (Anthropic) — initial development AI
-> **Project Owner:** Zafer (drzaferhabip@gmail.com)
-
----
-
-## 1. PROJECT IDENTITY
-
-- **Name:** ToolsMani
-- **Domain:** toolsmani.com
-- **Live URL:** https://toolsmani.web.app (Firebase) → toolsmani.com (custom domain, pending SSL)
-- **Repository:** https://github.com/drzaferim/EarnMoneyClaude
-- **Branch:** claude/ethical-revenue-system-GxdsX
-- **Local Path (Owner's Mac):** /Users/zafer/Documents/Github/ToolsMani/EarnMoneyClaude
+> **Son güncelleme:** 30 Temmuz 2026
+> **Sahip:** Zafer (drzaferhabip@gmail.com)
+> **Canlı:** https://toolsmani.com
+> **Depo:** https://github.com/drzaferim/tools-mani (branch: `main`)
+>
+> Bu dosya projenin **tek güncel doğruluk kaynağıdır**. `BUSINESS_PLAN.md` ve
+> `DEPLOYMENT.md` eski kararları yansıtır; çelişki halinde bu dosya geçerlidir.
 
 ---
 
-## 2. PROJECT PURPOSE & PHILOSOPHY
+## 1. Proje kimliği
 
-### What is ToolsMani?
-A free online tools platform that generates revenue ethically. The project was born from an experiment: **Can an AI build and manage a revenue-generating system from scratch with $100 starting capital?**
+**ToolsMani**, 39 araçlı ücretsiz online araç setidir. Tek ayırt edici özelliği:
+**her işlem kullanıcının tarayıcısında çalışır, hiçbir dosya sunucuya yüklenmez.**
+OCR ve video dönüştürme gibi ağır işler dahil — bunların wasm motorları bile kendi
+alan adımızdan sunulur, yani sitede sıfır üçüncü-taraf içerik isteği vardır.
 
-### Core Principles
-1. **Halal (Islamic finance compliant):** No interest-based transactions, no gambling, no haram content
-2. **Legal:** Fully legitimate SaaS business
-3. **Privacy-first:** ALL processing happens in the user's browser — no data is ever sent to servers
-4. **Value-first:** Free tools that genuinely help people; premium features for power users
-5. **Transparency:** Clear pricing, no hidden fees, no dark patterns
+### Bağlayıcı ilkeler (sahibinin kararları)
 
-### Revenue Split Agreement
-| Share | Percentage | Purpose |
-|-------|-----------|---------|
-| System & Growth | 60% | Hosting, marketing, new tools, API costs |
-| Development Reserve | 20% | Technical improvements, infrastructure |
-| Owner (Zafer) | 20% | Personal income |
+| İlke | Durum |
+|---|---|
+| Reklam | **YOK, kalıcı olarak.** AdSense planı iptal edildi. |
+| Ücret | Site sonsuza dek ücretsiz. Kilitli özellik, ödeme duvarı yok. |
+| Gizlilik | Dosyalar asla yüklenmez. Bu bir slogan değil, mimari kısıt. |
+| Helal uyumu | Faiz/kumar içerikli araçlar (kredi hesaplayıcı vb.) eklenmez. |
+| Karanlık desen | Yok. Yanıltıcı düğme, gizli maliyet, sahte aciliyet kullanılmaz. |
 
----
+### Gelir stratejisi (henüz uygulanmadı)
 
-## 3. TECH STACK
+Web sitesi ücretsiz kalır ve pazarlama hunisi işlevi görür. Talep kanıtı oluşmadan
+hiçbiri başlatılmaz; öncelik sırası:
 
-| Layer | Technology | Notes |
-|-------|-----------|-------|
-| Framework | **Next.js 14** (App Router) | Static export mode (`output: "export"`) |
-| Language | **TypeScript** | Strict mode |
-| Styling | **Tailwind CSS 3.4** | Custom primary (blue) and accent (green) color palette |
-| Font | **Inter** | Loaded via Google Fonts CDN (not next/font) |
-| Hosting | **Firebase Hosting** | Free tier, static files from `/out` directory |
-| DNS | **Cloudflare** | Domain registrar + DNS management |
-| Payment | **Stripe** (planned) | Not yet integrated |
-| Repo | **GitHub** | drzaferim/EarnMoneyClaude |
+1. **Tauri masaüstü uygulaması** — tek seferlik ücret. Gizlilik vaadinin doğal uzantısı.
+2. **B2B / white-label lisans** — kurumlar çalışanlarının belge yüklemesini yasaklar; tam bu boşluk.
+3. **Bağış düğmesi** — ~1.000 ziyaretçi/gün eşiğinden sonra.
+4. **Geliştirici API'si** — backend gerektirir, sadeliği bozar; en son seçenek.
 
-### Why Static Export?
-- All tools run client-side (JavaScript in browser)
-- No server needed = $0 hosting cost on Firebase free tier
-- Firebase serves static files from the `/out` directory after `next build`
+Reddedilenler: sponsor köşesi (teknik olarak reklamdır), affiliate linkler (güveni kemirir).
 
 ---
 
-## 4. INFRASTRUCTURE DETAILS
+## 2. Teknik yığın
 
-### Firebase Configuration
-- **Firebase Project ID:** `gorev-takip-8242b` (shared with another app — uses multi-site hosting)
-- **Hosting Site Name:** `toolsmani`
-- **Public Directory:** `out` (Next.js static export output)
-- **Config File:** `firebase.json` — sets `"site": "toolsmani"` for multi-site isolation
-- **Project Link:** `.firebaserc` → `"default": "gorev-takip-8242b"`
+| Katman | Teknoloji | Not |
+|---|---|---|
+| Framework | Next.js 14 (App Router) | `output: "export"` — tamamen statik |
+| Dil | TypeScript | **tsconfig hedefi es5**: `u` bayraklı regex derlenmez, karakter aralığı kullan |
+| Stil | Tailwind CSS 3.4 | `primary` (mavi) + `accent` (yeşil) paleti |
+| Barındırma | Firebase Hosting | Proje `thelectura-1`, site adı `toolsmani` |
+| Veri | Firestore | Yalnızca anonim araç sayaçları + geri bildirim |
+| Analitik | GA4 | `G-L78B8VTFP9` |
+| DNS | Cloudflare | A kaydı + TXT doğrulama |
 
-### Cloudflare DNS Records
-| Type | Name | Value | Proxy |
-|------|------|-------|-------|
-| A | @ | 199.36.158.100 | DNS only (grey cloud) |
-| TXT | @ | hosting-site=gorev-takip-8242b | DNS only |
+### Deploy
 
-### Deploy Command
 ```bash
-npm run build && firebase deploy --only hosting:toolsmani --project gorev-takip-8242b
+npm run build && firebase deploy --only hosting
 ```
 
-### Owner's Firebase Login
-- Email: drzaferhabip@gmail.com
-- Firebase CLI auth is on owner's Mac only (AI cannot authenticate)
+`postbuild` kancası `scripts/generate-sitemap.js`'i çalıştırır ve `out/` taramasından
+sitemap'i otomatik üretir (şu an 261 URL). `public/`'te statik sitemap **yok**.
+
+### Kritik yapılandırma notları
+
+- **`.env.production` dosyası zorunlu.** İçinde `NEXT_PUBLIC_GA_ID=G-L78B8VTFP9` var.
+  Bu dosya olmadan build alınırsa site GA'sız yayınlanır (sessiz veri kaybı).
+- **`firebase.json`'da `'**' -> /404.html` rewrite'ı OLMAMALI.** Bu kural bulunamayan
+  yolları 404 içeriğiyle ama **HTTP 200** koduyla sunuyordu (soft 404) — Google bu
+  sayfaları geçerli sanıp tarıyordu. 29 Tem 2026'da kaldırıldı. Firebase, `out/404.html`
+  varsa doğru 404 durum kodunu kendisi döndürür.
 
 ---
 
-## 5. PROJECT STRUCTURE
+## 3. Çoklu dil (i18n) mimarisi
+
+**6 dil:** `en` (öneksiz), `tr`, `es`, `de`, `pt`, `fr`.
+
+Dil **URL önekinden** belirlenir — `src/lib/language-context.tsx` içinde `usePathname()`
+ile okunur. localStorage yalnızca kullanıcının tercihini hatırlar, dili belirlemez.
+Bu, statik export'ta her dilin HTML'inin sunucu tarafında doğru dille üretilmesini sağlar
+(SEO için kritik).
+
+### Ayna sayfa üreticileri
+
+| Script | Kapsam | Veri kaynağı |
+|---|---|---|
+| `scripts/generate-tr-pages.js` | Sitenin **tamamı** (araçlar + kurumsal) | Script içindeki `TR_META` |
+| `scripts/generate-intl-pages.js` | Yalnızca ana sayfa + `/tools/*` | `scripts/intl-data.json` |
+
+`intl-data.json`, ES/DE/PT/FR çevirilerinin tek kaynağıdır. `src/lib/translations.ts`
+içindeki `extra` bloğu buradan **elle** senkron edilir. Eksik çeviriler otomatik olarak
+İngilizceye düşer (`pick()` yardımcısı, `language-context.tsx`).
+
+### ⚠️ Yeni araç eklerken kayıt listesi (hepsini yap, yoksa araç yarım kalır)
+
+1. `src/lib/tools.ts` — araç tanımı (id, kategori, href, ikon)
+2. `src/lib/icon-map.ts` — lucide ikonunu import + map'e ekle
+3. `src/lib/translations.ts` — `tool.X` ve `tool.X.desc`
+4. `src/app/page.tsx` — `toolNameKeys` ve `toolDescKeys`
+5. `src/app/admin/page.tsx` — `TOOL_LABELS`
+6. `scripts/generate-tr-pages.js` — `TR_META` girdisi
+7. `scripts/intl-data.json` — `tools` bölümüne 4 dilde ad + açıklama
+8. Sonra: `node scripts/generate-tr-pages.js && node scripts/generate-intl-pages.js`
+
+---
+
+## 4. SEO içerik altyapısı
+
+`src/components/ToolContent.tsx` — araç sayfalarının altına eklenen yeniden kullanılabilir
+bölüm: tanıtım paragrafları, "nasıl kullanılır" adımları, öne çıkanlar kartları, SSS ve
+ilgili araç linkleri. Ayrıca **FAQPage JSON-LD** üretir.
+
+İçerikler `src/content/tools/*.ts` dosyalarında 6 dilli `ToolContentMap` olarak tutulur.
+Statik export sayesinde her dilin HTML'ine o dilin SSS'i gömülü çıkar.
+
+**Uygulanmış 7 sayfa** (toplam gösterimlerin ~%75'i):
+json-formatter, text-diff, pdf-compress, image-compress, image-resize, text-counter, color-picker.
+
+### ⚠️ Yeni bir araca ToolContent eklerken
+
+O aracın `layout.tsx` dosyasında eski bir `faqJsonLd` sabiti varsa **mutlaka kaldır** —
+yoksa aynı sayfada iki FAQPage oluşur ve Google hangisini kullanacağını bilemez.
+
+Hâlâ layout-FAQ'ı olan araçlar: `pdf-merge`, `pdf-split`, `pdf-rotate`, `pdf-pages`,
+`pdf-watermark`, `pdf-pagenumber`, `pdf-to-image`, `image-to-pdf`, `heic-convert`.
+
+Ayrıca site geneli FAQPage artık kök layout'ta **değil** (261 sayfaya basılıyordu ve
+araç FAQ'larıyla çakışıyordu); `src/app/page.tsx` içinde ve yalnızca `locale === "en"`
+iken üretilir.
+
+---
+
+## 5. Yerelleştirme denetimi (29 Tem 2026, sayfa sayfa doğrulandı)
+
+Her sayfada `<title>`, meta description ve hreflang **6 dilde eksiksiz**. Arayüz
+metinleri ise üç katmanda:
+
+| Katman | Sayı | Araçlar |
+|---|---|---|
+| 6 dilde tam | 2 | json-formatter, text-diff |
+| 6 dilde arayüz (`t()` ile) | ~11 | Tüm PDF araçları + pdf-compress, text-counter, color-picker, image-compress |
+| Yalnızca EN+TR | ~20 | age-calculator, jwt-decoder, ocr, video-to-mp3, vat-calculator, regex-tester, url-encode, uuid-generator, exif-cleaner, pdf-sign, favicon-generator, csv-json, timestamp-converter, case-converter, number-to-words, percentage-calculator, image-resize |
+| **Hiç yerelleşmemiş** | **8** | **base64, heic-convert, image-convert, lorem-ipsum, markdown-preview, password-generator, qr-generator, unit-converter** |
+
+Son gruptaki 8 araç TR'de bile İngilizce görünüyor — **en acil yerelleştirme işi budur.**
+
+Kurumsal sayfalar (`/about`, `/contact`, `/privacy`, `/terms`) yalnızca `/` ve `/tr/`
+altında var. Blog: 3 İngilizce + 3 Türkçe yazı.
+
+---
+
+## 6. Ağır wasm araçları (hepsi self-host)
+
+| Araç | Kütüphane | Varlık yolu | Boyut |
+|---|---|---|---|
+| OCR (resimden metin) | tesseract.js v7 | `public/ocr/` (worker + core + eng/tur dil paketleri) | ~47 MB |
+| Video → MP3/WAV | @ffmpeg/ffmpeg 0.12 | `public/ffmpeg/` (core.js + core.wasm) | ~31 MB |
+
+İkisi de `workerPath`/`corePath`/`langPath` (OCR) ve `toBlobURL` (ffmpeg) ile **kendi
+alan adımızdan** yüklenir. CDN kullanılmaz — "sıfır üçüncü-taraf istek" iddiasının
+teknik dayanağı bu. QR üretimi de aynı nedenle yerelleştirildi (eskiden
+`api.qrserver.com` kullanıyordu).
+
+Bu dosyalar sadece ilgili aracı açan kullanıcıya, bir kez iner ve önbelleğe alınır.
+
+---
+
+## 7. Mevcut SEO durumu (29 Tem 2026 ölçümü)
+
+| Metrik | Değer |
+|---|---|
+| Dizine eklenen sayfa | **147** / 261 URL (6 gün önce yalnızca 4'tü) |
+| Gösterim (3 ay) | 1.080 |
+| Tıklama | **0** |
+| Ortalama konum | 65,1 (≈7. sayfa) |
+| Farklı sorgu | 548 |
+| Ülke | 77 |
+| GA4 (28 gün) | 17 etkin kullanıcı, 53 görüntüleme, %100 Direct trafik |
+
+**Gösterim liderleri:** `/tools/text-diff` 234 · `/es/tools/json-formatter` 187 ·
+`/pt/tools/pdf-compress` 185 · `/fr/tools/color-picker` 58 · `/tr/tools/image-compress` 47 ·
+`/fr/tools/image-resize` 37 · `/de/tools/text-counter` 24
+
+**Ülke dağılımı:** ABD 222 · Brezilya 187 · Fransa 111 · Türkiye 88 · Almanya 43 ·
+İspanya 42 · Rusya 41
+
+### Teşhis
+
+Çok dilli strateji **işliyor** — Brezilya ve Fransa gösterimlerde üst sıralarda, yerel
+sorgular (`comprimir pdf`, `wortzähler online`) geliyor. Ama alan otoritesi düşük olduğu
+için sıralama 7. sayfada, dolayısıyla tıklama yok. Çözüm yeni araç eklemek değil:
+**içerik derinliği + backlink**.
+
+---
+
+## 8. Lansman durumu ve engeller
+
+| Kanal | Durum |
+|---|---|
+| **Reddit** | r/privacy **yasak** (R3 self-promo → anında ban; R7 kapalı kaynak yasak). r/SideProject'e gönderildi 23 Tem → 1 puan, 0 yorum, sıfır referans trafiği. |
+| **Hacker News** | Show HN **engelli** — HN yeni/düşük karmalı hesaplarda kısıtlıyor (`/showlim`). Hesap `drzaferim`, 1 karma. Plan: organik yorumlarla karma biriktir. "Show HN'siz normal link" **önerilmez** (spam/flag riski). |
+| **Product Hunt** | Ürün sayfası mevcut (ilk lansman ~7 Nis 2026). Relansman isteği 23 Tem'de reddedildi (6 ay kuralı). **Hak doğuşu: 7 Ekim 2026** (zamanlanmış görev kurulu). Sayfa metni güncel; galeri görselleri eski — `launch-assets/` içindekiler elle yüklenecek. |
+| **AlternativeTo** | 7 gün hesap yaşı şartı → 30 Tem sonrası (zamanlanmış görev kurulu). |
+| **IndexNow** | Aktif. Güncellenen URL'ler Bing/Yandex'e bildiriliyor. Anahtar: `public/6a4845b897db421fa70c94b2cec92a67.txt` |
+
+Lansman metinleri ve yorum yanıt şablonları: **`LANSMAN.md`**.
+Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
+
+---
+
+## 9. Sıradaki iş — öncelik sırası
+
+1. **8 yerelleşmemiş aracı 6 dile çevir.** base64, heic-convert, image-convert,
+   lorem-ipsum, markdown-preview, password-generator, qr-generator, unit-converter.
+   Bunlar TR'de bile İngilizce; qr-generator ve password-generator popüler araçlar.
+2. **2 hafta sonra ölçüm al.** Derinleştirilen 7 sayfanın Search Console'daki ortalama
+   konumu düştü mü? Düştüyse aynı yaklaşımı kalan araçlara uygula.
+3. **Backlink çalışması.** Konum 65'ten çıkmak otorite gerektiriyor: AlternativeTo,
+   Privacy Guides forumu, awesome-* listeleri (kod açık kaynak yapılırsa şansı artar).
+4. **Ertelenen dil genişlemesi.** İyi adaylar: Japonca (Google hâkim, rekabet zayıf),
+   Rusça (IndexNow zaten Yandex'e gidiyor). Çince anakara için **önerilmez** — Firebase
+   Hosting GFW nedeniyle erişilemez; zh-TW (Tayvan) değerlendirilebilir. Arapça RTL
+   düzeni gerektirdiği için ayrı proje.
+5. **Kod açık kaynak?** "Kaynak kodu nerede?" HN/Reddit'te en sık gelen soru. Açmak hem
+   gizlilik iddiasını kanıtlar hem dizin listelerine girmeyi kolaylaştırır.
+
+---
+
+## 10. Bilinen eksikler ve teknik borç
+
+- **8 araç hiç yerelleşmemiş** (bkz. bölüm 5) — en büyük açık.
+- **Kurumsal sayfalar** ES/DE/PT/FR'de yok; footer'dan tıklayınca İngilizceye düşülüyor.
+- **PDF sıkıştırma yalnızca yapısaldır** — görsel örnekleme yapmaz, bu yüzden taranmış
+  PDF'lerde kazanç azdır. Sayfa içeriğinde bu dürüstçe açıklanıyor.
+- **Metin karşılaştırma satır düzeyinde** çalışır; satır içi (kelime) vurgulama yok.
+- **Gerçek destek e-postası yok.** İletişim formu Firestore'a yazıyor; Cloudflare Email
+  Routing ile `destek@toolsmani.com` kurulabilir.
+- **9 araç layout'unda eski `faqJsonLd` var** (bkz. bölüm 4) — o araçlara ToolContent
+  eklenirken kaldırılmalı.
+- `libheif-js` build uyarısı verir ("Critical dependency") — zararsız, HEIC aracının
+  bağımlılığından kaynaklanıyor.
+
+---
+
+## 11. Dosya haritası
 
 ```
-EarnMoneyClaude/
-├── .firebaserc                 # Firebase project link
-├── firebase.json               # Firebase hosting config (multi-site)
-├── next.config.js              # Next.js config (static export)
-├── tailwind.config.ts          # Tailwind with custom colors + Inter font
-├── postcss.config.js           # PostCSS config
-├── tsconfig.json               # TypeScript config
-├── package.json                # Dependencies and scripts
-├── BUSINESS_PLAN.md            # Detailed business plan
-├── DEPLOYMENT.md               # Deployment guide
-├── AI_HANDOFF.md               # THIS FILE
+tools-mani/
+├── AI_HANDOFF.md              # BU DOSYA — güncel doğruluk kaynağı
+├── LANSMAN.md                 # Lansman metinleri + yanıt şablonları
+├── BUSINESS_PLAN.md           # ESKİ: premium/Stripe modeli, artık geçersiz
+├── firebase.json              # ⚠️ '**' rewrite eklemeyin (soft 404)
+├── .env.production            # NEXT_PUBLIC_GA_ID — build için zorunlu
+├── launch-assets/             # Product Hunt galeri görselleri (1270×760)
 ├── public/
-│   ├── robots.txt              # SEO — references toolsmani.com
-│   └── sitemap.xml             # SEO — all tool URLs listed
+│   ├── ocr/                   # tesseract self-host varlıkları (~47 MB)
+│   ├── ffmpeg/                # ffmpeg.wasm çekirdeği (~31 MB)
+│   ├── og-image.png           # 1200×630 sosyal paylaşım görseli
+│   └── 6a48...a67.txt         # IndexNow anahtarı
+├── scripts/
+│   ├── generate-tr-pages.js   # TR ayna sayfaları (tam site)
+│   ├── generate-intl-pages.js # ES/DE/PT/FR ayna sayfaları (ana sayfa + araçlar)
+│   ├── intl-data.json         # ES/DE/PT/FR çevirilerinin tek kaynağı
+│   └── generate-sitemap.js    # postbuild: out/ taramasından sitemap
 └── src/
     ├── app/
-    │   ├── globals.css         # Tailwind imports + custom component classes
-    │   ├── layout.tsx          # Root layout (metadata, fonts, header/footer)
-    │   ├── page.tsx            # Homepage (hero, stats, tools grid, CTA)
-    │   ├── pricing/
-    │   │   └── page.tsx        # Pricing page (Free / Premium $4.99 / API Pro $19.99)
-    │   └── tools/
-    │       ├── text-counter/page.tsx       # FREE — word/char/sentence counter
-    │       ├── json-formatter/page.tsx     # FREE — format/minify/validate JSON
-    │       ├── qr-generator/page.tsx       # FREE — QR code generator (uses qrserver API)
-    │       ├── password-generator/page.tsx # FREE — crypto-random password generator
-    │       ├── image-compress/page.tsx     # FREE — browser-based image compression
-    │       └── pdf-merge/page.tsx          # PREMIUM — locked behind paywall (placeholder)
+    │   ├── layout.tsx         # kök layout (site geneli FAQ BURADA DEĞİL)
+    │   ├── page.tsx           # ana sayfa + EN-only FAQ schema
+    │   ├── tools/<slug>/      # 39 araç (page.tsx + layout.tsx)
+    │   ├── tr|es|de|pt|fr/    # üretilmiş ayna sayfalar (elle düzenlemeyin)
+    │   ├── about|contact|privacy|terms/
+    │   ├── blog/              # markdown tabanlı, 3 EN + 3 TR
+    │   └── admin/             # Google girişli istatistik paneli
     ├── components/
-    │   ├── Header.tsx          # Sticky header with nav, mobile menu, "Go Premium" CTA
-    │   └── Footer.tsx          # Footer with tool links and copyright
+    │   ├── ToolContent.tsx    # SEO içerik bölümü + FAQPage JSON-LD
+    │   ├── Header.tsx         # 6 dilli dil menüsü
+    │   └── Footer.tsx
+    ├── content/tools/*.ts     # 6 dilli araç içerikleri (ToolContentMap)
     └── lib/
-        └── tools.ts            # Tool definitions (id, name, description, category, isFree)
+        ├── language-context.tsx  # URL tabanlı locale + pick() + localePath()
+        ├── translations.ts       # EN/TR sözlük + extra (ES/DE/PT/FR)
+        ├── tools.ts              # araç kayıt listesi
+        └── track.ts              # GA event + Firestore sayaç
 ```
-
----
-
-## 6. CURRENT STATE (as of 2026-03-27)
-
-### Completed ✅
-- [x] Next.js project setup with TypeScript + Tailwind
-- [x] 5 free tools built and functional (text counter, JSON formatter, QR generator, password generator, image compressor)
-- [x] 1 premium tool placeholder (PDF merger — shows upgrade prompt)
-- [x] Homepage with hero, stats, tools grid, CTA sections
-- [x] Pricing page with 3 tiers (Free / Premium / API Pro)
-- [x] Header and Footer components
-- [x] Firebase Hosting configured (multi-site under gorev-takip-8242b)
-- [x] Successfully deployed to https://toolsmani.web.app
-- [x] Custom domain toolsmani.com added in Firebase Console
-- [x] Cloudflare DNS records configured (A + TXT)
-- [x] SEO basics (sitemap.xml, robots.txt, meta tags, Open Graph)
-- [x] Business plan and deployment documentation
-
-### Pending ⏳
-- [ ] SSL certificate provisioning for toolsmani.com (Firebase auto-generates, may take up to 24h)
-- [ ] Stripe payment integration for premium subscriptions
-- [ ] Google AdSense integration
-- [ ] Google Search Console registration
-- [ ] www subdomain CNAME record (www → toolsmani.web.app)
-
-### Not Started Yet 🔲
-- [ ] User authentication (for premium accounts)
-- [ ] Additional tools (see roadmap below)
-- [ ] API endpoints for API Pro tier
-- [ ] Blog / content marketing pages
-- [ ] Analytics integration
-- [ ] Multi-language support
-
----
-
-## 7. GROWTH ROADMAP
-
-### Phase 1: Foundation (Month 1-3) — CURRENT PHASE
-**Goal:** Get the site live, indexed, and start organic traffic
-
-- Complete custom domain setup (toolsmani.com)
-- Set up Stripe for premium payments
-- Register with Google Search Console
-- Write SEO-optimized descriptions for each tool
-- Add 5 more free tools:
-  - Base64 Encoder/Decoder
-  - Color Picker & Converter
-  - Lorem Ipsum Generator
-  - Markdown Preview
-  - Unit Converter
-
-### Phase 2: Growth (Month 4-6)
-**Goal:** Grow traffic through SEO and content
-
-- Implement Google AdSense (with haram content filters)
-- Start content marketing (tool guides, how-to blog posts)
-- Social media presence (Twitter/X, LinkedIn)
-- Add 5 more tools
-- Implement basic analytics
-
-### Phase 3: Monetization (Month 7-12)
-**Goal:** Activate premium revenue streams
-
-- Launch premium subscription (Stripe Checkout + Stripe Customer Portal)
-- Build actual PDF merger functionality (using pdf-lib)
-- Add batch processing for premium users
-- Build REST API for API Pro tier
-- Optimize conversion funnel
-- A/B test pricing
-
-### Phase 4: Scale (Month 13+)
-**Goal:** Expand and diversify
-
-- 20+ tools total
-- Multi-language support (Turkish, Arabic, English)
-- Affiliate partnerships
-- Consider mobile app (React Native or PWA)
-- Explore additional revenue streams
-
----
-
-## 8. REVENUE MODEL DETAILS
-
-### Pricing Tiers
-```
-Free ($0/forever):
-├── All basic tools (unlimited)
-├── Ads shown
-└── No sign-up required
-
-Premium ($4.99/month or $39.99/year):
-├── All tools unlimited
-├── Ad-free
-├── Batch processing
-├── Premium tools (PDF merger, etc.)
-├── Priority new tools
-└── Email support
-
-API Pro ($19.99/month):
-├── Everything in Premium
-├── REST API access (25,000 req/month)
-├── Webhook support
-├── API documentation
-├── Commercial license
-└── Priority support
-```
-
-### Revenue Sources
-1. **Premium subscriptions** — primary revenue (Stripe)
-2. **Ad revenue** — secondary (Google AdSense, filtered for halal compliance)
-3. **API access** — long-term (developer-focused)
-
-### Financial Projections (Conservative)
-| Period | Monthly Visitors | Monthly Revenue |
-|--------|-----------------|-----------------|
-| Month 1-3 | 500-2,000 | $0-5 |
-| Month 4-6 | 2,000-8,000 | $10-50 |
-| Month 7-12 | 8,000-30,000 | $50-300 |
-| Month 13-24 | 30,000-100,000 | $200-1,000 |
-
----
-
-## 9. TECHNICAL NOTES FOR AI DEVELOPERS
-
-### Key Architecture Decisions
-1. **Static export** — No SSR, no API routes within Next.js. Everything is client-side.
-2. **No database** — Tools process data in-browser only. When auth/payments are added, use Firebase Auth + Firestore or Stripe-only approach.
-3. **Multi-site Firebase** — The project shares a Firebase project (`gorev-takip-8242b`) with another app. Always use `--only hosting:toolsmani` when deploying.
-4. **No next/font** — Google Fonts loaded via CDN `<link>` tag because build environment may not have internet access to download fonts.
-
-### Adding a New Tool
-1. Create a new directory: `src/app/tools/{tool-name}/page.tsx`
-2. Make it a client component (`"use client"`)
-3. Add tool definition to `src/lib/tools.ts`
-4. Update `public/sitemap.xml` with the new URL
-5. Build and deploy: `npm run build && firebase deploy --only hosting:toolsmani`
-
-### Common Commands
-```bash
-npm run dev          # Local development server
-npm run build        # Build static export to /out
-npm run lint         # Run ESLint
-firebase deploy --only hosting:toolsmani --project gorev-takip-8242b   # Deploy
-```
-
-### Important Constraints
-- **AI cannot authenticate with Firebase** — The owner must run `firebase login` on their machine. AI can write code and prepare builds, but the owner must execute deploy commands locally.
-- **No server-side processing** — All tools MUST work entirely in the browser.
-- **Halal compliance** — No tools or ads related to gambling, alcohol, interest-based finance, or adult content.
-- **Privacy** — Never add analytics or tracking that sends user data to third parties without clear consent.
-
----
-
-## 10. OWNER PROFILE
-
-- **Name:** Zafer
-- **Email:** drzaferhabip@gmail.com
-- **Device:** MacBook Air (M-series)
-- **Firebase Account:** drzaferhabip@gmail.com
-- **GitHub:** drzaferim
-- **Domain Registrar:** Cloudflare
-- **Language:** Turkish (primary), English
-- **Budget:** $100 initial investment
-- **Role:** Handles domain purchases, bank accounts, payment processor setup, Firebase auth, and deployment execution
-
----
-
-## 11. COMMUNICATION STYLE
-
-- Zafer prefers Turkish for conversation
-- He expects AI to make decisions autonomously ("her şeyi senin kararınla olacak")
-- He wants AI to execute directly rather than just giving instructions when possible
-- He is hands-on and will help with tasks AI cannot do (browser auth, purchases, etc.)
-- Keep explanations concise and action-oriented
-
----
-
-## 12. IMMEDIATE NEXT ACTIONS
-
-When resuming work on this project, the priority order is:
-
-1. **Verify toolsmani.com is live** — Check if SSL certificate has been provisioned
-2. **Add www CNAME** — Cloudflare DNS: CNAME www → toolsmani.web.app (DNS only)
-3. **Stripe integration** — Set up Stripe Checkout for premium subscriptions
-4. **Google Search Console** — Register and submit sitemap
-5. **Add more free tools** — Each new tool = new SEO landing page = more organic traffic
-6. **Google AdSense** — Apply once traffic reaches ~1,000 monthly visitors
-
----
-
-*This document contains everything needed to continue development. Read BUSINESS_PLAN.md for financial details and DEPLOYMENT.md for infrastructure specifics.*

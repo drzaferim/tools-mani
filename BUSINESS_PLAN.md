@@ -1,5 +1,10 @@
 # ToolsMani - Business Plan
 
+> ⚠️ **BU DOSYA ESKİDİR (30 Temmuz 2026).** İçindeki premium abonelik, Stripe ve
+> AdSense planları sahibi tarafından **iptal edilmiştir**. Site kalıcı olarak
+> ücretsiz ve reklamsızdır. Güncel iş modeli ve gelir stratejisi için
+> **`AI_HANDOFF.md` bölüm 1**'e bakın. Bu dosya yalnızca tarihsel kayıt olarak duruyor.
+
 ## Mission
 Provide free, privacy-focused online tools that process data in the browser.
 Earn revenue ethically through premium features, respecting Islamic finance principles (halal).
