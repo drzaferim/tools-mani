@@ -105,6 +105,211 @@ const content = {
       },
     ],
   },
+
+  es: {
+    title: "Política de privacidad",
+    updated: "Última actualización: 14 de julio de 2026",
+    sections: [
+      {
+        h: "La versión corta",
+        p: [
+          "Tus archivos nunca salen de tu dispositivo. Todas las herramientas de ToolsMani (unir PDF, comprimir imágenes, conversores y el resto) se ejecutan por completo dentro de tu navegador mediante JavaScript. Nada de lo que abras en una herramienta se sube a nuestros servidores, ni se almacena en ellos, ni es visible para nosotros.",
+          "Solo recopilamos datos de uso mínimos y en su mayoría anónimos, para entender qué herramientas resultan útiles y mantener el sitio funcionando bien. Nunca vendemos datos a nadie.",
+        ],
+      },
+      {
+        h: "Lo que NO recopilamos",
+        p: [
+          "No recopilamos ni almacenamos tus archivos ni su contenido. No exigimos una cuenta, así que no guardamos nombres, contraseñas ni perfiles. No recopilamos datos de pago: el sitio es gratuito.",
+        ],
+      },
+      {
+        h: "Lo que sí recopilamos",
+        p: [
+          "Analítica: usamos Google Analytics 4 para medir las visitas de página y el uso de las herramientas (por ejemplo, que se usó la herramienta de unir PDF, nunca qué contenía el PDF). Google Analytics instala cookies y puede tratar tu dirección IP e información del dispositivo conforme a la propia política de privacidad de Google.",
+          "Contadores anónimos de uso: cuando se usa una herramienta, incrementamos un contador diario (p. ej. «pdf-merge: +1») en nuestra base de datos. Ese número no contiene ningún dato personal.",
+          "Comentarios: si usas el formulario de contacto o de comentarios, guardamos el mensaje que escribes, la página desde la que se envió y tu preferencia de idioma. El formulario es anónimo salvo que decidas incluir datos de contacto en el mensaje.",
+        ],
+      },
+      {
+        h: "Cookies",
+        p: [
+          "Usamos cookies únicamente para la medición de Google Analytics y una sola clave de localStorage que recuerda tu elección de idioma. Puedes bloquear las cookies en la configuración de tu navegador; las herramientas seguirán funcionando con normalidad.",
+        ],
+      },
+      {
+        h: "Servicios de terceros",
+        p: [
+          "Google Analytics (medición de uso), Google Fonts (entrega de tipografías) y Firebase Hosting y Firestore de Google (alojamiento del sitio y almacenamiento de contadores anónimos y comentarios). Cada uno trata los datos conforme a su propia política de privacidad. Ninguna herramienta envía tu contenido a un servicio externo: todo el procesamiento, incluida la generación de códigos QR, ocurre localmente en tu navegador.",
+        ],
+      },
+      {
+        h: "Conservación de datos y tus derechos",
+        p: [
+          "Los datos analíticos se conservan según los valores predeterminados de Google Analytics. Los mensajes de comentarios se guardan hasta haberlos leído y atendido, y después pueden eliminarse. Como no guardamos datos de cuenta sobre ti, normalmente no hay nada personal que borrar; pero si crees que conservamos algo relacionado contigo (por ejemplo, un mensaje con tu correo), escríbenos desde la página de contacto y lo eliminaremos.",
+        ],
+      },
+      {
+        h: "Cambios en esta política",
+        p: [
+          "Si cambiamos la forma en que el sitio trata los datos (por ejemplo, si algún día introducimos publicidad), actualizaremos esta página y la fecha superior antes de que el cambio entre en vigor.",
+        ],
+      },
+    ],
+  },
+  de: {
+    title: "Datenschutzerklärung",
+    updated: "Zuletzt aktualisiert: 14. Juli 2026",
+    sections: [
+      {
+        h: "Die Kurzfassung",
+        p: [
+          "Ihre Dateien verlassen Ihr Gerät nie. Jedes Tool auf ToolsMani (PDF zusammenführen, Bildkomprimierung, Konverter und alle übrigen) läuft vollständig in Ihrem Browser mit JavaScript. Nichts, was Sie in einem Tool öffnen, wird auf unsere Server hochgeladen, dort gespeichert oder ist für uns sichtbar.",
+          "Wir erheben nur minimale, überwiegend anonyme Nutzungsdaten, um zu verstehen, welche Tools nützlich sind, und die Website funktionsfähig zu halten. Wir verkaufen niemals Daten an Dritte.",
+        ],
+      },
+      {
+        h: "Was wir NICHT erheben",
+        p: [
+          "Wir erheben und speichern weder Ihre Dateien noch deren Inhalte. Ein Konto ist nicht erforderlich, daher liegen uns keine Namen, Passwörter oder Profile vor. Zahlungsdaten erheben wir nicht – die Website ist kostenlos.",
+        ],
+      },
+      {
+        h: "Was wir erheben",
+        p: [
+          "Analyse: Wir verwenden Google Analytics 4, um Seitenaufrufe und die Tool-Nutzung zu messen (zum Beispiel, dass das PDF-Zusammenführen genutzt wurde – niemals, was im PDF stand). Google Analytics setzt Cookies und verarbeitet ggf. Ihre IP-Adresse und Geräteinformationen gemäß der eigenen Datenschutzerklärung von Google.",
+          "Anonyme Tool-Zähler: Wird ein Tool genutzt, erhöhen wir einen Tageszähler (z. B. „pdf-merge: +1“) in unserer Datenbank. Diese Zahl enthält keinerlei personenbezogene Daten.",
+          "Feedback: Wenn Sie das Feedback- oder Kontaktformular nutzen, speichern wir die von Ihnen verfasste Nachricht, die Seite, von der sie gesendet wurde, und Ihre Spracheinstellung. Das Formular ist anonym, sofern Sie nicht selbst Kontaktdaten in die Nachricht schreiben.",
+        ],
+      },
+      {
+        h: "Cookies",
+        p: [
+          "Wir verwenden Cookies ausschließlich für die Messung mit Google Analytics sowie einen einzigen localStorage-Eintrag, der Ihre Sprachwahl speichert. Sie können Cookies in Ihren Browsereinstellungen blockieren; die Tools funktionieren weiterhin normal.",
+        ],
+      },
+      {
+        h: "Dienste von Drittanbietern",
+        p: [
+          "Google Analytics (Nutzungsmessung), Google Fonts (Bereitstellung von Schriftarten) sowie Firebase Hosting und Firestore von Google (Hosting der Website und Speicherung anonymer Zähler und Feedback). Jeder Dienst verarbeitet Daten nach seiner eigenen Datenschutzerklärung. Kein Tool sendet Ihre Inhalte an einen Drittanbieter – die gesamte Verarbeitung, einschließlich der QR-Code-Erzeugung, erfolgt lokal in Ihrem Browser.",
+        ],
+      },
+      {
+        h: "Speicherdauer und Ihre Rechte",
+        p: [
+          "Analysedaten werden gemäß den Standardeinstellungen von Google Analytics aufbewahrt. Feedback-Nachrichten werden aufbewahrt, bis sie gelesen und bearbeitet wurden, und können danach gelöscht werden. Da wir keine Kontodaten über Sie führen, gibt es in der Regel nichts Personenbezogenes zu löschen – falls Sie jedoch glauben, dass uns etwas zu Ihrer Person vorliegt (etwa eine Feedback-Nachricht mit Ihrer E-Mail-Adresse), kontaktieren Sie uns über die Kontaktseite, und wir entfernen es.",
+        ],
+      },
+      {
+        h: "Änderungen dieser Erklärung",
+        p: [
+          "Wenn wir ändern, wie die Website mit Daten umgeht (zum Beispiel, falls wir je Werbung einführen), aktualisieren wir diese Seite und das Datum oben, bevor die Änderung wirksam wird.",
+        ],
+      },
+    ],
+  },
+  pt: {
+    title: "Política de privacidade",
+    updated: "Última atualização: 14 de julho de 2026",
+    sections: [
+      {
+        h: "A versão curta",
+        p: [
+          "Seus arquivos nunca saem do seu dispositivo. Todas as ferramentas do ToolsMani (juntar PDF, comprimir imagens, conversores e as demais) rodam inteiramente dentro do seu navegador usando JavaScript. Nada do que você abre em uma ferramenta é enviado para os nossos servidores, armazenado neles ou visível para nós.",
+          "Coletamos apenas dados de uso mínimos e majoritariamente anônimos, para entender quais ferramentas são úteis e manter o site funcionando bem. Nunca vendemos dados a ninguém.",
+        ],
+      },
+      {
+        h: "O que NÃO coletamos",
+        p: [
+          "Não coletamos nem armazenamos seus arquivos ou o conteúdo deles. Não exigimos conta, portanto não guardamos nomes, senhas ou perfis. Não coletamos dados de pagamento — o site é gratuito.",
+        ],
+      },
+      {
+        h: "O que coletamos",
+        p: [
+          "Análise: usamos o Google Analytics 4 para medir visitas às páginas e uso das ferramentas (por exemplo, que a ferramenta de juntar PDF foi usada, nunca o que havia no PDF). O Google Analytics define cookies e pode tratar seu endereço IP e informações do dispositivo conforme a política de privacidade do próprio Google.",
+          "Contadores anônimos de uso: quando uma ferramenta é usada, incrementamos um contador diário (ex.: «pdf-merge: +1») no nosso banco de dados. Esse número não contém nenhum dado pessoal.",
+          "Feedback: se você usar o formulário de contato ou de feedback, guardamos a mensagem escrita, a página de onde ela foi enviada e sua preferência de idioma. O formulário é anônimo, a menos que você opte por incluir dados de contato na mensagem.",
+        ],
+      },
+      {
+        h: "Cookies",
+        p: [
+          "Usamos cookies apenas para a medição do Google Analytics e uma única chave de localStorage que lembra sua escolha de idioma. Você pode bloquear cookies nas configurações do navegador; as ferramentas continuarão funcionando normalmente.",
+        ],
+      },
+      {
+        h: "Serviços de terceiros",
+        p: [
+          "Google Analytics (medição de uso), Google Fonts (entrega de fontes) e Firebase Hosting e Firestore, do Google (hospedagem do site e armazenamento de contadores anônimos e feedback). Cada um trata os dados sob sua própria política de privacidade. Nenhuma ferramenta envia seu conteúdo para serviços de terceiros — todo o processamento, inclusive a geração de QR codes, acontece localmente no seu navegador.",
+        ],
+      },
+      {
+        h: "Retenção de dados e seus direitos",
+        p: [
+          "Os dados analíticos são retidos conforme os padrões do Google Analytics. As mensagens de feedback são mantidas até serem lidas e tratadas, podendo então ser excluídas. Como não guardamos dados de conta sobre você, normalmente não há nada pessoal para apagar — mas, se você acredita que temos algo relacionado a você (por exemplo, uma mensagem de feedback com seu e-mail), fale conosco pela página de contato e removeremos.",
+        ],
+      },
+      {
+        h: "Alterações nesta política",
+        p: [
+          "Se mudarmos a forma como o site lida com dados (por exemplo, caso um dia introduzamos publicidade), atualizaremos esta página e a data no topo antes de a mudança entrar em vigor.",
+        ],
+      },
+    ],
+  },
+  fr: {
+    title: "Politique de confidentialité",
+    updated: "Dernière mise à jour : 14 juillet 2026",
+    sections: [
+      {
+        h: "En bref",
+        p: [
+          "Vos fichiers ne quittent jamais votre appareil. Chaque outil de ToolsMani (fusion de PDF, compression d'images, convertisseurs et les autres) s'exécute entièrement dans votre navigateur au moyen de JavaScript. Rien de ce que vous ouvrez dans un outil n'est envoyé à nos serveurs, ni stocké chez nous, ni visible par nous.",
+          "Nous ne collectons que des données d'usage minimales et essentiellement anonymes, afin de comprendre quels outils sont utiles et de maintenir le site en bon état de marche. Nous ne vendons jamais de données à quiconque.",
+        ],
+      },
+      {
+        h: "Ce que nous ne collectons PAS",
+        p: [
+          "Nous ne collectons ni ne stockons vos fichiers ou leur contenu. Aucun compte n'est requis, nous ne détenons donc ni noms, ni mots de passe, ni profils. Nous ne collectons aucune donnée de paiement : le site est gratuit.",
+        ],
+      },
+      {
+        h: "Ce que nous collectons",
+        p: [
+          "Mesure d'audience : nous utilisons Google Analytics 4 pour mesurer les visites de pages et l'utilisation des outils (par exemple, que l'outil de fusion de PDF a été utilisé, jamais ce que contenait le PDF). Google Analytics dépose des cookies et peut traiter votre adresse IP et des informations sur votre appareil conformément à sa propre politique de confidentialité.",
+          "Compteurs anonymes d'utilisation : lorsqu'un outil est utilisé, nous incrémentons un compteur quotidien (par ex. « pdf-merge : +1 ») dans notre base de données. Ce nombre ne contient aucune donnée personnelle.",
+          "Retours : si vous utilisez le formulaire de contact ou de retour, nous conservons le message que vous rédigez, la page depuis laquelle il a été envoyé et votre préférence de langue. Le formulaire est anonyme, sauf si vous choisissez d'y indiquer des coordonnées.",
+        ],
+      },
+      {
+        h: "Cookies",
+        p: [
+          "Nous utilisons des cookies uniquement pour la mesure Google Analytics, ainsi qu'une seule clé localStorage qui mémorise votre choix de langue. Vous pouvez bloquer les cookies dans les réglages de votre navigateur ; les outils continueront de fonctionner normalement.",
+        ],
+      },
+      {
+        h: "Services tiers",
+        p: [
+          "Google Analytics (mesure d'usage), Google Fonts (fourniture des polices), ainsi que Firebase Hosting et Firestore de Google (hébergement du site et stockage des compteurs anonymes et des retours). Chacun traite les données selon sa propre politique de confidentialité. Aucun outil n'envoie votre contenu à un service tiers : tout le traitement, y compris la génération de QR codes, se fait localement dans votre navigateur.",
+        ],
+      },
+      {
+        h: "Conservation des données et vos droits",
+        p: [
+          "Les données de mesure d'audience sont conservées selon les paramètres par défaut de Google Analytics. Les messages de retour sont conservés jusqu'à leur lecture et leur traitement, puis peuvent être supprimés. Comme nous ne détenons aucune donnée de compte vous concernant, il n'y a généralement rien de personnel à supprimer ; mais si vous pensez que nous détenons un élément vous concernant (par exemple un message contenant votre e-mail), contactez-nous via la page de contact et nous le supprimerons.",
+        ],
+      },
+      {
+        h: "Modifications de cette politique",
+        p: [
+          "Si nous modifions la manière dont le site traite les données (par exemple si nous introduisons un jour de la publicité), nous mettrons à jour cette page ainsi que la date en haut avant l'entrée en vigueur du changement.",
+        ],
+      },
+    ],
+  },
 };
 
 export default function PrivacyPage() {

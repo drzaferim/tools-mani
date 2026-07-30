@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 
+export { default } from "@/app/terms/page";
+
 export const metadata: Metadata = {
-  title: "Terms of Use - ToolsMani",
+  title: "Términos de uso | ToolsMani",
   description:
-    "Terms of use for ToolsMani's free online tools. Plain-language rules for using the site.",
+    "Términos de uso de ToolsMani: cómo usar las herramientas, alcance de la garantía y límites de responsabilidad.",
   alternates: {
-    canonical: "/terms/",
+    canonical: "/es/terms/",
     languages: {
       en: "/terms/",
       tr: "/tr/terms/",
@@ -17,11 +19,3 @@ export const metadata: Metadata = {
     },
   },
 };
-
-export default function TermsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <>{children}</>;
-}

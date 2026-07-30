@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export { default } from "@/app/about/page";
 
 export const metadata: Metadata = {
-  title: "Hakkımızda | ToolsMani",
+  title: "À propos | ToolsMani",
   description:
-    "ToolsMani'nin hikayesi: gizlilik öncelikli, tamamen ücretsiz online araçlar. Dosyalarınız tarayıcınızdan asla çıkmaz.",
+    "L'histoire de ToolsMani : des outils en ligne gratuits, la confidentialité d'abord. Vos fichiers ne quittent jamais votre navigateur.",
   alternates: {
-    canonical: "/tr/about/",
+    canonical: "/fr/about/",
     languages: {
       en: "/about/",
       tr: "/tr/about/",

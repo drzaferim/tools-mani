@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export { default } from "@/app/privacy/page";
 
 export const metadata: Metadata = {
-  title: "Gizlilik Politikası | ToolsMani",
+  title: "Politique de confidentialité | ToolsMani",
   description:
-    "ToolsMani gizlilik politikası: dosyalarınız cihazınızdan çıkmaz, sunucuya yüklenmez. Hangi verileri topladığımızı açıkça anlatıyoruz.",
+    "Politique de confidentialité de ToolsMani : vos fichiers ne quittent pas votre appareil et ne sont pas envoyés à un serveur. Nous expliquons clairement les données collectées.",
   alternates: {
-    canonical: "/tr/privacy/",
+    canonical: "/fr/privacy/",
     languages: {
       en: "/privacy/",
       tr: "/tr/privacy/",

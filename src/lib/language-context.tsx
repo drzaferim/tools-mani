@@ -37,10 +37,17 @@ export function splitLocalePath(pathname: string): { locale: Locale; base: strin
   return { locale: "en", base: pathname };
 }
 
+/**
+ * es/de/pt/fr'de aynası olan kurumsal sayfalar. Blog ve admin hâlâ aynalanmıyor,
+ * bu yüzden bu diller FULL_MIRROR'a alınmadı — yalnızca bu yollar açıldı.
+ */
+const CORPORATE_PATHS = ["/about", "/contact", "/privacy", "/terms"];
+
 /** en/tr dışı diller için hangi taban yolların aynası var? */
 function isMirrored(locale: Locale, base: string): boolean {
   if (locale === "en" || FULL_MIRROR.has(locale)) return true;
-  return base === "/" || base.startsWith("/tools");
+  if (base === "/" || base.startsWith("/tools")) return true;
+  return CORPORATE_PATHS.some((p) => base === p || base.startsWith(`${p}/`));
 }
 
 /**

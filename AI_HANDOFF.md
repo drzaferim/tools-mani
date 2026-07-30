@@ -60,7 +60,7 @@ npm run build && firebase deploy --only hosting
 ```
 
 `postbuild` kancası `scripts/generate-sitemap.js`'i çalıştırır ve `out/` taramasından
-sitemap'i otomatik üretir (şu an 261 URL). `public/`'te statik sitemap **yok**.
+sitemap'i otomatik üretir (şu an 277 URL). `public/`'te statik sitemap **yok**.
 
 ### Kritik yapılandırma notları
 
@@ -209,8 +209,22 @@ Bunlar **çeviri işi değil, özellik işi** — arayüz 6 dilde ama motor değ
 - **number-to-words**: sayıyı yalnızca Türkçe ve İngilizce okunuşa çeviriyor.
   Diğer dillerin okunuş algoritması ayrıca yazılmalı.
 
-Kurumsal sayfalar (`/about`, `/contact`, `/privacy`, `/terms`) yalnızca `/` ve `/tr/`
-altında var. Blog: 3 İngilizce + 3 Türkçe yazı.
+### Kurumsal sayfalar da 6 dilde (30 Tem 2026)
+
+`/about`, `/contact`, `/privacy`, `/terms` artık altı dilde: 16 yeni ayna rota
+(`/es|de|pt|fr/{about,contact,privacy,terms}`) eklendi, site 261 → **277 URL**.
+Her sayfanın hreflang'ı 6 dil + `x-default` listeliyor; footer linkleri zaten
+`localePath()` kullandığı için otomatik doğru yere gidiyor.
+
+Yönlendirme `language-context.tsx` içindeki `CORPORATE_PATHS` ile açıldı.
+es/de/pt/fr **bilerek `FULL_MIRROR`'a alınmadı** — blog ve admin hâlâ aynalanmıyor,
+onları da aynalanmış saymak kırık link üretirdi.
+
+> **Gizlilik ve şartlar hukuki metindir.** Yapılan iş İngilizce metnin sadık
+> çevirisidir; hukuki inceleme veya ülkeye özel uyarlama (GDPR/LGPD'ye göre ek
+> madde vb.) **yapılmadı**. Bu gerekiyorsa ayrıca ele alınmalı.
+
+Blog: 3 İngilizce + 3 Türkçe yazı (hâlâ yalnızca en+tr).
 
 ---
 
@@ -277,10 +291,8 @@ Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
 
 1. **2 hafta sonra ölçüm al.** Derinleştirilen 7 sayfanın Search Console'daki ortalama
    konumu düştü mü? Düştüyse aynı yaklaşımı kalan araçlara uygula.
-2. **Kurumsal sayfaları ES/DE/PT/FR'ye aç.** Araçlar artık 6 dilde; en büyük
-   yerelleştirme açığı `/about`, `/contact`, `/privacy`, `/terms`. Şu an footer'dan
-   tıklayan İspanyol/Alman/Brezilyalı/Fransız kullanıcı İngilizceye düşüyor.
-   `language-context.tsx` içindeki `FULL_MIRROR` kümesi bunu yönetiyor.
+2. **Yeni 16 kurumsal sayfanın indekslenmesini izle.** 30 Tem'de eklendiler;
+   IndexNow Bing/Yandex'e bildirdi, Google için Search Console'dan takip et.
 3. **Backlink çalışması.** Konum 65'ten çıkmak otorite gerektiriyor: AlternativeTo,
    Privacy Guides forumu, awesome-* listeleri (kod açık kaynak yapılırsa şansı artar).
 4. **Ertelenen dil genişlemesi.** İyi adaylar: Japonca (Google hâkim, rekabet zayıf),
@@ -294,8 +306,11 @@ Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
 
 ## 10. Bilinen eksikler ve teknik borç
 
-- **Kurumsal sayfalar** ES/DE/PT/FR'de yok; footer'dan tıklayınca İngilizceye düşülüyor.
-  Araç yerelleştirmesi bittiğine göre kalan en büyük dil açığı bu.
+- **Blog yalnızca en+tr** (3+3 yazı). Araçlar ve kurumsal sayfalar 6 dile geçtiğine
+  göre kalan tek dil açığı bu. es/de/pt/fr'de blog aynası yok — `language-context.tsx`
+  içindeki `isMirrored` bunu bilerek dışarıda bırakıyor.
+- **Gizlilik/şartlar çevirileri hukuki inceleme görmedi** — İngilizce metnin sadık
+  çevirisi yapıldı, ülkeye özel uyarlama yapılmadı (bkz. bölüm 5).
 - **OCR yalnızca eng+tur tanıyor**, number-to-words yalnızca TR+EN okunuşu üretiyor
   (bkz. bölüm 5) — arayüzleri 6 dilde ama motorları değil.
 - ~~PDF araçlarında EN+TR ternary kalıntısı~~ — 30 Tem 2026'da kapatıldı (bkz. bölüm 5).

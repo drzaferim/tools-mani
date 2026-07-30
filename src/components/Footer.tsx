@@ -6,6 +6,10 @@ import { useLanguage, pick } from "@/lib/language-context";
 const legalLabels = {
   en: { about: "About", contact: "Contact", privacy: "Privacy Policy", terms: "Terms of Use" },
   tr: { about: "Hakkında", contact: "İletişim", privacy: "Gizlilik Politikası", terms: "Kullanım Şartları" },
+  es: { about: "Sobre nosotros", contact: "Contacto", privacy: "Política de privacidad", terms: "Términos de uso" },
+  de: { about: "Über uns", contact: "Kontakt", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen" },
+  pt: { about: "Sobre", contact: "Contato", privacy: "Política de privacidade", terms: "Termos de uso" },
+  fr: { about: "À propos", contact: "Contact", privacy: "Politique de confidentialité", terms: "Conditions d'utilisation" },
 };
 
 export function Footer() {

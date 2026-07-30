@@ -35,6 +35,62 @@ const content = {
     thanks: "Teşekkürler! Mesajınız alındı.",
     error: "Bir hata oluştu. Lütfen tekrar deneyin.",
   },
+  es: {
+    title: "Contacto",
+    intro:
+      "¿Has encontrado un error? ¿Tienes una idea para una herramienta nueva? ¿Solo quieres saludar? Usa el formulario de abajo: cada mensaje nos llega directamente y los leemos todos.",
+    anonNote:
+      "El formulario es anónimo por defecto. Si quieres una respuesta, incluye tu dirección de correo en el mensaje.",
+    typeLabel: "Tema",
+    types: { bug: "Informe de error", feature: "Sugerencia de herramienta", other: "Otro" },
+    placeholder: "Escribe tu mensaje aquí...",
+    send: "Enviar mensaje",
+    sending: "Enviando...",
+    thanks: "¡Gracias! Hemos recibido tu mensaje.",
+    error: "Algo salió mal. Inténtalo de nuevo.",
+  },
+  de: {
+    title: "Kontakt",
+    intro:
+      "Einen Fehler gefunden? Eine Idee für ein neues Tool? Einfach nur Hallo sagen? Nutzen Sie das Formular unten – jede Nachricht landet direkt bei uns und wir lesen alle.",
+    anonNote:
+      "Das Formular ist standardmäßig anonym. Wenn Sie eine Antwort möchten, geben Sie Ihre E-Mail-Adresse in der Nachricht an.",
+    typeLabel: "Thema",
+    types: { bug: "Fehlermeldung", feature: "Tool-Vorschlag", other: "Sonstiges" },
+    placeholder: "Schreiben Sie hier Ihre Nachricht...",
+    send: "Nachricht senden",
+    sending: "Wird gesendet...",
+    thanks: "Vielen Dank! Ihre Nachricht ist eingegangen.",
+    error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+  },
+  pt: {
+    title: "Contato",
+    intro:
+      "Encontrou um erro? Tem uma ideia de ferramenta nova? Quer só dar um oi? Use o formulário abaixo — cada mensagem chega direto até nós e lemos todas.",
+    anonNote:
+      "O formulário é anônimo por padrão. Se quiser uma resposta, inclua seu e-mail na mensagem.",
+    typeLabel: "Assunto",
+    types: { bug: "Relato de erro", feature: "Sugestão de ferramenta", other: "Outro" },
+    placeholder: "Escreva sua mensagem aqui...",
+    send: "Enviar mensagem",
+    sending: "Enviando...",
+    thanks: "Obrigado! Sua mensagem foi recebida.",
+    error: "Algo deu errado. Tente novamente.",
+  },
+  fr: {
+    title: "Contact",
+    intro:
+      "Vous avez trouvé un bug ? Une idée d'outil ? Envie de dire bonjour ? Utilisez le formulaire ci-dessous : chaque message nous parvient directement et nous les lisons tous.",
+    anonNote:
+      "Le formulaire est anonyme par défaut. Si vous souhaitez une réponse, indiquez votre adresse e-mail dans le message.",
+    typeLabel: "Sujet",
+    types: { bug: "Signalement de bug", feature: "Suggestion d'outil", other: "Autre" },
+    placeholder: "Écrivez votre message ici...",
+    send: "Envoyer le message",
+    sending: "Envoi...",
+    thanks: "Merci ! Votre message a bien été reçu.",
+    error: "Une erreur est survenue. Veuillez réessayer.",
+  },
 };
 
 export default function ContactPage() {

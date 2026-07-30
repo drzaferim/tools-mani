@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 
+export { default } from "@/app/contact/page";
+
 export const metadata: Metadata = {
-  title: "Contact - ToolsMani",
+  title: "Kontakt | ToolsMani",
   description:
-    "Get in touch with ToolsMani. Report a bug, suggest a new tool, or send feedback — we read every message.",
+    "Kontaktieren Sie ToolsMani: Fehler melden, ein Tool vorschlagen oder Feedback senden. Wir lesen jede Nachricht.",
   alternates: {
-    canonical: "/contact/",
+    canonical: "/de/contact/",
     languages: {
       en: "/contact/",
       tr: "/tr/contact/",
@@ -17,11 +19,3 @@ export const metadata: Metadata = {
     },
   },
 };
-
-export default function ContactLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <>{children}</>;
-}

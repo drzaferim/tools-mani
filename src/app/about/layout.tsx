@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     languages: {
       en: "/about/",
       tr: "/tr/about/",
+      es: "/es/about/",
+      de: "/de/about/",
+      pt: "/pt/about/",
+      fr: "/fr/about/",
       "x-default": "/about/",
     },
   },
