@@ -18,12 +18,7 @@
         "type": 301
       }
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/404.html"
-      }
-    ],
+    "//": "'**' -> /404.html rewrite'i bilincli olarak kaldirildi: bulunamayan yollari 404 icerigiyle ama HTTP 200 koduyla sunuyordu (soft 404). Firebase, out/404.html varsa dogru 404 kodunu kendisi dondurur.",
     "headers": [
       {
         "source": "**/*.@(js|css)",
