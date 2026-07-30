@@ -3,7 +3,8 @@ import { trackToolUse } from "@/lib/track";
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
+import type { Locale } from "@/lib/translations";
 
 type PageSize = "A4" | "Letter" | "fit";
 type Orientation = "portrait" | "landscape";
@@ -21,41 +22,171 @@ const PAGE_SIZES = {
 };
 
 const translations = {
-  title: { en: "Image to PDF", tr: "Görsel → PDF" },
+  title: {
+    en: "Image to PDF", tr: "Görsel → PDF", es: "Imagen a PDF",
+    de: "Bild zu PDF", pt: "Imagem para PDF", fr: "Image en PDF",
+  },
   subtitle: {
     en: "Convert JPG, PNG, WebP, or BMP images to a PDF document. Combine multiple images into one PDF. All in your browser.",
     tr: "JPG, PNG, WebP veya BMP görsellerinizi PDF belgesine dönüştürün. Birden fazla görseli tek PDF'e birleştirin. Tarayıcınızda çalışır.",
+    es: "Convierte imágenes JPG, PNG, WebP o BMP en un documento PDF. Combina varias imágenes en un solo PDF. Todo en tu navegador.",
+    de: "Wandeln Sie JPG-, PNG-, WebP- oder BMP-Bilder in ein PDF-Dokument um. Mehrere Bilder in einem PDF zusammenfassen. Alles im Browser.",
+    pt: "Converta imagens JPG, PNG, WebP ou BMP em um documento PDF. Combine várias imagens em um único PDF. Tudo no seu navegador.",
+    fr: "Convertissez des images JPG, PNG, WebP ou BMP en document PDF. Réunissez plusieurs images dans un seul PDF. Tout dans votre navigateur.",
   },
-  clickOrDrag: { en: "Click or drag images here", tr: "Görselleri buraya tıklayın veya sürükleyin" },
-  supportedFormats: { en: "JPG, PNG, WebP, BMP supported", tr: "JPG, PNG, WebP, BMP desteklenir" },
-  noLimit: { en: "No file size limit", tr: "Dosya boyutu sınırı yok" },
-  addMore: { en: "Add more images", tr: "Daha fazla görsel ekle" },
-  pageSize: { en: "Page Size", tr: "Sayfa Boyutu" },
-  fitToImage: { en: "Fit to image", tr: "Görsele uydur" },
-  orientation: { en: "Orientation", tr: "Yönlendirme" },
-  portrait: { en: "Portrait", tr: "Dikey" },
-  landscape: { en: "Landscape", tr: "Yatay" },
-  margin: { en: "Margin", tr: "Kenar Boşluğu" },
-  marginNone: { en: "None", tr: "Yok" },
-  marginSmall: { en: "Small (10mm)", tr: "Küçük (10mm)" },
-  marginMedium: { en: "Medium (20mm)", tr: "Orta (20mm)" },
-  convert: { en: "Convert to PDF", tr: "PDF'e Dönüştür" },
-  converting: { en: "Converting...", tr: "Dönüştürülüyor..." },
-  images: { en: "images", tr: "görsel" },
-  remove: { en: "Remove", tr: "Kaldır" },
-  errorImageOnly: { en: "Only image files are supported (JPG, PNG, WebP, BMP).", tr: "Yalnızca görsel dosyaları desteklenir (JPG, PNG, WebP, BMP)." },
-  errorConvert: { en: "Conversion failed. Please try again.", tr: "Dönüştürme başarısız. Lütfen tekrar deneyin." },
-  backToPdf: { en: "← PDF Tools", tr: "← PDF Araçları" },
-  eachPageOneImage: { en: "Each image becomes one PDF page", tr: "Her görsel bir PDF sayfası olur" },
+  clickOrDrag: {
+    en: "Click or drag images here", tr: "Görselleri buraya tıklayın veya sürükleyin",
+    es: "Haz clic o arrastra las imágenes aquí", de: "Bilder hierher klicken oder ziehen",
+    pt: "Clique ou arraste as imagens aqui", fr: "Cliquez ou glissez vos images ici",
+  },
+  supportedFormats: {
+    en: "JPG, PNG, WebP, BMP supported", tr: "JPG, PNG, WebP, BMP desteklenir",
+    es: "Compatible con JPG, PNG, WebP y BMP", de: "JPG, PNG, WebP, BMP werden unterstützt",
+    pt: "JPG, PNG, WebP e BMP suportados", fr: "JPG, PNG, WebP, BMP pris en charge",
+  },
+  noLimit: {
+    en: "No file size limit", tr: "Dosya boyutu sınırı yok",
+    es: "Sin límite de tamaño", de: "Keine Größenbeschränkung",
+    pt: "Sem limite de tamanho", fr: "Aucune limite de taille",
+  },
+  addMore: {
+    en: "Add more images", tr: "Daha fazla görsel ekle",
+    es: "Añadir más imágenes", de: "Weitere Bilder hinzufügen",
+    pt: "Adicionar mais imagens", fr: "Ajouter d'autres images",
+  },
+  pageSize: {
+    en: "Page Size", tr: "Sayfa Boyutu", es: "Tamaño de página",
+    de: "Seitengröße", pt: "Tamanho da página", fr: "Format de page",
+  },
+  fitToImage: {
+    en: "Fit to image", tr: "Görsele uydur", es: "Ajustar a la imagen",
+    de: "An Bild anpassen", pt: "Ajustar à imagem", fr: "Adapter à l'image",
+  },
+  orientation: {
+    en: "Orientation", tr: "Yönlendirme", es: "Orientación",
+    de: "Ausrichtung", pt: "Orientação", fr: "Orientation",
+  },
+  portrait: {
+    en: "Portrait", tr: "Dikey", es: "Vertical",
+    de: "Hochformat", pt: "Retrato", fr: "Portrait",
+  },
+  landscape: {
+    en: "Landscape", tr: "Yatay", es: "Horizontal",
+    de: "Querformat", pt: "Paisagem", fr: "Paysage",
+  },
+  margin: {
+    en: "Margin", tr: "Kenar Boşluğu", es: "Margen",
+    de: "Rand", pt: "Margem", fr: "Marge",
+  },
+  marginNone: {
+    en: "None", tr: "Yok", es: "Ninguno", de: "Kein", pt: "Nenhuma", fr: "Aucune",
+  },
+  marginSmall: {
+    en: "Small (10mm)", tr: "Küçük (10mm)", es: "Pequeño (10 mm)",
+    de: "Klein (10 mm)", pt: "Pequena (10 mm)", fr: "Petite (10 mm)",
+  },
+  marginMedium: {
+    en: "Medium (20mm)", tr: "Orta (20mm)", es: "Mediano (20 mm)",
+    de: "Mittel (20 mm)", pt: "Média (20 mm)", fr: "Moyenne (20 mm)",
+  },
+  convert: {
+    en: "Convert to PDF", tr: "PDF'e Dönüştür", es: "Convertir a PDF",
+    de: "In PDF umwandeln", pt: "Converter para PDF", fr: "Convertir en PDF",
+  },
+  converting: {
+    en: "Converting...", tr: "Dönüştürülüyor...", es: "Convirtiendo...",
+    de: "Konvertierung läuft...", pt: "Convertendo...", fr: "Conversion...",
+  },
+  images: {
+    en: "images", tr: "görsel", es: "imágenes",
+    de: "Bilder", pt: "imagens", fr: "images",
+  },
+  remove: {
+    en: "Remove", tr: "Kaldır", es: "Quitar",
+    de: "Entfernen", pt: "Remover", fr: "Retirer",
+  },
+  errorImageOnly: {
+    en: "Only image files are supported (JPG, PNG, WebP, BMP).",
+    tr: "Yalnızca görsel dosyaları desteklenir (JPG, PNG, WebP, BMP).",
+    es: "Solo se admiten archivos de imagen (JPG, PNG, WebP, BMP).",
+    de: "Es werden nur Bilddateien unterstützt (JPG, PNG, WebP, BMP).",
+    pt: "Apenas arquivos de imagem são suportados (JPG, PNG, WebP, BMP).",
+    fr: "Seuls les fichiers image sont pris en charge (JPG, PNG, WebP, BMP).",
+  },
+  errorConvert: {
+    en: "Conversion failed. Please try again.",
+    tr: "Dönüştürme başarısız. Lütfen tekrar deneyin.",
+    es: "La conversión falló. Inténtalo de nuevo.",
+    de: "Konvertierung fehlgeschlagen. Bitte erneut versuchen.",
+    pt: "A conversão falhou. Tente novamente.",
+    fr: "La conversion a échoué. Veuillez réessayer.",
+  },
+  backToPdf: {
+    en: "← PDF Tools", tr: "← PDF Araçları", es: "← Herramientas PDF",
+    de: "← PDF-Tools", pt: "← Ferramentas PDF", fr: "← Outils PDF",
+  },
+  eachPageOneImage: {
+    en: "Each image becomes one PDF page", tr: "Her görsel bir PDF sayfası olur",
+    es: "Cada imagen se convierte en una página del PDF",
+    de: "Jedes Bild wird zu einer PDF-Seite",
+    pt: "Cada imagem vira uma página do PDF",
+    fr: "Chaque image devient une page du PDF",
+  },
+  faqTitle: {
+    en: "Frequently Asked Questions", tr: "Sık Sorulan Sorular",
+    es: "Preguntas frecuentes", de: "Häufig gestellte Fragen",
+    pt: "Perguntas frequentes", fr: "Questions fréquentes",
+  },
 };
 
-function t(key: keyof typeof translations, locale: "en" | "tr"): string {
-  return translations[key][locale];
+const faq = {
+  en: [
+    { q: "Which image formats are supported?", a: "JPG, PNG, WebP, and BMP formats are supported. Works in all modern browsers." },
+    { q: "Are my images uploaded to a server?", a: "No. Everything happens locally in your browser. Your images never leave your device." },
+    { q: "Can I combine multiple images into one PDF?", a: "Yes. Upload multiple images, reorder them with the arrows, and convert. Each image becomes a separate page." },
+    { q: "What page size options are available?", a: "A4 (210×297mm), Letter (216×279mm), or Fit to image. For A4 and Letter you can choose portrait or landscape orientation." },
+  ],
+  tr: [
+    { q: "Hangi görsel formatları destekleniyor?", a: "JPG, PNG, WebP ve BMP formatları desteklenir. Tüm modern tarayıcılarda çalışır." },
+    { q: "Görsellerim sunucuya yükleniyor mu?", a: "Hayır. Tüm dönüştürme işlemi tarayıcınızda gerçekleşir. Dosyalarınız hiçbir sunucuya gönderilmez." },
+    { q: "Birden fazla görseli tek PDF'e birleştirebilir miyim?", a: "Evet. Birden fazla görsel yükleyin, sıralayın ve dönüştürün. Her görsel ayrı bir sayfa olur." },
+    { q: "Sayfa boyutu seçenekleri nelerdir?", a: "A4 (210×297mm), Letter (216×279mm) veya 'Görsele uydur' seçenekleri mevcuttur. A4 ve Letter için dikey/yatay yönlendirme seçebilirsiniz." },
+  ],
+  es: [
+    { q: "¿Qué formatos de imagen se admiten?", a: "Se admiten los formatos JPG, PNG, WebP y BMP. Funciona en todos los navegadores modernos." },
+    { q: "¿Se suben mis imágenes a un servidor?", a: "No. Todo ocurre localmente en tu navegador. Tus imágenes nunca salen de tu dispositivo." },
+    { q: "¿Puedo combinar varias imágenes en un solo PDF?", a: "Sí. Sube varias imágenes, reordénalas con las flechas y conviértelas. Cada imagen se convierte en una página independiente." },
+    { q: "¿Qué opciones de tamaño de página hay?", a: "A4 (210×297 mm), Letter (216×279 mm) o «Ajustar a la imagen». Para A4 y Letter puedes elegir orientación vertical u horizontal." },
+  ],
+  de: [
+    { q: "Welche Bildformate werden unterstützt?", a: "Unterstützt werden JPG, PNG, WebP und BMP. Funktioniert in allen modernen Browsern." },
+    { q: "Werden meine Bilder auf einen Server hochgeladen?", a: "Nein. Alles läuft lokal in Ihrem Browser ab. Ihre Bilder verlassen Ihr Gerät nie." },
+    { q: "Kann ich mehrere Bilder in einem PDF zusammenfassen?", a: "Ja. Laden Sie mehrere Bilder hoch, ordnen Sie sie mit den Pfeilen und konvertieren Sie. Jedes Bild wird zu einer eigenen Seite." },
+    { q: "Welche Seitengrößen stehen zur Auswahl?", a: "A4 (210×297 mm), Letter (216×279 mm) oder „An Bild anpassen“. Bei A4 und Letter können Sie Hoch- oder Querformat wählen." },
+  ],
+  pt: [
+    { q: "Quais formatos de imagem são suportados?", a: "São suportados os formatos JPG, PNG, WebP e BMP. Funciona em todos os navegadores modernos." },
+    { q: "Minhas imagens são enviadas para um servidor?", a: "Não. Tudo acontece localmente no seu navegador. Suas imagens nunca saem do seu dispositivo." },
+    { q: "Posso combinar várias imagens em um único PDF?", a: "Sim. Envie várias imagens, reordene-as com as setas e converta. Cada imagem vira uma página separada." },
+    { q: "Quais opções de tamanho de página existem?", a: "A4 (210×297 mm), Letter (216×279 mm) ou «Ajustar à imagem». Para A4 e Letter você pode escolher orientação retrato ou paisagem." },
+  ],
+  fr: [
+    { q: "Quels formats d'image sont pris en charge ?", a: "Les formats JPG, PNG, WebP et BMP sont pris en charge. Fonctionne dans tous les navigateurs modernes." },
+    { q: "Mes images sont-elles envoyées à un serveur ?", a: "Non. Tout se passe localement dans votre navigateur. Vos images ne quittent jamais votre appareil." },
+    { q: "Puis-je réunir plusieurs images dans un seul PDF ?", a: "Oui. Importez plusieurs images, réordonnez-les avec les flèches et convertissez. Chaque image devient une page distincte." },
+    { q: "Quelles tailles de page sont proposées ?", a: "A4 (210×297 mm), Letter (216×279 mm) ou « Adapter à l'image ». Pour A4 et Letter, vous pouvez choisir l'orientation portrait ou paysage." },
+  ],
+};
+
+/** Eksik dil İngilizceye düşer — önceden locale "en"|"tr" cast ediliyordu ve
+ *  es/de/pt/fr'de undefined dönüp sayfayı boş bırakıyordu. */
+function t(key: keyof typeof translations, locale: Locale): string {
+  return translations[key][locale] ?? translations[key].en;
 }
 
 export default function ImageToPdfPage() {
   const { locale } = useLanguage();
-  const l = locale as "en" | "tr";
+  const l = locale;
 
   const [images, setImages] = useState<ImageFile[]>([]);
   const [pageSize, setPageSize] = useState<PageSize>("A4");
@@ -346,7 +477,7 @@ export default function ImageToPdfPage() {
           {converting && (
             <div className="mb-4">
               <div className="flex justify-between text-sm text-gray-500 mb-1">
-                <span>{l === "tr" ? "Dönüştürülüyor..." : "Converting..."}</span>
+                <span>{t("converting", l)}</span>
                 <span>{progress}%</span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-2">
@@ -371,27 +502,10 @@ export default function ImageToPdfPage() {
       {/* FAQ */}
       <div className="mt-16 border-t border-gray-100 pt-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {l === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+          {t("faqTitle", l)}
         </h2>
         <div className="space-y-6">
-          {[
-            {
-              q: l === "tr" ? "Hangi görsel formatları destekleniyor?" : "Which image formats are supported?",
-              a: l === "tr" ? "JPG, PNG, WebP ve BMP formatları desteklenir. Tüm modern tarayıcılarda çalışır." : "JPG, PNG, WebP, and BMP formats are supported. Works in all modern browsers.",
-            },
-            {
-              q: l === "tr" ? "Görsellerim sunucuya yükleniyor mu?" : "Are my images uploaded to a server?",
-              a: l === "tr" ? "Hayır. Tüm dönüştürme işlemi tarayıcınızda gerçekleşir. Dosyalarınız hiçbir sunucuya gönderilmez." : "No. Everything happens locally in your browser. Your images never leave your device.",
-            },
-            {
-              q: l === "tr" ? "Birden fazla görseli tek PDF'e birleştirebilir miyim?" : "Can I combine multiple images into one PDF?",
-              a: l === "tr" ? "Evet. Birden fazla görsel yükleyin, sıralayın ve dönüştürün. Her görsel ayrı bir sayfa olur." : "Yes. Upload multiple images, reorder them with the arrows, and convert. Each image becomes a separate page.",
-            },
-            {
-              q: l === "tr" ? "Sayfa boyutu seçenekleri nelerdir?" : "What page size options are available?",
-              a: l === "tr" ? "A4 (210×297mm), Letter (216×279mm) veya 'Görsele uydur' seçenekleri mevcuttur. A4 ve Letter için dikey/yatay yönlendirme seçebilirsiniz." : "A4 (210×297mm), Letter (216×279mm), or Fit to image. For A4 and Letter you can choose portrait or landscape orientation.",
-            },
-          ].map(({ q, a }, i) => (
+          {pick(faq, l).map(({ q, a }, i) => (
             <div key={i} className="bg-gray-50 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{a}</p>

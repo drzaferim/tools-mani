@@ -4,7 +4,7 @@ import Link from "next/link";
 import { tools, categories } from "@/lib/tools";
 import { iconMap } from "@/lib/icon-map";
 import { useState } from "react";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import type { TranslationKey } from "@/lib/translations";
 
 const categoryKeys: Record<string, TranslationKey> = {
@@ -142,6 +142,39 @@ const homeFaqJsonLd = {
   ],
 };
 
+const searchLabels = {
+  en: {
+    placeholder: "Search tools... (e.g. PDF, password, QR)",
+    noResults: (q: string) => `No results for "${q}"`,
+    clear: "Clear search",
+  },
+  tr: {
+    placeholder: "Araç ara... (ör. PDF, şifre, QR)",
+    noResults: (q: string) => `"${q}" için sonuç bulunamadı`,
+    clear: "Aramayı temizle",
+  },
+  es: {
+    placeholder: "Buscar herramientas... (p. ej. PDF, contraseña, QR)",
+    noResults: (q: string) => `Sin resultados para "${q}"`,
+    clear: "Borrar búsqueda",
+  },
+  de: {
+    placeholder: "Tools suchen... (z. B. PDF, Passwort, QR)",
+    noResults: (q: string) => `Keine Ergebnisse für „${q}“`,
+    clear: "Suche zurücksetzen",
+  },
+  pt: {
+    placeholder: "Buscar ferramentas... (ex.: PDF, senha, QR)",
+    noResults: (q: string) => `Nenhum resultado para "${q}"`,
+    clear: "Limpar busca",
+  },
+  fr: {
+    placeholder: "Rechercher un outil... (ex. PDF, mot de passe, QR)",
+    noResults: (q: string) => `Aucun résultat pour « ${q} »`,
+    clear: "Effacer la recherche",
+  },
+};
+
 export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -243,7 +276,7 @@ export default function HomePage() {
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder={locale === "tr" ? "Araç ara... (ör. PDF, şifre, QR)" : "Search tools... (e.g. PDF, password, QR)"}
+                placeholder={pick(searchLabels, locale).placeholder}
                 className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white shadow-sm"
               />
               {searchQuery && (
@@ -280,9 +313,9 @@ export default function HomePage() {
                 <svg className="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <p className="text-lg font-medium">{locale === "tr" ? `"${searchQuery}" için sonuç bulunamadı` : `No results for "${searchQuery}"`}</p>
+                <p className="text-lg font-medium">{pick(searchLabels, locale).noResults(searchQuery)}</p>
                 <button onClick={() => setSearchQuery("")} className="mt-3 text-primary-600 text-sm hover:underline">
-                  {locale === "tr" ? "Aramayı temizle" : "Clear search"}
+                  {pick(searchLabels, locale).clear}
                 </button>
               </div>
             )}

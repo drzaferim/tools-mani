@@ -179,6 +179,26 @@ altı anahtarın da bulunması gerekir.
   diyordu ama kaydırıcı maksimumu 64; qr-generator "PNG veya SVG indirebilirsiniz"
   diyordu ama yalnızca PNG indirme var. Yanlış metin 6 dile kopyalanmadan düzeltildi.
 
+### ⚠️ Üçüncü tur: iki araç 4 dilde tamamen boş sayfa veriyordu
+
+`image-to-pdf` ve `pdf-to-image`, global `t()` yerine **kendi yerel `translations`
+nesnelerini** kullanıyordu ve locale'i `as "en" | "tr"` diye cast ediyordu.
+`translations[key]["es"]` çalışma anında `undefined` döndüğü için React hiçbir şey
+basmıyordu: `/es/`, `/de/`, `/pt/`, `/fr/` altındaki bu 8 sayfada `<h1>` **boş**
+çıkıyordu — İngilizceye düşme değil, metin yokluğu. Boş `<h1>` indekslenen
+sayfalarda SEO açısından da ağır bir kayıp.
+
+Düzeltme: iki dosyanın `translations` nesnesi 6 dile çıkarıldı ve `t()`
+`?? translations[key].en` ile geri düşüş kazandı; `as "en" | "tr"` cast'i kaldırıldı.
+**Bu cast deseni bir daha girmemeli** — `pick()` gibi geri düşüşü olmayan her erişim
+aynı sessiz boşluğu üretir. Tarama komutu:
+`grep -rn 'as "en" | "tr"' src/app --include=*.tsx`
+
+Aynı turda 7 PDF aracının (`pdf-merge`, `pdf-split`, `pdf-rotate`, `pdf-pages`,
+`pdf-watermark`, `pdf-pagenumber`, `pdf-to-image`) satır içi EN+TR SSS blokları —
+toplam 29 soru — 6 dile çevrilip `pick(faq, locale)` yapısına taşındı. Ana sayfadaki
+arama kutusu metinleri de (yer tutucu, "sonuç yok", "aramayı temizle") 6 dile geçti.
+
 ### Arayüzü çevrilmiş ama çıktısı hâlâ sınırlı iki araç
 
 Bunlar **çeviri işi değil, özellik işi** — arayüz 6 dilde ama motor değil:
@@ -278,10 +298,9 @@ Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
   Araç yerelleştirmesi bittiğine göre kalan en büyük dil açığı bu.
 - **OCR yalnızca eng+tur tanıyor**, number-to-words yalnızca TR+EN okunuşu üretiyor
   (bkz. bölüm 5) — arayüzleri 6 dilde ama motorları değil.
-- **PDF araçlarının bir kısmında EN+TR ternary kalıntısı var** (`pdf-merge`,
-  `pdf-split`, `pdf-rotate`, `pdf-pages`, `pdf-watermark`, `pdf-pagenumber`,
-  `pdf-to-image`, `image-to-pdf`). Bu araçların gövdesi `t()` ile 6 dilde ama
-  bu ternary'lerin bastığı parçalar ES/DE/PT/FR'de İngilizce kalıyor. Denetlenmeli.
+- ~~PDF araçlarında EN+TR ternary kalıntısı~~ — 30 Tem 2026'da kapatıldı (bkz. bölüm 5).
+  Sitede kalan tek `locale === "tr"` ifadesi `ocr/page.tsx:215`; o çeviri değil,
+  varsayılan tanıma dilini seçen mantık (TR sayfasında `tur`, diğerlerinde `eng`).
 - **PDF sıkıştırma yalnızca yapısaldır** — görsel örnekleme yapmaz, bu yüzden taranmış
   PDF'lerde kazanç azdır. Sayfa içeriğinde bu dürüstçe açıklanıyor.
 - **Metin karşılaştırma satır düzeyinde** çalışır; satır içi (kelime) vurgulama yok.

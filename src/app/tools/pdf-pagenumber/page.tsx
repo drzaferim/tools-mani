@@ -3,7 +3,7 @@ import { trackToolUse } from "@/lib/track";
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 
 type Position = "bottom-center" | "bottom-left" | "bottom-right" | "top-center" | "top-left" | "top-right";
 
@@ -14,6 +14,49 @@ const positionKeyMap: Record<Position, string> = {
   "top-center": "pdfPageNum.topCenter",
   "top-left": "pdfPageNum.topLeft",
   "top-right": "pdfPageNum.topRight",
+};
+
+const faqTitle = {
+  en: "Frequently Asked Questions", tr: "Sık Sorulan Sorular", es: "Preguntas frecuentes", de: "Häufig gestellte Fragen", pt: "Perguntas frequentes", fr: "Questions fréquentes",
+};
+
+const faq = {
+  en: [
+    { q: "Can I choose where the page numbers appear?", a: "Yes. You can place page numbers in six positions: top-left, top-center, top-right, bottom-left, bottom-center, or bottom-right." },
+    { q: "What page number formats are available?", a: "Three formats are available: numeric (1, 2, 3), page-of-total (Page 1 of 10), and roman numerals (i, ii, iii)." },
+    { q: "Can I start numbering from a number other than 1?", a: "Yes. Use the 'Starting number' field to begin numbering from any number you choose." },
+    { q: "Is my PDF uploaded to a server?", a: "No. Page numbering happens entirely in your browser using pdf-lib. Your file never leaves your device." },
+  ],
+  tr: [
+    { q: "Sayfa numaralarının nerede görüneceğini seçebilir miyim?", a: "Evet. Sayfa numaralarını altı konuma yerleştirebilirsiniz: sol üst, orta üst, sağ üst, sol alt, orta alt veya sağ alt." },
+    { q: "Hangi sayfa numarası formatları mevcut?", a: "Üç format mevcuttur: sayısal (1, 2, 3), toplam sayfalı format (Sayfa 1/10) ve romen rakamları (i, ii, iii)." },
+    { q: "Numaralandırmayı 1'den farklı bir sayıdan başlatabilir miyim?", a: "Evet. 'Başlangıç numarası' alanını kullanarak istediğiniz herhangi bir sayıdan numaralandırmaya başlayabilirsiniz." },
+    { q: "PDF'm sunucuya yükleniyor mu?", a: "Hayır. Sayfa numaralandırma tamamen tarayıcınızda pdf-lib kullanılarak gerçekleşir. Dosyanız cihazınızdan ayrılmaz." },
+  ],
+  es: [
+    { q: "¿Puedo elegir dónde aparecen los números de página?", a: "Sí. Puedes colocar los números en seis posiciones: arriba a la izquierda, arriba centrado, arriba a la derecha, abajo a la izquierda, abajo centrado o abajo a la derecha." },
+    { q: "¿Qué formatos de numeración hay disponibles?", a: "Hay tres formatos: numérico (1, 2, 3), página-de-total (Página 1 de 10) y números romanos (i, ii, iii)." },
+    { q: "¿Puedo empezar a numerar desde un número distinto de 1?", a: "Sí. Usa el campo «Número inicial» para empezar la numeración desde el número que quieras." },
+    { q: "¿Se sube mi PDF a un servidor?", a: "No. La numeración ocurre por completo en tu navegador mediante pdf-lib. Tu archivo nunca sale de tu dispositivo." },
+  ],
+  de: [
+    { q: "Kann ich wählen, wo die Seitenzahlen erscheinen?", a: "Ja. Sie können die Seitenzahlen an sechs Positionen platzieren: oben links, oben mittig, oben rechts, unten links, unten mittig oder unten rechts." },
+    { q: "Welche Formate für Seitenzahlen gibt es?", a: "Drei Formate stehen zur Verfügung: numerisch (1, 2, 3), Seite-von-Gesamt (Seite 1 von 10) und römische Ziffern (i, ii, iii)." },
+    { q: "Kann ich die Nummerierung bei einer anderen Zahl als 1 beginnen?", a: "Ja. Über das Feld „Startnummer“ beginnen Sie die Nummerierung bei einer beliebigen Zahl." },
+    { q: "Wird mein PDF auf einen Server hochgeladen?", a: "Nein. Die Nummerierung erfolgt vollständig in Ihrem Browser mit pdf-lib. Ihre Datei verlässt Ihr Gerät nie." },
+  ],
+  pt: [
+    { q: "Posso escolher onde os números de página aparecem?", a: "Sim. Você pode posicionar os números em seis lugares: superior esquerdo, superior central, superior direito, inferior esquerdo, inferior central ou inferior direito." },
+    { q: "Quais formatos de numeração estão disponíveis?", a: "Há três formatos: numérico (1, 2, 3), página-de-total (Página 1 de 10) e algarismos romanos (i, ii, iii)." },
+    { q: "Posso começar a numeração em um número diferente de 1?", a: "Sim. Use o campo «Número inicial» para começar a numeração a partir do número que quiser." },
+    { q: "Meu PDF é enviado para um servidor?", a: "Não. A numeração acontece inteiramente no seu navegador usando pdf-lib. Seu arquivo nunca sai do seu dispositivo." },
+  ],
+  fr: [
+    { q: "Puis-je choisir où apparaissent les numéros de page ?", a: "Oui. Vous pouvez placer les numéros à six emplacements : en haut à gauche, en haut au centre, en haut à droite, en bas à gauche, en bas au centre ou en bas à droite." },
+    { q: "Quels formats de numérotation sont disponibles ?", a: "Trois formats sont disponibles : numérique (1, 2, 3), page-sur-total (Page 1 sur 10) et chiffres romains (i, ii, iii)." },
+    { q: "Puis-je commencer la numérotation à un autre nombre que 1 ?", a: "Oui. Utilisez le champ « Numéro de départ » pour commencer à n'importe quel nombre." },
+    { q: "Mon PDF est-il envoyé à un serveur ?", a: "Non. La numérotation se fait entièrement dans votre navigateur via pdf-lib. Votre fichier ne quitte jamais votre appareil." },
+  ],
 };
 
 export default function PdfPageNumberPage() {
@@ -169,15 +212,10 @@ export default function PdfPageNumberPage() {
       {/* FAQ */}
       <div className="mt-16 border-t border-gray-100 pt-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+          {pick(faqTitle, locale)}
         </h2>
         <div className="space-y-5">
-          {[
-            { q: locale === "tr" ? "Sayfa numaralarının nerede görüneceğini seçebilir miyim?" : "Can I choose where the page numbers appear?", a: locale === "tr" ? "Evet. Sayfa numaralarını altı konuma yerleştirebilirsiniz: sol üst, orta üst, sağ üst, sol alt, orta alt veya sağ alt." : "Yes. You can place page numbers in six positions: top-left, top-center, top-right, bottom-left, bottom-center, or bottom-right." },
-            { q: locale === "tr" ? "Hangi sayfa numarası formatları mevcut?" : "What page number formats are available?", a: locale === "tr" ? "Üç format mevcuttur: sayısal (1, 2, 3), toplam sayfalı format (Sayfa 1/10) ve romen rakamları (i, ii, iii)." : "Three formats are available: numeric (1, 2, 3), page-of-total (Page 1 of 10), and roman numerals (i, ii, iii)." },
-            { q: locale === "tr" ? "Numaralandırmayı 1'den farklı bir sayıdan başlatabilir miyim?" : "Can I start numbering from a number other than 1?", a: locale === "tr" ? "Evet. 'Başlangıç numarası' alanını kullanarak istediğiniz herhangi bir sayıdan numaralandırmaya başlayabilirsiniz." : "Yes. Use the 'Starting number' field to begin numbering from any number you choose." },
-            { q: locale === "tr" ? "PDF'm sunucuya yükleniyor mu?" : "Is my PDF uploaded to a server?", a: locale === "tr" ? "Hayır. Sayfa numaralandırma tamamen tarayıcınızda pdf-lib kullanılarak gerçekleşir. Dosyanız cihazınızdan ayrılmaz." : "No. Page numbering happens entirely in your browser using pdf-lib. Your file never leaves your device." },
-          ].map(({ q, a }, i) => (
+          {pick(faq, locale).map(({ q, a }, i) => (
             <div key={i} className="bg-gray-50 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{a}</p>

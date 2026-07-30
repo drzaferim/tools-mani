@@ -3,7 +3,56 @@ import { trackToolUse } from "@/lib/track";
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
+
+const faqTitle = {
+  en: "Frequently Asked Questions", tr: "Sık Sorulan Sorular", es: "Preguntas frecuentes", de: "Häufig gestellte Fragen", pt: "Perguntas frequentes", fr: "Questions fréquentes",
+};
+
+const faq = {
+  en: [
+    { q: "Is there a file size limit for merging PDFs?", a: "No. ToolsMani processes everything in your browser, so there is no server-side file size limit. You can merge PDFs of any size as long as your device has enough memory." },
+    { q: "Are my PDF files uploaded to a server?", a: "Never. Your files stay 100% on your device. All merging happens locally using the pdf-lib library running in your browser. Nothing is sent over the internet." },
+    { q: "How many PDF files can I merge at once?", a: "There is no hard limit. You can add as many PDFs as you need. Very large batches may take longer depending on your device." },
+    { q: "Can I reorder the PDF files before merging?", a: "Yes. Use the arrow buttons next to each file to move it up or down. The final merged PDF will follow the order shown." },
+    { q: "Does PDF merging work on mobile?", a: "Yes. The tool works on any modern browser including mobile browsers on iOS and Android. Large files may be slower on older devices." },
+  ],
+  tr: [
+    { q: "PDF birleştirmede dosya boyutu sınırı var mı?", a: "Hayır. ToolsMani tüm işlemleri tarayıcınızda gerçekleştirir, herhangi bir sunucu taraflı boyut sınırı yoktur. Cihazınızın belleği yettiği sürece istediğiniz boyuttaki PDF'leri birleştirebilirsiniz." },
+    { q: "PDF dosyalarım bir sunucuya yükleniyor mu?", a: "Kesinlikle hayır. Dosyalarınız %100 cihazınızda kalır. Tüm birleştirme işlemi tarayıcınızda çalışan pdf-lib kütüphanesi kullanılarak yerel olarak gerçekleşir." },
+    { q: "Aynı anda kaç PDF dosyasını birleştirebilirim?", a: "Dosya sayısı konusunda sabit bir sınır yoktur. İhtiyacınız olan kadar PDF ekleyebilirsiniz. Çok büyük grupların işlenmesi cihazınıza bağlı olarak daha uzun sürebilir." },
+    { q: "Birleştirmeden önce PDF dosyalarını yeniden sıralayabilir miyim?", a: "Evet. Her dosyanın yanındaki ok düğmelerini kullanarak yukarı veya aşağı taşıyabilirsiniz. Nihai PDF gösterilen sırayı takip eder." },
+    { q: "PDF birleştirme mobil cihazlarda çalışır mı?", a: "Evet. Araç, iOS ve Android dahil tüm modern tarayıcılarda çalışır. Büyük dosyalar eski cihazlarda daha yavaş olabilir." },
+  ],
+  es: [
+    { q: "¿Hay un límite de tamaño para unir PDF?", a: "No. ToolsMani procesa todo en tu navegador, así que no hay ningún límite de tamaño impuesto por un servidor. Puedes unir PDF de cualquier tamaño mientras tu dispositivo tenga memoria suficiente." },
+    { q: "¿Se suben mis archivos PDF a un servidor?", a: "Nunca. Tus archivos permanecen al 100% en tu dispositivo. Toda la unión se realiza localmente con la biblioteca pdf-lib ejecutándose en tu navegador. No se envía nada por internet." },
+    { q: "¿Cuántos archivos PDF puedo unir a la vez?", a: "No hay un límite fijo. Puedes añadir tantos PDF como necesites. Los lotes muy grandes pueden tardar más según tu dispositivo." },
+    { q: "¿Puedo reordenar los archivos antes de unirlos?", a: "Sí. Usa los botones de flecha junto a cada archivo para subirlo o bajarlo. El PDF final seguirá el orden mostrado." },
+    { q: "¿Funciona la unión de PDF en el móvil?", a: "Sí. La herramienta funciona en cualquier navegador moderno, incluidos los móviles con iOS y Android. Los archivos grandes pueden ir más lentos en dispositivos antiguos." },
+  ],
+  de: [
+    { q: "Gibt es eine Größenbeschränkung beim Zusammenführen von PDFs?", a: "Nein. ToolsMani verarbeitet alles in Ihrem Browser, daher gibt es keine serverseitige Größenbeschränkung. Sie können PDFs beliebiger Größe zusammenführen, solange Ihr Gerät genügend Arbeitsspeicher hat." },
+    { q: "Werden meine PDF-Dateien auf einen Server hochgeladen?", a: "Niemals. Ihre Dateien bleiben zu 100% auf Ihrem Gerät. Das Zusammenführen erfolgt lokal mit der Bibliothek pdf-lib in Ihrem Browser. Es wird nichts über das Internet gesendet." },
+    { q: "Wie viele PDF-Dateien kann ich auf einmal zusammenführen?", a: "Es gibt keine feste Grenze. Sie können so viele PDFs hinzufügen, wie Sie benötigen. Sehr große Stapel können je nach Gerät länger dauern." },
+    { q: "Kann ich die Reihenfolge der PDFs vor dem Zusammenführen ändern?", a: "Ja. Verschieben Sie die Dateien mit den Pfeiltasten daneben nach oben oder unten. Das fertige PDF folgt der angezeigten Reihenfolge." },
+    { q: "Funktioniert das Zusammenführen auf Mobilgeräten?", a: "Ja. Das Tool läuft in jedem modernen Browser, auch auf Mobilgeräten mit iOS und Android. Große Dateien können auf älteren Geräten langsamer sein." },
+  ],
+  pt: [
+    { q: "Existe limite de tamanho para juntar PDFs?", a: "Não. O ToolsMani processa tudo no seu navegador, então não há limite de tamanho imposto por servidor. Você pode juntar PDFs de qualquer tamanho, desde que seu dispositivo tenha memória suficiente." },
+    { q: "Meus arquivos PDF são enviados para um servidor?", a: "Nunca. Seus arquivos ficam 100% no seu dispositivo. Toda a junção acontece localmente com a biblioteca pdf-lib rodando no seu navegador. Nada é enviado pela internet." },
+    { q: "Quantos arquivos PDF posso juntar de uma vez?", a: "Não há limite fixo. Você pode adicionar quantos PDFs precisar. Lotes muito grandes podem demorar mais dependendo do seu dispositivo." },
+    { q: "Posso reordenar os arquivos antes de juntar?", a: "Sim. Use os botões de seta ao lado de cada arquivo para movê-lo para cima ou para baixo. O PDF final seguirá a ordem exibida." },
+    { q: "A junção de PDF funciona no celular?", a: "Sim. A ferramenta funciona em qualquer navegador moderno, incluindo os de celular no iOS e Android. Arquivos grandes podem ficar mais lentos em aparelhos antigos." },
+  ],
+  fr: [
+    { q: "Y a-t-il une limite de taille pour fusionner des PDF ?", a: "Non. ToolsMani traite tout dans votre navigateur, il n'y a donc aucune limite de taille imposée par un serveur. Vous pouvez fusionner des PDF de n'importe quelle taille tant que votre appareil dispose de assez de mémoire." },
+    { q: "Mes fichiers PDF sont-ils envoyés à un serveur ?", a: "Jamais. Vos fichiers restent à 100% sur votre appareil. Toute la fusion se fait localement avec la bibliothèque pdf-lib exécutée dans votre navigateur. Rien n'est envoyé sur Internet." },
+    { q: "Combien de fichiers PDF puis-je fusionner à la fois ?", a: "Il n'y a pas de limite stricte. Vous pouvez ajouter autant de PDF que nécessaire. Les très gros lots peuvent prendre plus de temps selon votre appareil." },
+    { q: "Puis-je réordonner les fichiers avant la fusion ?", a: "Oui. Utilisez les flèches à côté de chaque fichier pour le monter ou le descendre. Le PDF final suivra l'ordre affiché." },
+    { q: "La fusion de PDF fonctionne-t-elle sur mobile ?", a: "Oui. L'outil fonctionne dans tout navigateur moderne, y compris sur mobile sous iOS et Android. Les gros fichiers peuvent être plus lents sur les appareils anciens." },
+  ],
+};
 
 export default function PdfMergePage() {
   const [files, setFiles] = useState<File[]>([]);
@@ -130,16 +179,10 @@ export default function PdfMergePage() {
       {/* FAQ */}
       <div className="mt-16 border-t border-gray-100 pt-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+          {pick(faqTitle, locale)}
         </h2>
         <div className="space-y-5">
-          {[
-            { q: locale === "tr" ? "PDF birleştirmede dosya boyutu sınırı var mı?" : "Is there a file size limit for merging PDFs?", a: locale === "tr" ? "Hayır. ToolsMani tüm işlemleri tarayıcınızda gerçekleştirir, herhangi bir sunucu taraflı boyut sınırı yoktur. Cihazınızın belleği yettiği sürece istediğiniz boyuttaki PDF'leri birleştirebilirsiniz." : "No. ToolsMani processes everything in your browser, so there is no server-side file size limit. You can merge PDFs of any size as long as your device has enough memory." },
-            { q: locale === "tr" ? "PDF dosyalarım bir sunucuya yükleniyor mu?" : "Are my PDF files uploaded to a server?", a: locale === "tr" ? "Kesinlikle hayır. Dosyalarınız %100 cihazınızda kalır. Tüm birleştirme işlemi tarayıcınızda çalışan pdf-lib kütüphanesi kullanılarak yerel olarak gerçekleşir." : "Never. Your files stay 100% on your device. All merging happens locally using the pdf-lib library running in your browser. Nothing is sent over the internet." },
-            { q: locale === "tr" ? "Aynı anda kaç PDF dosyasını birleştirebilirim?" : "How many PDF files can I merge at once?", a: locale === "tr" ? "Dosya sayısı konusunda sabit bir sınır yoktur. İhtiyacınız olan kadar PDF ekleyebilirsiniz. Çok büyük grupların işlenmesi cihazınıza bağlı olarak daha uzun sürebilir." : "There is no hard limit. You can add as many PDFs as you need. Very large batches may take longer depending on your device." },
-            { q: locale === "tr" ? "Birleştirmeden önce PDF dosyalarını yeniden sıralayabilir miyim?" : "Can I reorder the PDF files before merging?", a: locale === "tr" ? "Evet. Her dosyanın yanındaki ok düğmelerini kullanarak yukarı veya aşağı taşıyabilirsiniz. Nihai PDF gösterilen sırayı takip eder." : "Yes. Use the arrow buttons next to each file to move it up or down. The final merged PDF will follow the order shown." },
-            { q: locale === "tr" ? "PDF birleştirme mobil cihazlarda çalışır mı?" : "Does PDF merging work on mobile?", a: locale === "tr" ? "Evet. Araç, iOS ve Android dahil tüm modern tarayıcılarda çalışır. Büyük dosyalar eski cihazlarda daha yavaş olabilir." : "Yes. The tool works on any modern browser including mobile browsers on iOS and Android. Large files may be slower on older devices." },
-          ].map(({ q, a }, i) => (
+          {pick(faq, locale).map(({ q, a }, i) => (
             <div key={i} className="bg-gray-50 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{a}</p>

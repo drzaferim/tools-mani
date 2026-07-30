@@ -3,7 +3,8 @@ import { trackToolUse } from "@/lib/track";
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
+import type { Locale } from "@/lib/translations";
 
 type OutputFormat = "jpg" | "png";
 
@@ -15,40 +16,161 @@ interface PagePreview {
 }
 
 const translations = {
-  title: { en: "PDF to Image", tr: "PDF'den Görsel" },
+  title: {
+    en: "PDF to Image", tr: "PDF'den Görsel", es: "PDF a imagen",
+    de: "PDF zu Bild", pt: "PDF para imagem", fr: "PDF en image",
+  },
   subtitle: {
     en: "Convert each PDF page to a high-quality JPG or PNG image. All processing happens in your browser.",
     tr: "Her PDF sayfasını yüksek kaliteli JPG veya PNG görselinize dönüştürün. Tüm işlemler tarayıcınızda gerçekleşir.",
+    es: "Convierte cada página del PDF en una imagen JPG o PNG de alta calidad. Todo el procesamiento ocurre en tu navegador.",
+    de: "Wandeln Sie jede PDF-Seite in ein hochwertiges JPG- oder PNG-Bild um. Die gesamte Verarbeitung erfolgt in Ihrem Browser.",
+    pt: "Converta cada página do PDF em uma imagem JPG ou PNG de alta qualidade. Todo o processamento acontece no seu navegador.",
+    fr: "Convertissez chaque page du PDF en image JPG ou PNG de haute qualité. Tout le traitement se fait dans votre navigateur.",
   },
-  clickOrDrag: { en: "Click or drag a PDF file here", tr: "PDF dosyasını buraya tıklayın veya sürükleyin" },
-  noLimit: { en: "No file size limit", tr: "Dosya boyutu sınırı yok" },
-  format: { en: "Output Format", tr: "Çıktı Formatı" },
-  scale: { en: "Quality / Resolution", tr: "Kalite / Çözünürlük" },
-  scaleLow: { en: "Low (faster)", tr: "Düşük (hızlı)" },
-  scaleMed: { en: "Medium", tr: "Orta" },
-  scaleHigh: { en: "High (best quality)", tr: "Yüksek (en iyi kalite)" },
-  convert: { en: "Convert to Images", tr: "Görsele Dönüştür" },
-  converting: { en: "Converting...", tr: "Dönüştürülüyor..." },
-  downloadAll: { en: "Download All as ZIP", tr: "Tümünü ZIP İndir" },
-  downloadPage: { en: "Download", tr: "İndir" },
-  page: { en: "Page", tr: "Sayfa" },
-  pages: { en: "pages", tr: "sayfa" },
-  errorPdfOnly: { en: "Please select a PDF file.", tr: "Lütfen bir PDF dosyası seçin." },
-  errorLoad: { en: "Could not load PDF. File may be corrupted.", tr: "PDF yüklenemedi. Dosya bozuk olabilir." },
-  processing: { en: "Processing page", tr: "Sayfa işleniyor" },
-  of: { en: "of", tr: "/" },
-  backToPdf: { en: "← PDF Tools", tr: "← PDF Araçları" },
-  preview: { en: "Preview", tr: "Önizleme" },
-  ready: { en: "Ready to download", tr: "İndirmeye hazır" },
+  clickOrDrag: {
+    en: "Click or drag a PDF file here", tr: "PDF dosyasını buraya tıklayın veya sürükleyin",
+    es: "Haz clic o arrastra un archivo PDF aquí", de: "PDF-Datei hierher klicken oder ziehen",
+    pt: "Clique ou arraste um arquivo PDF aqui", fr: "Cliquez ou glissez un fichier PDF ici",
+  },
+  noLimit: {
+    en: "No file size limit", tr: "Dosya boyutu sınırı yok", es: "Sin límite de tamaño",
+    de: "Keine Größenbeschränkung", pt: "Sem limite de tamanho", fr: "Aucune limite de taille",
+  },
+  format: {
+    en: "Output Format", tr: "Çıktı Formatı", es: "Formato de salida",
+    de: "Ausgabeformat", pt: "Formato de saída", fr: "Format de sortie",
+  },
+  scale: {
+    en: "Quality / Resolution", tr: "Kalite / Çözünürlük", es: "Calidad / Resolución",
+    de: "Qualität / Auflösung", pt: "Qualidade / Resolução", fr: "Qualité / Résolution",
+  },
+  scaleLow: {
+    en: "Low (faster)", tr: "Düşük (hızlı)", es: "Baja (más rápida)",
+    de: "Niedrig (schneller)", pt: "Baixa (mais rápida)", fr: "Basse (plus rapide)",
+  },
+  scaleMed: {
+    en: "Medium", tr: "Orta", es: "Media", de: "Mittel", pt: "Média", fr: "Moyenne",
+  },
+  scaleHigh: {
+    en: "High (best quality)", tr: "Yüksek (en iyi kalite)", es: "Alta (mejor calidad)",
+    de: "Hoch (beste Qualität)", pt: "Alta (melhor qualidade)", fr: "Élevée (meilleure qualité)",
+  },
+  convert: {
+    en: "Convert to Images", tr: "Görsele Dönüştür", es: "Convertir a imágenes",
+    de: "In Bilder umwandeln", pt: "Converter em imagens", fr: "Convertir en images",
+  },
+  converting: {
+    en: "Converting...", tr: "Dönüştürülüyor...", es: "Convirtiendo...",
+    de: "Konvertierung läuft...", pt: "Convertendo...", fr: "Conversion...",
+  },
+  downloadAll: {
+    en: "Download All as ZIP", tr: "Tümünü ZIP İndir", es: "Descargar todo en ZIP",
+    de: "Alle als ZIP herunterladen", pt: "Baixar tudo em ZIP", fr: "Tout télécharger en ZIP",
+  },
+  downloadPage: {
+    en: "Download", tr: "İndir", es: "Descargar", de: "Herunterladen", pt: "Baixar", fr: "Télécharger",
+  },
+  page: {
+    en: "Page", tr: "Sayfa", es: "Página", de: "Seite", pt: "Página", fr: "Page",
+  },
+  pages: {
+    en: "pages", tr: "sayfa", es: "páginas", de: "Seiten", pt: "páginas", fr: "pages",
+  },
+  errorPdfOnly: {
+    en: "Please select a PDF file.", tr: "Lütfen bir PDF dosyası seçin.",
+    es: "Selecciona un archivo PDF.", de: "Bitte wählen Sie eine PDF-Datei.",
+    pt: "Selecione um arquivo PDF.", fr: "Veuillez sélectionner un fichier PDF.",
+  },
+  errorLoad: {
+    en: "Could not load PDF. File may be corrupted.", tr: "PDF yüklenemedi. Dosya bozuk olabilir.",
+    es: "No se pudo cargar el PDF. El archivo puede estar dañado.",
+    de: "PDF konnte nicht geladen werden. Die Datei ist möglicherweise beschädigt.",
+    pt: "Não foi possível carregar o PDF. O arquivo pode estar corrompido.",
+    fr: "Impossible de charger le PDF. Le fichier est peut-être corrompu.",
+  },
+  processing: {
+    en: "Processing page", tr: "Sayfa işleniyor", es: "Procesando página",
+    de: "Seite wird verarbeitet", pt: "Processando página", fr: "Traitement de la page",
+  },
+  of: {
+    en: "of", tr: "/", es: "de", de: "von", pt: "de", fr: "sur",
+  },
+  backToPdf: {
+    en: "← PDF Tools", tr: "← PDF Araçları", es: "← Herramientas PDF",
+    de: "← PDF-Tools", pt: "← Ferramentas PDF", fr: "← Outils PDF",
+  },
+  preview: {
+    en: "Preview", tr: "Önizleme", es: "Vista previa",
+    de: "Vorschau", pt: "Pré-visualização", fr: "Aperçu",
+  },
+  ready: {
+    en: "Ready to download", tr: "İndirmeye hazır", es: "Listo para descargar",
+    de: "Bereit zum Herunterladen", pt: "Pronto para baixar", fr: "Prêt à télécharger",
+  },
 };
 
-function t(key: keyof typeof translations, locale: "en" | "tr"): string {
-  return translations[key][locale];
+/** Eksik dil İngilizceye düşer — önceden locale "en"|"tr" cast ediliyordu ve
+ *  es/de/pt/fr'de undefined dönüp sayfayı boş bırakıyordu. */
+function t(key: keyof typeof translations, locale: Locale): string {
+  return translations[key][locale] ?? translations[key].en;
 }
+
+const ui = {
+  en: { remove: "Remove", newPdf: "New PDF" },
+  tr: { remove: "Kaldır", newPdf: "Yeni PDF" },
+  es: { remove: "Quitar", newPdf: "Nuevo PDF" },
+  de: { remove: "Entfernen", newPdf: "Neues PDF" },
+  pt: { remove: "Remover", newPdf: "Novo PDF" },
+  fr: { remove: "Retirer", newPdf: "Nouveau PDF" },
+};
+
+const faqTitle = {
+  en: "Frequently Asked Questions", tr: "Sık Sorulan Sorular", es: "Preguntas frecuentes", de: "Häufig gestellte Fragen", pt: "Perguntas frequentes", fr: "Questions fréquentes",
+};
+
+const faq = {
+  en: [
+    { q: "Is my PDF uploaded to a server when converting?", a: "No. The entire conversion happens locally in your browser using PDF.js. Your file never leaves your device." },
+    { q: "Should I choose JPG or PNG?", a: "JPG produces smaller files and is ideal for photos. PNG is lossless and better for text-heavy pages or when you need transparency." },
+    { q: "Can I convert multi-page PDFs?", a: "Yes. Each page is converted to a separate image. Use the 'Download All as ZIP' button to get all pages at once." },
+    { q: "What does the quality setting do?", a: "Higher quality renders at 3x scale for sharper images but uses more memory and takes longer. Medium is recommended for most PDFs." },
+  ],
+  tr: [
+    { q: "PDF sayfalarını görsele dönüştürürken dosyam yükleniyor mu?", a: "Hayır. Tüm dönüştürme işlemi tamamen tarayıcınızda gerçekleşir. Dosyanız hiçbir sunucuya gönderilmez." },
+    { q: "JPG mi PNG mi seçmeliyim?", a: "Fotoğraflar ve genel kullanım için JPG daha küçük dosya boyutu sunar. Şeffaflık gerektiren veya metin ağırlıklı sayfalar için PNG daha kalitelidir." },
+    { q: "Çok sayfalı PDF'leri dönüştürebilir miyim?", a: "Evet, her sayfa ayrı bir görsel olarak dönüştürülür. İndirme düğmesi tüm sayfaları ZIP dosyası olarak indirir." },
+    { q: "Kalite ayarı ne işe yarar?", a: "Yüksek kalite seçeneği daha yüksek çözünürlükte render eder (3x ölçek) ancak daha fazla bellek kullanır ve daha uzun sürer. Büyük PDF'ler için Orta seçeneği önerilir." },
+  ],
+  es: [
+    { q: "¿Se sube mi PDF a un servidor al convertirlo?", a: "No. Toda la conversión ocurre localmente en tu navegador mediante PDF.js. Tu archivo nunca sale de tu dispositivo." },
+    { q: "¿Debo elegir JPG o PNG?", a: "JPG genera archivos más pequeños y es ideal para fotos. PNG es sin pérdidas y va mejor con páginas con mucho texto o cuando necesitas transparencia." },
+    { q: "¿Puedo convertir PDF de varias páginas?", a: "Sí. Cada página se convierte en una imagen independiente. Usa el botón «Descargar todo en ZIP» para obtener todas las páginas de una vez." },
+    { q: "¿Qué hace el ajuste de calidad?", a: "La calidad alta renderiza a escala 3x para imágenes más nítidas, pero usa más memoria y tarda más. Para la mayoría de los PDF se recomienda Media." },
+  ],
+  de: [
+    { q: "Wird mein PDF beim Konvertieren hochgeladen?", a: "Nein. Die gesamte Konvertierung erfolgt lokal in Ihrem Browser mit PDF.js. Ihre Datei verlässt Ihr Gerät nie." },
+    { q: "Soll ich JPG oder PNG wählen?", a: "JPG erzeugt kleinere Dateien und eignet sich ideal für Fotos. PNG ist verlustfrei und besser für textlastige Seiten oder wenn Sie Transparenz brauchen." },
+    { q: "Kann ich mehrseitige PDFs konvertieren?", a: "Ja. Jede Seite wird in ein eigenes Bild umgewandelt. Mit „Alle als ZIP herunterladen“ erhalten Sie alle Seiten auf einmal." },
+    { q: "Was bewirkt die Qualitätseinstellung?", a: "Hohe Qualität rendert mit 3-facher Skalierung für schärfere Bilder, benötigt aber mehr Speicher und dauert länger. Für die meisten PDFs wird Mittel empfohlen." },
+  ],
+  pt: [
+    { q: "Meu PDF é enviado para um servidor ao converter?", a: "Não. Toda a conversão acontece localmente no seu navegador usando PDF.js. Seu arquivo nunca sai do seu dispositivo." },
+    { q: "Devo escolher JPG ou PNG?", a: "JPG gera arquivos menores e é ideal para fotos. PNG é sem perdas e melhor para páginas com muito texto ou quando você precisa de transparência." },
+    { q: "Posso converter PDFs de várias páginas?", a: "Sim. Cada página é convertida em uma imagem separada. Use o botão «Baixar tudo em ZIP» para obter todas as páginas de uma vez." },
+    { q: "O que faz a configuração de qualidade?", a: "A qualidade alta renderiza em escala 3x para imagens mais nítidas, mas usa mais memória e demora mais. Para a maioria dos PDFs, recomenda-se Média." },
+  ],
+  fr: [
+    { q: "Mon PDF est-il envoyé à un serveur lors de la conversion ?", a: "Non. Toute la conversion se fait localement dans votre navigateur via PDF.js. Votre fichier ne quitte jamais votre appareil." },
+    { q: "Dois-je choisir JPG ou PNG ?", a: "Le JPG produit des fichiers plus légers, idéal pour les photos. Le PNG est sans perte et convient mieux aux pages riches en texte ou quand vous avez besoin de transparence." },
+    { q: "Puis-je convertir des PDF de plusieurs pages ?", a: "Oui. Chaque page est convertie en une image distincte. Utilisez le bouton « Tout télécharger en ZIP » pour récupérer toutes les pages d'un coup." },
+    { q: "À quoi sert le réglage de qualité ?", a: "La qualité élevée effectue le rendu à l'échelle 3x pour des images plus nettes, mais consomme plus de mémoire et prend plus de temps. Moyenne est recommandé pour la plupart des PDF." },
+  ],
+};
 
 export default function PdfToImagePage() {
   const { locale } = useLanguage();
-  const l = locale as "en" | "tr";
+  const l = locale;
 
   const [file, setFile] = useState<File | null>(null);
   const [format, setFormat] = useState<OutputFormat>("jpg");
@@ -224,7 +346,7 @@ export default function PdfToImagePage() {
               onClick={() => { setFile(null); setPages([]); setProgress(0); }}
               className="text-gray-400 hover:text-red-500 transition-colors text-sm"
             >
-              ✕ {locale === "tr" ? "Kaldır" : "Remove"}
+              ✕ {pick(ui, locale).remove}
             </button>
           </div>
 
@@ -317,7 +439,7 @@ export default function PdfToImagePage() {
                 onClick={() => { setFile(null); setPages([]); setProgress(0); }}
                 className="btn-secondary py-2 px-4 text-sm"
               >
-                {locale === "tr" ? "Yeni PDF" : "New PDF"}
+                {pick(ui, locale).newPdf}
               </button>
               <button
                 onClick={downloadAll}
@@ -360,27 +482,10 @@ export default function PdfToImagePage() {
       {/* FAQ */}
       <div className="mt-16 border-t border-gray-100 pt-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+          {pick(faqTitle, locale)}
         </h2>
         <div className="space-y-6">
-          {[
-            {
-              q: locale === "tr" ? "PDF sayfalarını görsele dönüştürürken dosyam yükleniyor mu?" : "Is my PDF uploaded to a server when converting?",
-              a: locale === "tr" ? "Hayır. Tüm dönüştürme işlemi tamamen tarayıcınızda gerçekleşir. Dosyanız hiçbir sunucuya gönderilmez." : "No. The entire conversion happens locally in your browser using PDF.js. Your file never leaves your device.",
-            },
-            {
-              q: locale === "tr" ? "JPG mi PNG mi seçmeliyim?" : "Should I choose JPG or PNG?",
-              a: locale === "tr" ? "Fotoğraflar ve genel kullanım için JPG daha küçük dosya boyutu sunar. Şeffaflık gerektiren veya metin ağırlıklı sayfalar için PNG daha kalitelidir." : "JPG produces smaller files and is ideal for photos. PNG is lossless and better for text-heavy pages or when you need transparency.",
-            },
-            {
-              q: locale === "tr" ? "Çok sayfalı PDF'leri dönüştürebilir miyim?" : "Can I convert multi-page PDFs?",
-              a: locale === "tr" ? "Evet, her sayfa ayrı bir görsel olarak dönüştürülür. İndirme düğmesi tüm sayfaları ZIP dosyası olarak indirir." : "Yes. Each page is converted to a separate image. Use the 'Download All as ZIP' button to get all pages at once.",
-            },
-            {
-              q: locale === "tr" ? "Kalite ayarı ne işe yarar?" : "What does the quality setting do?",
-              a: locale === "tr" ? "Yüksek kalite seçeneği daha yüksek çözünürlükte render eder (3x ölçek) ancak daha fazla bellek kullanır ve daha uzun sürer. Büyük PDF'ler için Orta seçeneği önerilir." : "Higher quality renders at 3x scale for sharper images but uses more memory and takes longer. Medium is recommended for most PDFs.",
-            },
-          ].map(({ q, a }, i) => (
+          {pick(faq, locale).map(({ q, a }, i) => (
             <div key={i} className="bg-gray-50 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{a}</p>

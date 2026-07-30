@@ -3,7 +3,50 @@ import { trackToolUse } from "@/lib/track";
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
+
+const faqTitle = {
+  en: "Frequently Asked Questions", tr: "Sık Sorulan Sorular", es: "Preguntas frecuentes", de: "Häufig gestellte Fragen", pt: "Perguntas frequentes", fr: "Questions fréquentes",
+};
+
+const faq = {
+  en: [
+    { q: "Can I extract multiple non-consecutive pages?", a: "Yes. Click on any combination of pages to select them, then click 'Extract'. The resulting PDF will contain only the selected pages in their original order." },
+    { q: "What is the difference between Extract and Delete?", a: "Extract creates a new PDF with only the selected pages. Delete creates a new PDF with the selected pages removed. The original file is never modified." },
+    { q: "Is there a limit on the number of pages I can extract?", a: "No. You can extract any number of pages from PDFs of any size. Everything runs in your browser." },
+    { q: "Does page extraction affect PDF quality?", a: "No. Pages are copied with their original content intact — images, text, and formatting are all preserved." },
+  ],
+  tr: [
+    { q: "Birbirini takip etmeyen birden fazla sayfayı çıkarabilir miyim?", a: "Evet. Herhangi bir sayfa kombinasyonuna tıklayarak seçin, ardından 'Çıkar'a tıklayın. Sonuçta oluşan PDF yalnızca seçilen sayfaları orijinal sırasıyla içerir." },
+    { q: "Çıkar ve Sil arasındaki fark nedir?", a: "Çıkar, yalnızca seçili sayfaları içeren yeni bir PDF oluşturur. Sil, seçili sayfalar kaldırılmış yeni bir PDF oluşturur. Orijinal dosya hiçbir zaman değiştirilmez." },
+    { q: "Çıkarabileceğim sayfa sayısında bir sınır var mı?", a: "Hayır. Herhangi bir boyuttaki PDF'den istediğiniz sayıda sayfayı çıkarabilirsiniz. Her şey tarayıcınızda çalışır." },
+    { q: "Sayfa çıkarma PDF kalitesini etkiler mi?", a: "Hayır. Sayfalar orijinal içerikleri bozulmadan kopyalanır — görseller, metin ve biçimlendirme korunur." },
+  ],
+  es: [
+    { q: "¿Puedo extraer varias páginas no consecutivas?", a: "Sí. Haz clic en cualquier combinación de páginas para seleccionarlas y luego pulsa «Extraer». El PDF resultante contendrá solo las páginas seleccionadas, en su orden original." },
+    { q: "¿Cuál es la diferencia entre Extraer y Eliminar?", a: "Extraer crea un PDF nuevo solo con las páginas seleccionadas. Eliminar crea un PDF nuevo sin esas páginas. El archivo original nunca se modifica." },
+    { q: "¿Hay un límite de páginas que puedo extraer?", a: "No. Puedes extraer cualquier número de páginas de PDF de cualquier tamaño. Todo se ejecuta en tu navegador." },
+    { q: "¿La extracción de páginas afecta a la calidad del PDF?", a: "No. Las páginas se copian con su contenido original intacto: imágenes, texto y formato se conservan." },
+  ],
+  de: [
+    { q: "Kann ich mehrere nicht aufeinanderfolgende Seiten extrahieren?", a: "Ja. Klicken Sie auf eine beliebige Kombination von Seiten, um sie auszuwählen, und dann auf „Extrahieren“. Das Ergebnis-PDF enthält nur die gewählten Seiten in ihrer ursprünglichen Reihenfolge." },
+    { q: "Was ist der Unterschied zwischen Extrahieren und Löschen?", a: "Extrahieren erzeugt ein neues PDF nur mit den ausgewählten Seiten. Löschen erzeugt ein neues PDF ohne diese Seiten. Die Originaldatei wird nie verändert." },
+    { q: "Gibt es eine Grenze für die Anzahl extrahierbarer Seiten?", a: "Nein. Sie können beliebig viele Seiten aus PDFs jeder Größe extrahieren. Alles läuft in Ihrem Browser." },
+    { q: "Beeinträchtigt das Extrahieren die PDF-Qualität?", a: "Nein. Die Seiten werden mit ihrem Originalinhalt kopiert – Bilder, Text und Formatierung bleiben erhalten." },
+  ],
+  pt: [
+    { q: "Posso extrair várias páginas não consecutivas?", a: "Sim. Clique em qualquer combinação de páginas para selecioná-las e depois em «Extrair». O PDF resultante conterá apenas as páginas selecionadas, na ordem original." },
+    { q: "Qual é a diferença entre Extrair e Excluir?", a: "Extrair cria um novo PDF apenas com as páginas selecionadas. Excluir cria um novo PDF sem essas páginas. O arquivo original nunca é modificado." },
+    { q: "Existe limite de páginas que posso extrair?", a: "Não. Você pode extrair qualquer número de páginas de PDFs de qualquer tamanho. Tudo roda no seu navegador." },
+    { q: "A extração de páginas afeta a qualidade do PDF?", a: "Não. As páginas são copiadas com o conteúdo original intacto — imagens, texto e formatação são preservados." },
+  ],
+  fr: [
+    { q: "Puis-je extraire plusieurs pages non consécutives ?", a: "Oui. Cliquez sur n'importe quelle combinaison de pages pour les sélectionner, puis sur « Extraire ». Le PDF obtenu ne contiendra que les pages choisies, dans leur ordre d'origine." },
+    { q: "Quelle est la différence entre Extraire et Supprimer ?", a: "Extraire crée un nouveau PDF contenant uniquement les pages sélectionnées. Supprimer crée un nouveau PDF sans ces pages. Le fichier d'origine n'est jamais modifié." },
+    { q: "Y a-t-il une limite au nombre de pages extractibles ?", a: "Non. Vous pouvez extraire autant de pages que vous voulez, depuis des PDF de n'importe quelle taille. Tout s'exécute dans votre navigateur." },
+    { q: "L'extraction de pages altère-t-elle la qualité du PDF ?", a: "Non. Les pages sont copiées avec leur contenu d'origine intact : images, texte et mise en forme sont préservés." },
+  ],
+};
 
 export default function PdfPagesPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -117,15 +160,10 @@ export default function PdfPagesPage() {
       {/* FAQ */}
       <div className="mt-16 border-t border-gray-100 pt-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+          {pick(faqTitle, locale)}
         </h2>
         <div className="space-y-5">
-          {[
-            { q: locale === "tr" ? "Birbirini takip etmeyen birden fazla sayfayı çıkarabilir miyim?" : "Can I extract multiple non-consecutive pages?", a: locale === "tr" ? "Evet. Herhangi bir sayfa kombinasyonuna tıklayarak seçin, ardından 'Çıkar'a tıklayın. Sonuçta oluşan PDF yalnızca seçilen sayfaları orijinal sırasıyla içerir." : "Yes. Click on any combination of pages to select them, then click 'Extract'. The resulting PDF will contain only the selected pages in their original order." },
-            { q: locale === "tr" ? "Çıkar ve Sil arasındaki fark nedir?" : "What is the difference between Extract and Delete?", a: locale === "tr" ? "Çıkar, yalnızca seçili sayfaları içeren yeni bir PDF oluşturur. Sil, seçili sayfalar kaldırılmış yeni bir PDF oluşturur. Orijinal dosya hiçbir zaman değiştirilmez." : "Extract creates a new PDF with only the selected pages. Delete creates a new PDF with the selected pages removed. The original file is never modified." },
-            { q: locale === "tr" ? "Çıkarabileceğim sayfa sayısında bir sınır var mı?" : "Is there a limit on the number of pages I can extract?", a: locale === "tr" ? "Hayır. Herhangi bir boyuttaki PDF'den istediğiniz sayıda sayfayı çıkarabilirsiniz. Her şey tarayıcınızda çalışır." : "No. You can extract any number of pages from PDFs of any size. Everything runs in your browser." },
-            { q: locale === "tr" ? "Sayfa çıkarma PDF kalitesini etkiler mi?" : "Does page extraction affect PDF quality?", a: locale === "tr" ? "Hayır. Sayfalar orijinal içerikleri bozulmadan kopyalanır — görseller, metin ve biçimlendirme korunur." : "No. Pages are copied with their original content intact — images, text, and formatting are all preserved." },
-          ].map(({ q, a }, i) => (
+          {pick(faq, locale).map(({ q, a }, i) => (
             <div key={i} className="bg-gray-50 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{a}</p>

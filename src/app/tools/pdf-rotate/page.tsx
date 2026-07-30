@@ -3,9 +3,52 @@ import { trackToolUse } from "@/lib/track";
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 
 interface PageInfo { index: number; rotation: number; }
+
+const faqTitle = {
+  en: "Frequently Asked Questions", tr: "Sık Sorulan Sorular", es: "Preguntas frecuentes", de: "Häufig gestellte Fragen", pt: "Perguntas frequentes", fr: "Questions fréquentes",
+};
+
+const faq = {
+  en: [
+    { q: "Can I rotate only specific pages?", a: "Yes. Click the rotation arrows on individual page thumbnails to rotate them independently, or use the bulk rotation buttons to rotate all pages at once." },
+    { q: "Will rotating pages affect the PDF quality?", a: "No. Rotation is a structural change to the PDF metadata — it does not re-encode or re-compress any content, so quality is preserved perfectly." },
+    { q: "Are my files uploaded to a server?", a: "No. All rotation happens locally in your browser using pdf-lib. Your files never leave your device." },
+    { q: "Can I rotate a scanned PDF?", a: "Yes. Scanned PDFs contain images, and rotation works on them exactly the same way as regular PDFs." },
+  ],
+  tr: [
+    { q: "Yalnızca belirli sayfaları döndürebilir miyim?", a: "Evet. Sayfaları bağımsız olarak döndürmek için sayfa önizlemelerindeki döndürme oklarına tıklayabilir ya da tüm sayfaları aynı anda döndürmek için toplu döndürme düğmelerini kullanabilirsiniz." },
+    { q: "Sayfaları döndürmek PDF kalitesini etkiler mi?", a: "Hayır. Döndürme, PDF meta verilerine yapısal bir değişikliktir — herhangi bir içeriği yeniden kodlamaz veya sıkıştırmaz, bu nedenle kalite mükemmel şekilde korunur." },
+    { q: "Dosyalarım bir sunucuya yükleniyor mu?", a: "Hayır. Tüm döndürme işlemi pdf-lib kullanılarak tarayıcınızda yerel olarak gerçekleşir. Dosyalarınız cihazınızdan ayrılmaz." },
+    { q: "Taranmış bir PDF'yi döndürebilir miyim?", a: "Evet. Taranmış PDF'ler görsel içerir ve döndürme işlemi normal PDF'lerle tamamen aynı şekilde çalışır." },
+  ],
+  es: [
+    { q: "¿Puedo rotar solo páginas concretas?", a: "Sí. Haz clic en las flechas de rotación de cada miniatura para rotarlas de forma independiente, o usa los botones de rotación masiva para rotar todas las páginas a la vez." },
+    { q: "¿Rotar las páginas afecta a la calidad del PDF?", a: "No. La rotación es un cambio estructural en los metadatos del PDF: no vuelve a codificar ni a comprimir el contenido, así que la calidad se conserva intacta." },
+    { q: "¿Se suben mis archivos a un servidor?", a: "No. Toda la rotación ocurre localmente en tu navegador mediante pdf-lib. Tus archivos nunca salen de tu dispositivo." },
+    { q: "¿Puedo rotar un PDF escaneado?", a: "Sí. Los PDF escaneados contienen imágenes, y la rotación funciona con ellos exactamente igual que con los PDF normales." },
+  ],
+  de: [
+    { q: "Kann ich nur bestimmte Seiten drehen?", a: "Ja. Klicken Sie auf die Drehpfeile einzelner Seitenvorschauen, um sie unabhängig zu drehen, oder nutzen Sie die Sammel-Schaltflächen, um alle Seiten auf einmal zu drehen." },
+    { q: "Beeinträchtigt das Drehen die PDF-Qualität?", a: "Nein. Die Drehung ist eine strukturelle Änderung an den PDF-Metadaten – Inhalte werden weder neu kodiert noch neu komprimiert, die Qualität bleibt vollständig erhalten." },
+    { q: "Werden meine Dateien auf einen Server hochgeladen?", a: "Nein. Das Drehen erfolgt lokal in Ihrem Browser mit pdf-lib. Ihre Dateien verlassen Ihr Gerät nie." },
+    { q: "Kann ich ein gescanntes PDF drehen?", a: "Ja. Gescannte PDFs enthalten Bilder, und das Drehen funktioniert dort genauso wie bei normalen PDFs." },
+  ],
+  pt: [
+    { q: "Posso girar apenas páginas específicas?", a: "Sim. Clique nas setas de rotação nas miniaturas de cada página para girá-las de forma independente, ou use os botões de rotação em massa para girar todas as páginas de uma vez." },
+    { q: "Girar as páginas afeta a qualidade do PDF?", a: "Não. A rotação é uma alteração estrutural nos metadados do PDF — não recodifica nem recomprime nenhum conteúdo, então a qualidade é totalmente preservada." },
+    { q: "Meus arquivos são enviados para um servidor?", a: "Não. Toda a rotação acontece localmente no seu navegador usando pdf-lib. Seus arquivos nunca saem do seu dispositivo." },
+    { q: "Posso girar um PDF digitalizado?", a: "Sim. PDFs digitalizados contêm imagens, e a rotação funciona neles exatamente como em PDFs comuns." },
+  ],
+  fr: [
+    { q: "Puis-je faire pivoter seulement certaines pages ?", a: "Oui. Cliquez sur les flèches de rotation des vignettes pour les faire pivoter individuellement, ou utilisez les boutons de rotation groupée pour tout faire pivoter d'un coup." },
+    { q: "La rotation altère-t-elle la qualité du PDF ?", a: "Non. La rotation est une modification structurelle des métadonnées du PDF : elle ne réencode ni ne recompresse le contenu, la qualité est donc parfaitement préservée." },
+    { q: "Mes fichiers sont-ils envoyés à un serveur ?", a: "Non. Toute la rotation se fait localement dans votre navigateur via pdf-lib. Vos fichiers ne quittent jamais votre appareil." },
+    { q: "Puis-je faire pivoter un PDF numérisé ?", a: "Oui. Les PDF numérisés contiennent des images, et la rotation fonctionne exactement comme pour les PDF classiques." },
+  ],
+};
 
 export default function PdfRotatePage() {
   const [file, setFile] = useState<File | null>(null);
@@ -108,15 +151,10 @@ export default function PdfRotatePage() {
       {/* FAQ */}
       <div className="mt-16 border-t border-gray-100 pt-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
+          {pick(faqTitle, locale)}
         </h2>
         <div className="space-y-5">
-          {[
-            { q: locale === "tr" ? "Yalnızca belirli sayfaları döndürebilir miyim?" : "Can I rotate only specific pages?", a: locale === "tr" ? "Evet. Sayfaları bağımsız olarak döndürmek için sayfa önizlemelerindeki döndürme oklarına tıklayabilir ya da tüm sayfaları aynı anda döndürmek için toplu döndürme düğmelerini kullanabilirsiniz." : "Yes. Click the rotation arrows on individual page thumbnails to rotate them independently, or use the bulk rotation buttons to rotate all pages at once." },
-            { q: locale === "tr" ? "Sayfaları döndürmek PDF kalitesini etkiler mi?" : "Will rotating pages affect the PDF quality?", a: locale === "tr" ? "Hayır. Döndürme, PDF meta verilerine yapısal bir değişikliktir — herhangi bir içeriği yeniden kodlamaz veya sıkıştırmaz, bu nedenle kalite mükemmel şekilde korunur." : "No. Rotation is a structural change to the PDF metadata — it does not re-encode or re-compress any content, so quality is preserved perfectly." },
-            { q: locale === "tr" ? "Dosyalarım bir sunucuya yükleniyor mu?" : "Are my files uploaded to a server?", a: locale === "tr" ? "Hayır. Tüm döndürme işlemi pdf-lib kullanılarak tarayıcınızda yerel olarak gerçekleşir. Dosyalarınız cihazınızdan ayrılmaz." : "No. All rotation happens locally in your browser using pdf-lib. Your files never leave your device." },
-            { q: locale === "tr" ? "Taranmış bir PDF'yi döndürebilir miyim?" : "Can I rotate a scanned PDF?", a: locale === "tr" ? "Evet. Taranmış PDF'ler görsel içerir ve döndürme işlemi normal PDF'lerle tamamen aynı şekilde çalışır." : "Yes. Scanned PDFs contain images, and rotation works on them exactly the same way as regular PDFs." },
-          ].map(({ q, a }, i) => (
+          {pick(faq, locale).map(({ q, a }, i) => (
             <div key={i} className="bg-gray-50 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
