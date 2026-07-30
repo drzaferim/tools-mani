@@ -4,9 +4,11 @@ import { useState, useMemo } from "react";
 import { useLanguage } from "@/lib/language-context";
 import Link from "next/link";
 import { useTrackToolUseOnce } from "@/lib/track";
+import { ToolContent } from "@/components/ToolContent";
+import { textCounterContent } from "@/content/tools/text-color";
 
 export default function TextCounterPage() {
-  const { locale } = useLanguage();
+  const { t, localePath } = useLanguage();
   const [text, setText] = useState("");
   const markToolUsed = useTrackToolUseOnce("text-counter");
 
@@ -36,10 +38,10 @@ export default function TextCounterPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-6">
         <Link
-          href="/"
+          href={localePath("/")}
           className="text-primary-600 hover:text-primary-700 text-sm"
         >
-          &larr; Back to Tools
+          &larr; {t("pdfHub.backToAll")}
         </Link>
       </div>
 
@@ -125,25 +127,7 @@ export default function TextCounterPage() {
         </button>
       </div>
 
-      {/* FAQ */}
-      <div className="mt-16 border-t border-gray-100 pt-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
-        </h2>
-        <div className="space-y-5">
-          {[
-            { q: locale === "tr" ? "Kelime sayacı gerçek zamanlı çalışıyor mu?" : "Does the word counter work in real time?", a: locale === "tr" ? "Evet. Kelime, karakter, cümle ve paragraf sayıları siz yazarken anında güncellenir." : "Yes. Word, character, sentence, and paragraph counts update instantly as you type." },
-            { q: locale === "tr" ? "Karakter veya kelime sınırı var mı?" : "Is there a character or word limit?", a: locale === "tr" ? "Hayır. İstediğiniz kadar metin yapıştırabilir veya yazabilirsiniz — sınır yoktur." : "No. You can paste or type as much text as you like — there is no limit." },
-            { q: locale === "tr" ? "Boşluklu mu yoksa boşluksuz mu karakter sayar?" : "Does it count characters with or without spaces?", a: locale === "tr" ? "Her ikisi de. Araç, boşluklu ve boşluksuz karakter sayısını ayrı ayrı gösterir." : "Both. The tool shows character count with spaces and without spaces separately." },
-            { q: locale === "tr" ? "Metnim kaydediliyor veya bir yere gönderiliyor mu?" : "Is my text saved or sent anywhere?", a: locale === "tr" ? "Hayır. Her şey tarayıcınızda çalışır. Metniniz cihazınızdan ayrılmaz." : "No. Everything runs in your browser. Your text never leaves your device." },
-          ].map(({ q, a }, i) => (
-            <div key={i} className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ToolContent content={textCounterContent} />
     </div>
   );
 }

@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
+import { ToolContent } from "@/components/ToolContent";
+import { imageResizeContent } from "@/content/tools/images";
 
 const labels = {
   en: {
@@ -266,6 +268,8 @@ export default function ImageResizePage() {
           )}
         </div>
       )}
+
+      <ToolContent content={imageResizeContent} />
     </div>
   );
 }

@@ -2,7 +2,10 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
+import { ToolContent } from "@/components/ToolContent";
+import { imageCompressContent } from "@/content/tools/images";
 
 interface CompressedImage {
   original: { name: string; size: number; url: string };
@@ -11,6 +14,7 @@ interface CompressedImage {
 }
 
 export default function ImageCompressPage() {
+  const { t, localePath } = useLanguage();
   const [images, setImages] = useState<CompressedImage[]>([]);
   const [quality, setQuality] = useState(80);
   const [processing, setProcessing] = useState(false);
@@ -100,10 +104,10 @@ export default function ImageCompressPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-6">
         <Link
-          href="/"
+          href={localePath("/")}
           className="text-primary-600 hover:text-primary-700 text-sm"
         >
-          &larr; Back to Tools
+          &larr; {t("pdfHub.backToAll")}
         </Link>
       </div>
 
@@ -207,6 +211,8 @@ export default function ImageCompressPage() {
           </button>
         </div>
       )}
+
+      <ToolContent content={imageCompressContent} />
     </div>
   );
 }

@@ -65,6 +65,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Not: site geneli FAQPage schema'sı bilinçli olarak burada DEĞİL — kök layout
+// her sayfaya basıldığı için araç sayfalarının kendi FAQPage'leriyle çakışıyordu.
+// Ana sayfaya özel FAQ schema'sı src/app/page.tsx içinde üretilir.
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -96,52 +99,6 @@ const jsonLd = [
     url: "https://toolsmani.com",
     logo: "https://toolsmani.com/icon.png",
     sameAs: [],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Is ToolsMani free to use?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes, all tools on ToolsMani are completely free with no usage limits. PDF tools have no file size restrictions.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Are my files safe on ToolsMani?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Absolutely. All file processing happens directly in your browser. Your files are never uploaded to any server. We don't collect or store any personal data.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What PDF tools are available?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "ToolsMani offers 7 PDF tools: Merge, Split, Compress, Rotate, Page Manager, Watermark, and Page Numbers. All with no file size limits.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do I need to create an account?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "No. ToolsMani requires no registration, no account, and no sign-up. Just open a tool and start using it immediately.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can I use ToolsMani offline?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Since all processing happens in your browser, most tools work even with a slow connection. The page needs to load initially, but after that, file processing is entirely local.",
-        },
-      },
-    ],
   },
 ];
 

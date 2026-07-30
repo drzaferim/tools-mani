@@ -4,6 +4,8 @@ import { trackToolUse } from "@/lib/track";
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
+import { ToolContent } from "@/components/ToolContent";
+import { pdfCompressContent } from "@/content/tools/pdf-compress";
 
 export default function PdfCompressPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -12,7 +14,7 @@ export default function PdfCompressPage() {
   const [result, setResult] = useState<{ originalSize: number; compressedSize: number; url: string } | null>(null);
   const [progress, setProgress] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { t, locale } = useLanguage();
+  const { t, localePath } = useLanguage();
 
   const formatSize = (bytes: number) => {
     if (bytes < 1024) return bytes + " B";
@@ -115,26 +117,7 @@ export default function PdfCompressPage() {
         </>
       )}
 
-
-      {/* FAQ */}
-      <div className="mt-16 border-t border-gray-100 pt-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
-        </h2>
-        <div className="space-y-5">
-          {[
-            { q: locale === "tr" ? "PDF Sıkıştırma dosya boyutumu ne kadar küçültebilir?" : "How much can PDF Compress reduce my file size?", a: locale === "tr" ? "Bu PDF içeriğine bağlıdır. Tipik küçülme %10–40 arasındadır. Zaten optimize edilmiş veya ağırlıklı olarak yüksek kaliteli görsel içeren PDF'lerde küçülme az olabilir." : "It depends on the PDF content. Typical reduction is 10–40%. PDFs already optimized or mainly containing high-quality images may see little reduction." },
-            { q: locale === "tr" ? "Sıkıştırma görsel kalitesini düşürür mü?" : "Does compression reduce image quality?", a: locale === "tr" ? "Sıkıştırmamız görsel örnekleme yerine PDF yapısı optimizasyonuna (nesne akışları, çapraz referans tabloları) odaklanır, bu nedenle görsel kalitesi korunur." : "Our compression focuses on PDF structure optimization (object streams, cross-reference tables) rather than image downsampling, so image quality is preserved." },
-            { q: locale === "tr" ? "PDF dosyam herhangi bir yere yükleniyor mu?" : "Is my PDF file uploaded anywhere?", a: locale === "tr" ? "Hayır. Sıkıştırma tamamen tarayıcınızda gerçekleşir. Dosyanız cihazınızdan ayrılmaz." : "No. The compression happens entirely in your browser. Your file never leaves your device." },
-            { q: locale === "tr" ? "Sıkıştırma dosya boyutunu küçültmezse ne olur?" : "What if compression doesn't reduce the file size?", a: locale === "tr" ? "Bazı PDF'ler zaten iyi optimize edilmiştir. Bu durumda araç %0 küçülme gösterir — dosyayı büyütmez. Görsel ağırlıklı PDF'ler için özel bir PDF sıkıştırıcı kullanmayı düşünebilirsiniz." : "Some PDFs are already well-optimized. In that case, the tool will show 0% reduction — it won't make the file larger. Consider using a specialized PDF compressor for image-heavy PDFs." },
-          ].map(({ q, a }, i) => (
-            <div key={i} className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ToolContent content={pdfCompressContent} />
     </div>
   );
 }

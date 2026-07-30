@@ -100,6 +100,48 @@ const toolDescKeys: Record<string, TranslationKey> = {
   "number-to-words": "tool.numberToWords.desc",
 };
 
+// Ana sayfaya özel site SSS'i. Yalnızca İngilizce ana sayfada yayınlanır;
+// diğer dillerde çeviri hazır olmadığı için schema basılmaz (yanlış dilde
+// yapılandırılmış veri vermek, hiç vermemekten kötüdür).
+const homeFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is ToolsMani free to use?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Every tool is completely free with no usage limits, no account and no file size restrictions.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are my files safe on ToolsMani?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. All file processing happens directly in your browser. Your files are never uploaded to any server, so we cannot see them even if we wanted to.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need to create an account?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. ToolsMani requires no registration, no account and no sign-up. Open a tool and start using it immediately.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Does ToolsMani work offline?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Once a tool page has loaded, most tools keep working without an internet connection, because all processing runs locally on your device.",
+      },
+    },
+  ],
+};
+
 export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -117,6 +159,13 @@ export default function HomePage() {
   });
 
   return (
+    <>
+      {locale === "en" && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }}
+        />
+      )}
     <>
       {/* Hero Section */}
       <section className="hero-gradient hero-pattern relative overflow-hidden">
@@ -303,6 +352,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+    </>
     </>
   );
 }

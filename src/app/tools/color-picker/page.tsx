@@ -2,7 +2,10 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
+import { ToolContent } from "@/components/ToolContent";
+import { colorPickerContent } from "@/content/tools/text-color";
 
 function hexToRgb(hex: string) {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -35,6 +38,7 @@ function rgbToHsl(r: number, g: number, b: number) {
 }
 
 export default function ColorPickerPage() {
+  const { t, localePath } = useLanguage();
   const [hex, setHex] = useState("#3b82f6");
   const markToolUsed = useTrackToolUseOnce("color-picker");
 
@@ -56,7 +60,7 @@ export default function ColorPickerPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-6">
         <Link href="/" className="text-primary-600 hover:text-primary-700 text-sm">
-          &larr; Back to Tools
+          &larr; {t("pdfHub.backToAll")}
         </Link>
       </div>
 
@@ -120,6 +124,8 @@ export default function ColorPickerPage() {
           </div>
         </div>
       </div>
+
+      <ToolContent content={colorPickerContent} />
     </div>
   );
 }
