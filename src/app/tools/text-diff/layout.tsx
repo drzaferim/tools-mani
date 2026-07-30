@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Text Compare - Online Diff Checker | ToolsMani",
+  title: "Text Compare - Online Text Difference Checker | ToolsMani",
   description:
-    "Compare two texts and see differences line by line. Free diff checker that runs entirely in your browser \u2014 nothing is uploaded.",
+    "Compare two texts online and see the differences line by line. Free diff checker with added/removed highlighting \u2014 runs entirely in your browser, nothing is uploaded.",
   alternates: {
     canonical: "/tools/text-diff/",
     languages: {
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Text Compare - Online Diff Checker | ToolsMani",
+    title: "Text Compare - Online Text Difference Checker | ToolsMani",
     description:
-      "Compare two texts and see differences line by line. Free diff checker that runs entirely in your browser \u2014 nothing is uploaded.",
+      "Compare two texts online and see the differences line by line. Free diff checker with added/removed highlighting \u2014 runs entirely in your browser, nothing is uploaded.",
     images: ["/og-image.png"],
   },
 };
@@ -32,10 +32,10 @@ export default function TextDiffLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Text Compare - Online Diff Checker | ToolsMani",
+    name: "Text Compare - Online Text Difference Checker | ToolsMani",
     url: "https://toolsmani.com/tools/text-diff/",
     description:
-      "Compare two texts and see differences line by line. Free diff checker that runs entirely in your browser \u2014 nothing is uploaded.",
+      "Compare two texts online and see the differences line by line. Free diff checker with added/removed highlighting \u2014 runs entirely in your browser, nothing is uploaded.",
     applicationCategory: "UtilityApplication",
     operatingSystem: "All",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },

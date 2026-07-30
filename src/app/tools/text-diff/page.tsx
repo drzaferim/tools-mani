@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useLanguage, pick } from "@/lib/language-context";
 import { useTrackToolUseOnce } from "@/lib/track";
+import { ToolContent } from "@/components/ToolContent";
+import { textDiffContent } from "@/content/tools/text-diff";
 
 const labels = {
   en: {
@@ -33,6 +35,62 @@ const labels = {
     added: "eklendi",
     removed: "silindi",
     stats: (a: number, r: number) => `${a} satır eklendi, ${r} satır silindi`,
+  },
+  es: {
+    back: "← Volver a las herramientas",
+    title: "Comparar textos (diff)",
+    subtitle:
+      "Pega dos textos y ve las diferencias línea por línea. La comparación ocurre en tu navegador: nada se sube.",
+    original: "Texto original",
+    changed: "Texto modificado",
+    phA: "Pega aquí la primera versión...",
+    phB: "Pega aquí la segunda versión...",
+    identical: "Los dos textos son idénticos.",
+    added: "añadidas",
+    removed: "eliminadas",
+    stats: (a: number, r: number) => `${a} línea(s) añadida(s), ${r} línea(s) eliminada(s)`,
+  },
+  de: {
+    back: "← Zurück zu den Tools",
+    title: "Textvergleich (Diff)",
+    subtitle:
+      "Zwei Texte einfügen und Unterschiede zeilenweise sehen. Der Vergleich läuft im Browser – nichts wird hochgeladen.",
+    original: "Originaltext",
+    changed: "Geänderter Text",
+    phA: "Erste Version hier einfügen ...",
+    phB: "Zweite Version hier einfügen ...",
+    identical: "Die beiden Texte sind identisch.",
+    added: "hinzugefügt",
+    removed: "entfernt",
+    stats: (a: number, r: number) => `${a} Zeile(n) hinzugefügt, ${r} Zeile(n) entfernt`,
+  },
+  pt: {
+    back: "← Voltar às ferramentas",
+    title: "Comparar textos (diff)",
+    subtitle:
+      "Cole dois textos e veja as diferenças linha por linha. A comparação acontece no seu navegador — nada é enviado.",
+    original: "Texto original",
+    changed: "Texto alterado",
+    phA: "Cole aqui a primeira versão...",
+    phB: "Cole aqui a segunda versão...",
+    identical: "Os dois textos são idênticos.",
+    added: "adicionadas",
+    removed: "removidas",
+    stats: (a: number, r: number) => `${a} linha(s) adicionada(s), ${r} linha(s) removida(s)`,
+  },
+  fr: {
+    back: "← Retour aux outils",
+    title: "Comparer des textes (diff)",
+    subtitle:
+      "Collez deux textes et voyez les différences ligne par ligne. La comparaison se fait dans votre navigateur — rien n'est envoyé.",
+    original: "Texte original",
+    changed: "Texte modifié",
+    phA: "Collez ici la première version...",
+    phB: "Collez ici la seconde version...",
+    identical: "Les deux textes sont identiques.",
+    added: "ajoutées",
+    removed: "supprimées",
+    stats: (a: number, r: number) => `${a} ligne(s) ajoutée(s), ${r} ligne(s) supprimée(s)`,
   },
 };
 
@@ -159,6 +217,8 @@ export default function TextDiffPage() {
           )}
         </div>
       )}
+
+      <ToolContent content={textDiffContent} />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "JSON Formatter & Validator - Beautify JSON Online | ToolsMani",
   description:
-    "Format, validate, and beautify JSON data online for free. Minify or pretty-print JSON with syntax highlighting and error detection. Fast and easy to use.",
+    "Format, validate and minify JSON online for free. Pretty-print any JSON with 2, 4 or 8-space indentation and get precise parser errors. Runs entirely in your browser.",
   alternates: {
     canonical: "/tools/json-formatter/",
     languages: {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "JSON Formatter & Validator - Beautify JSON Online | ToolsMani",
     description:
-      "Format, validate and beautify JSON online with syntax highlighting and error detection.",
+      "Format, validate and minify JSON online. Precise error messages, no size limit, nothing uploaded.",
     images: ["/og-image.png"],
   },
 };
@@ -35,7 +35,7 @@ export default function JsonFormatterLayout({
     name: "JSON Formatter & Validator - Beautify JSON Online",
     url: "https://toolsmani.com/tools/json-formatter/",
     description:
-      "Format, validate, and beautify JSON data online for free. Minify or pretty-print JSON with syntax highlighting and error detection. Fast and easy to use.",
+      "Format, validate and minify JSON online for free. Pretty-print any JSON with 2, 4 or 8-space indentation and get precise parser errors. Runs entirely in your browser.",
     applicationCategory: "UtilityApplication",
     operatingSystem: "All",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },

@@ -1,87 +1,188 @@
 "use client";
 
 import { useState } from "react";
-import { useLanguage } from "@/lib/language-context";
 import Link from "next/link";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
+import { ToolContent } from "@/components/ToolContent";
+import { jsonFormatterContent } from "@/content/tools/json-formatter";
+
+const labels = {
+  en: {
+    back: "← Back to Tools",
+    title: "JSON Formatter",
+    subtitle: "Format, validate and minify JSON instantly — entirely in your browser.",
+    format: "Format",
+    minify: "Minify",
+    validate: "Validate",
+    clear: "Clear",
+    spaces: (n: number) => `${n} spaces`,
+    tab: "Tab (8)",
+    input: "Input",
+    output: "Output",
+    placeholder: '{"key": "value"}',
+    outputPlaceholder: "Formatted output will appear here...",
+    copy: "Copy Output",
+    copied: "Copied!",
+    valid: "Valid JSON!",
+    invalid: "Invalid JSON",
+  },
+  tr: {
+    back: "← Araçlara Dön",
+    title: "JSON Biçimlendirici",
+    subtitle: "JSON'u anında biçimlendirin, doğrulayın ve küçültün — tamamen tarayıcınızda.",
+    format: "Biçimlendir",
+    minify: "Küçült",
+    validate: "Doğrula",
+    clear: "Temizle",
+    spaces: (n: number) => `${n} boşluk`,
+    tab: "Sekme (8)",
+    input: "Girdi",
+    output: "Çıktı",
+    placeholder: '{"anahtar": "değer"}',
+    outputPlaceholder: "Biçimlendirilmiş çıktı burada görünecek...",
+    copy: "Çıktıyı Kopyala",
+    copied: "Kopyalandı!",
+    valid: "Geçerli JSON!",
+    invalid: "Geçersiz JSON",
+  },
+  es: {
+    back: "← Volver a las herramientas",
+    title: "Formateador JSON",
+    subtitle: "Formatea, valida y minifica JSON al instante, todo en tu navegador.",
+    format: "Formatear",
+    minify: "Minificar",
+    validate: "Validar",
+    clear: "Limpiar",
+    spaces: (n: number) => `${n} espacios`,
+    tab: "Tabulación (8)",
+    input: "Entrada",
+    output: "Salida",
+    placeholder: '{"clave": "valor"}',
+    outputPlaceholder: "La salida formateada aparecerá aquí...",
+    copy: "Copiar salida",
+    copied: "¡Copiado!",
+    valid: "¡JSON válido!",
+    invalid: "JSON no válido",
+  },
+  de: {
+    back: "← Zurück zu den Tools",
+    title: "JSON-Formatter",
+    subtitle: "JSON sofort formatieren, validieren und minifizieren – vollständig im Browser.",
+    format: "Formatieren",
+    minify: "Minifizieren",
+    validate: "Validieren",
+    clear: "Leeren",
+    spaces: (n: number) => `${n} Leerzeichen`,
+    tab: "Tabulator (8)",
+    input: "Eingabe",
+    output: "Ausgabe",
+    placeholder: '{"schlüssel": "wert"}',
+    outputPlaceholder: "Formatierte Ausgabe erscheint hier ...",
+    copy: "Ausgabe kopieren",
+    copied: "Kopiert!",
+    valid: "Gültiges JSON!",
+    invalid: "Ungültiges JSON",
+  },
+  pt: {
+    back: "← Voltar às ferramentas",
+    title: "Formatador JSON",
+    subtitle: "Formate, valide e minifique JSON na hora — inteiramente no seu navegador.",
+    format: "Formatar",
+    minify: "Minificar",
+    validate: "Validar",
+    clear: "Limpar",
+    spaces: (n: number) => `${n} espaços`,
+    tab: "Tabulação (8)",
+    input: "Entrada",
+    output: "Saída",
+    placeholder: '{"chave": "valor"}',
+    outputPlaceholder: "A saída formatada aparecerá aqui...",
+    copy: "Copiar saída",
+    copied: "Copiado!",
+    valid: "JSON válido!",
+    invalid: "JSON inválido",
+  },
+  fr: {
+    back: "← Retour aux outils",
+    title: "Formateur JSON",
+    subtitle: "Formatez, validez et minifiez du JSON instantanément — entièrement dans votre navigateur.",
+    format: "Formater",
+    minify: "Minifier",
+    validate: "Valider",
+    clear: "Effacer",
+    spaces: (n: number) => `${n} espaces`,
+    tab: "Tabulation (8)",
+    input: "Entrée",
+    output: "Sortie",
+    placeholder: '{"clé": "valeur"}',
+    outputPlaceholder: "La sortie formatée apparaîtra ici...",
+    copy: "Copier la sortie",
+    copied: "Copié !",
+    valid: "JSON valide !",
+    invalid: "JSON non valide",
+  },
+};
 
 export default function JsonFormatterPage() {
-  const { locale } = useLanguage();
+  const { locale, localePath } = useLanguage();
+  const l = pick(labels, locale);
+
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [indentSize, setIndentSize] = useState(2);
+  const [copied, setCopied] = useState(false);
 
-  const formatJson = () => {
+  const run = (mode: "format" | "minify" | "validate") => {
     try {
       const parsed = JSON.parse(input);
-      setOutput(JSON.stringify(parsed, null, indentSize));
+      if (mode === "format") setOutput(JSON.stringify(parsed, null, indentSize));
+      else if (mode === "minify") setOutput(JSON.stringify(parsed));
+      else setOutput(l.valid);
       setError("");
       void trackToolUse("json-formatter");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Invalid JSON");
+      setError(e instanceof Error ? e.message : l.invalid);
       setOutput("");
     }
   };
 
-  const minifyJson = () => {
-    try {
-      const parsed = JSON.parse(input);
-      setOutput(JSON.stringify(parsed));
-      setError("");
-      void trackToolUse("json-formatter");
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Invalid JSON");
-      setOutput("");
-    }
-  };
-
-  const validateJson = () => {
-    try {
-      JSON.parse(input);
-      setError("");
-      setOutput("Valid JSON!");
-      void trackToolUse("json-formatter");
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Invalid JSON");
-      setOutput("");
-    }
+  const copy = async () => {
+    await navigator.clipboard.writeText(output);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-6">
-        <Link
-          href="/"
-          className="text-primary-600 hover:text-primary-700 text-sm"
-        >
-          &larr; Back to Tools
+        <Link href={localePath("/")} className="text-primary-600 hover:text-primary-700 text-sm">
+          {l.back}
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">JSON Formatter</h1>
-      <p className="text-gray-600 mb-8">
-        Format, validate, and beautify your JSON data instantly.
-      </p>
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">{l.title}</h1>
+      <p className="text-gray-600 mb-8">{l.subtitle}</p>
 
       <div className="flex flex-wrap gap-3 mb-6">
-        <button onClick={formatJson} className="btn-primary text-sm">
-          Format
+        <button onClick={() => run("format")} className="btn-primary text-sm">
+          {l.format}
         </button>
-        <button onClick={minifyJson} className="btn-secondary text-sm">
-          Minify
+        <button onClick={() => run("minify")} className="btn-secondary text-sm">
+          {l.minify}
         </button>
-        <button onClick={validateJson} className="btn-secondary text-sm">
-          Validate
+        <button onClick={() => run("validate")} className="btn-secondary text-sm">
+          {l.validate}
         </button>
         <select
           value={indentSize}
           onChange={(e) => setIndentSize(Number(e.target.value))}
           className="border border-gray-200 rounded-lg px-3 py-2 text-sm"
         >
-          <option value={2}>2 spaces</option>
-          <option value={4}>4 spaces</option>
-          <option value={8}>Tab (8)</option>
+          <option value={2}>{l.spaces(2)}</option>
+          <option value={4}>{l.spaces(4)}</option>
+          <option value={8}>{l.tab}</option>
         </select>
         <button
           onClick={() => {
@@ -91,36 +192,34 @@ export default function JsonFormatterPage() {
           }}
           className="btn-secondary text-sm"
         >
-          Clear
+          {l.clear}
         </button>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 font-mono text-sm">
           {error}
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Input
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{l.input}</label>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder='{"key": "value"}'
+            placeholder={l.placeholder}
+            spellCheck={false}
             className="w-full h-96 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Output
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{l.output}</label>
           <textarea
             value={output}
             readOnly
-            placeholder="Formatted output will appear here..."
+            placeholder={l.outputPlaceholder}
+            spellCheck={false}
             className="w-full h-96 p-4 bg-gray-50 border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none"
           />
         </div>
@@ -128,34 +227,13 @@ export default function JsonFormatterPage() {
 
       {output && (
         <div className="mt-4">
-          <button
-            onClick={() => navigator.clipboard.writeText(output)}
-            className="btn-primary text-sm"
-          >
-            Copy Output
+          <button onClick={copy} className="btn-primary text-sm">
+            {copied ? l.copied : l.copy}
           </button>
         </div>
       )}
 
-      {/* FAQ */}
-      <div className="mt-16 border-t border-gray-100 pt-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
-        </h2>
-        <div className="space-y-5">
-          {[
-            { q: locale === "tr" ? "JSON Biçimlendirici ne yapar?" : "What does the JSON Formatter do?", a: locale === "tr" ? "Ham veya sıkıştırılmış JSON'u insan tarafından okunabilir girintili bir biçime dönüştürür ve JSON'un geçerli olup olmadığını doğrular." : "It formats (pretty-prints) raw or minified JSON into a human-readable indented format, and validates whether the JSON is valid." },
-            { q: locale === "tr" ? "JSON'u küçültebilir mi?" : "Can it minify JSON too?", a: locale === "tr" ? "Evet. JSON'unuzu tek satıra sıkıştırmak için Küçült seçeneğini kullanın; API'lerde yük boyutunu azaltmak için idealdir." : "Yes. Use the Minify option to compress your JSON into a single line, ideal for reducing payload size in APIs." },
-            { q: locale === "tr" ? "JSON girişi için boyut sınırı var mı?" : "Is there a size limit for JSON input?", a: locale === "tr" ? "Hayır. İstediğiniz boyuttaki JSON'u yapıştırabilirsiniz. İşlem tamamen tarayıcınızda gerçekleşir." : "No. You can paste JSON of any size. Processing happens entirely in your browser." },
-            { q: locale === "tr" ? "JSON verilerim sunucuya gönderiliyor mu?" : "Is my JSON data sent to a server?", a: locale === "tr" ? "Hayır. Tüm biçimlendirme ve doğrulama tarayıcınızda yerel olarak gerçekleşir. Verileriniz cihazınızdan ayrılmaz." : "No. All formatting and validation happens locally in your browser. Your data never leaves your device." },
-          ].map(({ q, a }, i) => (
-            <div key={i} className="bg-gray-50 rounded-xl p-5">
-              <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ToolContent content={jsonFormatterContent} />
     </div>
   );
 }
