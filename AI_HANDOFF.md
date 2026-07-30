@@ -132,19 +132,30 @@ iken üretilir.
 
 ---
 
-## 5. Yerelleştirme denetimi (29 Tem 2026, sayfa sayfa doğrulandı)
+## 5. Yerelleştirme denetimi (30 Tem 2026 güncellendi)
 
 Her sayfada `<title>`, meta description ve hreflang **6 dilde eksiksiz**. Arayüz
 metinleri ise üç katmanda:
 
 | Katman | Sayı | Araçlar |
 |---|---|---|
-| 6 dilde tam | 2 | json-formatter, text-diff |
+| 6 dilde tam | 10 | json-formatter, text-diff, base64, heic-convert, image-convert, lorem-ipsum, markdown-preview, password-generator, qr-generator, unit-converter |
 | 6 dilde arayüz (`t()` ile) | ~11 | Tüm PDF araçları + pdf-compress, text-counter, color-picker, image-compress |
 | Yalnızca EN+TR | ~20 | age-calculator, jwt-decoder, ocr, video-to-mp3, vat-calculator, regex-tester, url-encode, uuid-generator, exif-cleaner, pdf-sign, favicon-generator, csv-json, timestamp-converter, case-converter, number-to-words, percentage-calculator, image-resize |
-| **Hiç yerelleşmemiş** | **8** | **base64, heic-convert, image-convert, lorem-ipsum, markdown-preview, password-generator, qr-generator, unit-converter** |
+| Hiç yerelleşmemiş | **0** | — |
 
-Son gruptaki 8 araç TR'de bile İngilizce görünüyor — **en acil yerelleştirme işi budur.**
+**30 Tem 2026'da kapatıldı:** Daha önce hiç yerelleşmemiş olan 8 araç (base64,
+heic-convert, image-convert, lorem-ipsum, markdown-preview, password-generator,
+qr-generator, unit-converter) 6 dile çevrildi. Kullanılan desen json-formatter ile
+aynı: dosya içinde 6 dilli `labels` nesnesi + `pick(labels, locale)`. Ayna sayfalar
+aynı bileşeni re-export ettiği için tek dosyayı çevirmek 6 rotayı birden düzeltir.
+
+Bu iş sırasında ayrıca:
+- Bu 8 araçtaki "Araçlara Dön" linkleri `localePath("/")` kullanacak şekilde
+  düzeltildi (önceden TR/ES/DE/PT/FR sayfalarından İngilizce ana sayfaya atıyordu).
+- İki SSS'deki yanlış bilgi düzeltildi: password-generator "128 karaktere kadar"
+  diyordu ama kaydırıcı maksimumu 64; qr-generator "PNG veya SVG indirebilirsiniz"
+  diyordu ama yalnızca PNG indirme var. Yanlış metin 6 dile kopyalanmadan düzeltildi.
 
 Kurumsal sayfalar (`/about`, `/contact`, `/privacy`, `/terms`) yalnızca `/` ve `/tr/`
 altında var. Blog: 3 İngilizce + 3 Türkçe yazı.
@@ -212,11 +223,12 @@ Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
 
 ## 9. Sıradaki iş — öncelik sırası
 
-1. **8 yerelleşmemiş aracı 6 dile çevir.** base64, heic-convert, image-convert,
-   lorem-ipsum, markdown-preview, password-generator, qr-generator, unit-converter.
-   Bunlar TR'de bile İngilizce; qr-generator ve password-generator popüler araçlar.
-2. **2 hafta sonra ölçüm al.** Derinleştirilen 7 sayfanın Search Console'daki ortalama
+1. **2 hafta sonra ölçüm al.** Derinleştirilen 7 sayfanın Search Console'daki ortalama
    konumu düştü mü? Düştüyse aynı yaklaşımı kalan araçlara uygula.
+2. **Kalan ~20 aracı EN+TR'den 6 dile çıkar.** Artık en büyük yerelleştirme açığı bu
+   grup (age-calculator, jwt-decoder, ocr, video-to-mp3, regex-tester, url-encode…).
+   Desen hazır: `labels` + `pick()`. ES/DE/PT/FR gösterimlerinin yüksek olduğu
+   araçlardan başla (bkz. bölüm 7 gösterim liderleri).
 3. **Backlink çalışması.** Konum 65'ten çıkmak otorite gerektiriyor: AlternativeTo,
    Privacy Guides forumu, awesome-* listeleri (kod açık kaynak yapılırsa şansı artar).
 4. **Ertelenen dil genişlemesi.** İyi adaylar: Japonca (Google hâkim, rekabet zayıf),
@@ -230,7 +242,8 @@ Product Hunt galeri görselleri: **`launch-assets/`** (1270×760, 5 adet).
 
 ## 10. Bilinen eksikler ve teknik borç
 
-- **8 araç hiç yerelleşmemiş** (bkz. bölüm 5) — en büyük açık.
+- **~20 araç yalnızca EN+TR** (bkz. bölüm 5) — kalan en büyük yerelleştirme açığı.
+  ES/DE/PT/FR ziyaretçisi bu araçlarda İngilizce arayüz görüyor.
 - **Kurumsal sayfalar** ES/DE/PT/FR'de yok; footer'dan tıklayınca İngilizceye düşülüyor.
 - **PDF sıkıştırma yalnızca yapısaldır** — görsel örnekleme yapmaz, bu yüzden taranmış
   PDF'lerde kazanç azdır. Sayfa içeriğinde bu dürüstçe açıklanıyor.

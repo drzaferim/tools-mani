@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 type OutputFormat = "image/png" | "image/jpeg" | "image/webp" | "image/bmp";
@@ -29,40 +29,8 @@ const formatExtensions: Record<OutputFormat, string> = {
   "image/bmp": ".bmp",
 };
 
-export default function ImageConvertPage() {
-  const [files, setFiles] = useState<File[]>([]);
-  const [outputFormat, setOutputFormat] = useState<OutputFormat>("image/jpeg");
-  const [quality, setQuality] = useState(0.9);
-  const [processing, setProcessing] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [results, setResults] = useState<ConvertedFile[]>([]);
-  const [error, setError] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { locale } = useLanguage();
-
-  const l = locale === "tr" ? {
-    title: "Resim Dönüştürücü",
-    subtitle: "Resimlerinizi PNG, JPEG, WebP ve BMP formatları arasında dönüştürün.",
-    allBrowser: "100% ücretsiz — tüm işlemler tarayıcınızda gerçekleşir.",
-    noLimit: "Dosya boyutu limiti yok",
-    clickOrDrag: "Resimleri tıklayın veya sürükleyin",
-    dragHint: "PNG, JPEG, WebP, BMP, GIF — dosya boyutu limiti yok",
-    outputFormat: "Çıkış Formatı",
-    quality: "Kalite",
-    converting: "Dönüştürülüyor",
-    convert: "Dönüştür",
-    files: "dosya",
-    original: "Orijinal",
-    converted: "Dönüştürülmüş",
-    download: "İndir",
-    downloadAll: "Tümünü İndir",
-    convertMore: "Daha Fazla Dönüştür",
-    clearAll: "Tümünü Temizle",
-    remove: "Kaldır",
-    back: "Tüm Araçlara Dön",
-    errorImage: "Lütfen resim dosyası seçin.",
-    errorFailed: "Dönüştürme başarısız oldu.",
-  } : {
+const labels = {
+  en: {
     title: "Image Converter",
     subtitle: "Convert images between PNG, JPEG, WebP, and BMP formats.",
     allBrowser: "100% free — all processing happens in your browser.",
@@ -84,7 +52,136 @@ export default function ImageConvertPage() {
     back: "Back to All Tools",
     errorImage: "Please select image files only.",
     errorFailed: "Conversion failed.",
-  };
+  },
+  tr: {
+    title: "Resim Dönüştürücü",
+    subtitle: "Resimlerinizi PNG, JPEG, WebP ve BMP formatları arasında dönüştürün.",
+    allBrowser: "100% ücretsiz — tüm işlemler tarayıcınızda gerçekleşir.",
+    noLimit: "Dosya boyutu limiti yok",
+    clickOrDrag: "Resimleri tıklayın veya sürükleyin",
+    dragHint: "PNG, JPEG, WebP, BMP, GIF — dosya boyutu limiti yok",
+    outputFormat: "Çıkış Formatı",
+    quality: "Kalite",
+    converting: "Dönüştürülüyor",
+    convert: "Dönüştür",
+    files: "dosya",
+    original: "Orijinal",
+    converted: "Dönüştürülmüş",
+    download: "İndir",
+    downloadAll: "Tümünü İndir",
+    convertMore: "Daha Fazla Dönüştür",
+    clearAll: "Tümünü Temizle",
+    remove: "Kaldır",
+    back: "Tüm Araçlara Dön",
+    errorImage: "Lütfen resim dosyası seçin.",
+    errorFailed: "Dönüştürme başarısız oldu.",
+  },
+  es: {
+    title: "Conversor de imágenes",
+    subtitle: "Convierte imágenes entre los formatos PNG, JPEG, WebP y BMP.",
+    allBrowser: "100% gratis: todo el procesamiento ocurre en tu navegador.",
+    noLimit: "Sin límite de tamaño",
+    clickOrDrag: "Haz clic o arrastra imágenes aquí",
+    dragHint: "PNG, JPEG, WebP, BMP, GIF — sin límite de tamaño",
+    outputFormat: "Formato de salida",
+    quality: "Calidad",
+    converting: "Convirtiendo",
+    convert: "Convertir",
+    files: "archivos",
+    original: "Original",
+    converted: "Convertido",
+    download: "Descargar",
+    downloadAll: "Descargar todo",
+    convertMore: "Convertir más",
+    clearAll: "Limpiar todo",
+    remove: "Quitar",
+    back: "Volver a todas las herramientas",
+    errorImage: "Selecciona solo archivos de imagen.",
+    errorFailed: "La conversión falló.",
+  },
+  de: {
+    title: "Bildkonverter",
+    subtitle: "Konvertieren Sie Bilder zwischen den Formaten PNG, JPEG, WebP und BMP.",
+    allBrowser: "100% kostenlos – die gesamte Verarbeitung erfolgt in Ihrem Browser.",
+    noLimit: "Keine Größenbeschränkung",
+    clickOrDrag: "Bilder hierher klicken oder ziehen",
+    dragHint: "PNG, JPEG, WebP, BMP, GIF — keine Größenbeschränkung",
+    outputFormat: "Ausgabeformat",
+    quality: "Qualität",
+    converting: "Konvertierung läuft",
+    convert: "Konvertieren",
+    files: "Dateien",
+    original: "Original",
+    converted: "Konvertiert",
+    download: "Herunterladen",
+    downloadAll: "Alle herunterladen",
+    convertMore: "Weitere konvertieren",
+    clearAll: "Alle entfernen",
+    remove: "Entfernen",
+    back: "Zurück zu allen Tools",
+    errorImage: "Bitte nur Bilddateien auswählen.",
+    errorFailed: "Konvertierung fehlgeschlagen.",
+  },
+  pt: {
+    title: "Conversor de imagens",
+    subtitle: "Converta imagens entre os formatos PNG, JPEG, WebP e BMP.",
+    allBrowser: "100% grátis — todo o processamento acontece no seu navegador.",
+    noLimit: "Sem limite de tamanho",
+    clickOrDrag: "Clique ou arraste imagens aqui",
+    dragHint: "PNG, JPEG, WebP, BMP, GIF — sem limite de tamanho",
+    outputFormat: "Formato de saída",
+    quality: "Qualidade",
+    converting: "Convertendo",
+    convert: "Converter",
+    files: "arquivos",
+    original: "Original",
+    converted: "Convertido",
+    download: "Baixar",
+    downloadAll: "Baixar tudo",
+    convertMore: "Converter mais",
+    clearAll: "Limpar tudo",
+    remove: "Remover",
+    back: "Voltar a todas as ferramentas",
+    errorImage: "Selecione apenas arquivos de imagem.",
+    errorFailed: "A conversão falhou.",
+  },
+  fr: {
+    title: "Convertisseur d'images",
+    subtitle: "Convertissez vos images entre les formats PNG, JPEG, WebP et BMP.",
+    allBrowser: "100% gratuit — tout le traitement se fait dans votre navigateur.",
+    noLimit: "Aucune limite de taille",
+    clickOrDrag: "Cliquez ou glissez vos images ici",
+    dragHint: "PNG, JPEG, WebP, BMP, GIF — aucune limite de taille",
+    outputFormat: "Format de sortie",
+    quality: "Qualité",
+    converting: "Conversion",
+    convert: "Convertir",
+    files: "fichiers",
+    original: "Original",
+    converted: "Converti",
+    download: "Télécharger",
+    downloadAll: "Tout télécharger",
+    convertMore: "Convertir d'autres",
+    clearAll: "Tout effacer",
+    remove: "Retirer",
+    back: "Retour à tous les outils",
+    errorImage: "Veuillez sélectionner uniquement des fichiers image.",
+    errorFailed: "Échec de la conversion.",
+  },
+};
+
+export default function ImageConvertPage() {
+  const [files, setFiles] = useState<File[]>([]);
+  const [outputFormat, setOutputFormat] = useState<OutputFormat>("image/jpeg");
+  const [quality, setQuality] = useState(0.9);
+  const [processing, setProcessing] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [results, setResults] = useState<ConvertedFile[]>([]);
+  const [error, setError] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { locale, localePath } = useLanguage();
+
+  const l = pick(labels, locale);
 
   const addFiles = (newFiles: FileList | null) => {
     if (!newFiles) return;
@@ -192,7 +289,7 @@ export default function ImageConvertPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-6">
-        <Link href="/" className="text-primary-600 hover:text-primary-700 text-sm">&larr; {l.back}</Link>
+        <Link href={localePath("/")} className="text-primary-600 hover:text-primary-700 text-sm">&larr; {l.back}</Link>
       </div>
 
       <div className="flex items-start justify-between mb-2">

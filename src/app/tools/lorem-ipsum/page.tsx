@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 const LOREM_SENTENCES = [
@@ -27,6 +28,75 @@ const LOREM_SENTENCES = [
   "Morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
 ];
 
+const labels = {
+  en: {
+    back: "← Back to Tools",
+    title: "Lorem Ipsum Generator",
+    subtitle: "Generate placeholder text for your designs and mockups.",
+    paragraphs: "Paragraphs",
+    sentences: "Sentences",
+    words: "Words",
+    generate: "Generate",
+    copy: "Copy",
+    placeholder: "Click Generate to create placeholder text...",
+  },
+  tr: {
+    back: "← Araçlara Dön",
+    title: "Lorem Ipsum Üretici",
+    subtitle: "Tasarımlarınız ve maketleriniz için yer tutucu metin üretin.",
+    paragraphs: "Paragraf",
+    sentences: "Cümle",
+    words: "Kelime",
+    generate: "Üret",
+    copy: "Kopyala",
+    placeholder: "Yer tutucu metin oluşturmak için Üret'e tıklayın...",
+  },
+  es: {
+    back: "← Volver a las herramientas",
+    title: "Generador de Lorem Ipsum",
+    subtitle: "Genera texto de relleno para tus diseños y maquetas.",
+    paragraphs: "Párrafos",
+    sentences: "Frases",
+    words: "Palabras",
+    generate: "Generar",
+    copy: "Copiar",
+    placeholder: "Haz clic en Generar para crear texto de relleno...",
+  },
+  de: {
+    back: "← Zurück zu den Tools",
+    title: "Lorem-Ipsum-Generator",
+    subtitle: "Blindtext für Ihre Designs und Mockups erzeugen.",
+    paragraphs: "Absätze",
+    sentences: "Sätze",
+    words: "Wörter",
+    generate: "Erzeugen",
+    copy: "Kopieren",
+    placeholder: "Auf Erzeugen klicken, um Blindtext zu erstellen...",
+  },
+  pt: {
+    back: "← Voltar às ferramentas",
+    title: "Gerador de Lorem Ipsum",
+    subtitle: "Gere texto de preenchimento para seus designs e protótipos.",
+    paragraphs: "Parágrafos",
+    sentences: "Frases",
+    words: "Palavras",
+    generate: "Gerar",
+    copy: "Copiar",
+    placeholder: "Clique em Gerar para criar texto de preenchimento...",
+  },
+  fr: {
+    back: "← Retour aux outils",
+    title: "Générateur de Lorem Ipsum",
+    subtitle: "Générez du faux texte pour vos maquettes et designs.",
+    paragraphs: "Paragraphes",
+    sentences: "Phrases",
+    words: "Mots",
+    generate: "Générer",
+    copy: "Copier",
+    placeholder: "Cliquez sur Générer pour créer du faux texte...",
+  },
+};
+
 function generateParagraphs(count: number): string {
   const paragraphs: string[] = [];
   for (let i = 0; i < count; i++) {
@@ -50,6 +120,8 @@ function generateWords(count: number): string {
 }
 
 export default function LoremIpsumPage() {
+  const { locale, localePath } = useLanguage();
+  const l = pick(labels, locale);
   const [mode, setMode] = useState<"paragraphs" | "sentences" | "words">("paragraphs");
   const [count, setCount] = useState(3);
   const [output, setOutput] = useState("");
@@ -66,15 +138,13 @@ export default function LoremIpsumPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-6">
-        <Link href="/" className="text-primary-600 hover:text-primary-700 text-sm">
-          &larr; Back to Tools
+        <Link href={localePath("/")} className="text-primary-600 hover:text-primary-700 text-sm">
+          {l.back}
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">Lorem Ipsum Generator</h1>
-      <p className="text-gray-600 mb-8">
-        Generate placeholder text for your designs and mockups.
-      </p>
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">{l.title}</h1>
+      <p className="text-gray-600 mb-8">{l.subtitle}</p>
 
       <div className="flex flex-wrap gap-3 mb-6 items-center">
         <select
@@ -82,9 +152,9 @@ export default function LoremIpsumPage() {
           onChange={(e) => setMode(e.target.value as typeof mode)}
           className="border border-gray-200 rounded-lg px-3 py-2 text-sm"
         >
-          <option value="paragraphs">Paragraphs</option>
-          <option value="sentences">Sentences</option>
-          <option value="words">Words</option>
+          <option value="paragraphs">{l.paragraphs}</option>
+          <option value="sentences">{l.sentences}</option>
+          <option value="words">{l.words}</option>
         </select>
         <input
           type="number"
@@ -94,13 +164,13 @@ export default function LoremIpsumPage() {
           onChange={(e) => setCount(Math.max(1, Math.min(100, Number(e.target.value))))}
           className="w-20 border border-gray-200 rounded-lg px-3 py-2 text-sm"
         />
-        <button onClick={generate} className="btn-primary text-sm">Generate</button>
+        <button onClick={generate} className="btn-primary text-sm">{l.generate}</button>
         {output && (
           <button
             onClick={() => navigator.clipboard.writeText(output)}
             className="btn-secondary text-sm"
           >
-            Copy
+            {l.copy}
           </button>
         )}
       </div>
@@ -108,7 +178,7 @@ export default function LoremIpsumPage() {
       <textarea
         value={output}
         readOnly
-        placeholder="Click Generate to create placeholder text..."
+        placeholder={l.placeholder}
         className="w-full h-80 p-4 bg-gray-50 border border-gray-200 rounded-xl text-sm resize-y focus:outline-none"
       />
     </div>

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage, pick } from "@/lib/language-context";
 import { trackToolUse } from "@/lib/track";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
@@ -22,8 +22,258 @@ const FORMAT_EXT: Record<OutputFormat, string> = {
   "image/webp": "webp",
 };
 
+const labels = {
+  en: {
+    back: "All Tools",
+    title: "HEIC to JPG / PNG Converter",
+    noLimit: "No file size limit",
+    subtitle:
+      "Convert iPhone HEIC/HEIF photos to JPG, PNG or WebP. Batch convert multiple files. Processed entirely in your browser — no uploads.",
+    dropTitle: "Click or drag HEIC/HEIF files here",
+    dropHint: "iPhone photos (.heic, .heif) — any size",
+    outputFormat: "Output Format",
+    quality: "Quality",
+    smallerFile: "Smaller file",
+    bestQuality: "Best quality",
+    converting: "Converting...",
+    convertN: (n: number) => `Convert ${n} file${n > 1 ? "s" : ""}`,
+    convertedFiles: "Converted Files",
+    downloadZip: "Download All as ZIP",
+    convertMore: "Convert More",
+    download: "Download",
+    smaller: "smaller",
+    errorSelect: "Please select HEIC or HEIF files.",
+    errorFailed: "Conversion failed",
+    faqTitle: "Frequently Asked Questions",
+    faq: [
+      {
+        q: "What is a HEIC file?",
+        a: "HEIC is the default photo format on iPhones (iOS 11+). It offers great compression but is not widely supported on Windows or web platforms.",
+      },
+      {
+        q: "Are my photos uploaded to a server?",
+        a: "Never. All conversion happens locally in your browser. Your photos never leave your device.",
+      },
+      {
+        q: "Which format should I choose?",
+        a: "JPG is best for photos and sharing. PNG is lossless and ideal for screenshots. WebP offers the best compression for the web.",
+      },
+      {
+        q: "Can I convert multiple files at once?",
+        a: "Yes. Select multiple HEIC files and convert them all at once. Download individually or as a ZIP archive.",
+      },
+    ],
+  },
+  tr: {
+    back: "Tüm Araçlar",
+    title: "HEIC'den JPG / PNG Dönüştürücü",
+    noLimit: "Boyut sınırı yok",
+    subtitle:
+      "iPhone HEIC/HEIF fotoğraflarını JPG, PNG veya WebP'ye dönüştürün. Toplu dönüştürme desteklenir. Tüm işlem tarayıcınızda — yükleme yok.",
+    dropTitle: "HEIC/HEIF dosyalarını buraya tıklayın veya sürükleyin",
+    dropHint: "iPhone fotoğrafları (.heic, .heif) — herhangi bir boyut",
+    outputFormat: "Çıkış Formatı",
+    quality: "Kalite",
+    smallerFile: "Küçük dosya",
+    bestQuality: "En iyi kalite",
+    converting: "Dönüştürülüyor...",
+    convertN: (n: number) => `${n} dosyayı dönüştür`,
+    convertedFiles: "Dönüştürülen Dosyalar",
+    downloadZip: "Tümünü ZIP İndir",
+    convertMore: "Daha Fazla Dönüştür",
+    download: "İndir",
+    smaller: "küçük",
+    errorSelect: "Lütfen HEIC veya HEIF dosyaları seçin.",
+    errorFailed: "Dönüştürme başarısız",
+    faqTitle: "Sık Sorulan Sorular",
+    faq: [
+      {
+        q: "HEIC dosyası nedir?",
+        a: "HEIC, iPhone'larda (iOS 11+) varsayılan fotoğraf formatıdır. Mükemmel sıkıştırma sunar ancak Windows ve web platformlarında yaygın olarak desteklenmez.",
+      },
+      {
+        q: "Fotoğraflarım sunucuya yükleniyor mu?",
+        a: "Kesinlikle hayır. Tüm dönüştürme tarayıcınızda yerel olarak gerçekleşir. Fotoğraflarınız cihazınızdan ayrılmaz.",
+      },
+      {
+        q: "Hangi formatı seçmeliyim?",
+        a: "JPG fotoğraflar ve paylaşım için en iyisidir. PNG kayıpsız olup ekran görüntüleri için idealdir. WebP web için en iyi sıkıştırmayı sunar.",
+      },
+      {
+        q: "Birden fazla dosyayı aynı anda dönüştürebilir miyim?",
+        a: "Evet. Birden fazla HEIC dosyası seçip hepsini aynı anda dönüştürebilirsiniz. Tek tek veya ZIP olarak indirebilirsiniz.",
+      },
+    ],
+  },
+  es: {
+    back: "Todas las herramientas",
+    title: "Conversor de HEIC a JPG / PNG",
+    noLimit: "Sin límite de tamaño",
+    subtitle:
+      "Convierte fotos HEIC/HEIF de iPhone a JPG, PNG o WebP. Convierte varios archivos a la vez. Todo el proceso ocurre en tu navegador, sin subidas.",
+    dropTitle: "Haz clic o arrastra archivos HEIC/HEIF aquí",
+    dropHint: "Fotos de iPhone (.heic, .heif) — cualquier tamaño",
+    outputFormat: "Formato de salida",
+    quality: "Calidad",
+    smallerFile: "Archivo más pequeño",
+    bestQuality: "Mejor calidad",
+    converting: "Convirtiendo...",
+    convertN: (n: number) => `Convertir ${n} archivo${n > 1 ? "s" : ""}`,
+    convertedFiles: "Archivos convertidos",
+    downloadZip: "Descargar todo en ZIP",
+    convertMore: "Convertir más",
+    download: "Descargar",
+    smaller: "menos",
+    errorSelect: "Selecciona archivos HEIC o HEIF.",
+    errorFailed: "La conversión falló",
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      {
+        q: "¿Qué es un archivo HEIC?",
+        a: "HEIC es el formato de foto predeterminado en los iPhone (iOS 11+). Ofrece una gran compresión, pero no está bien soportado en Windows ni en la web.",
+      },
+      {
+        q: "¿Se suben mis fotos a un servidor?",
+        a: "Nunca. Toda la conversión ocurre localmente en tu navegador. Tus fotos no salen de tu dispositivo.",
+      },
+      {
+        q: "¿Qué formato debo elegir?",
+        a: "JPG es ideal para fotos y para compartir. PNG es sin pérdidas y perfecto para capturas. WebP ofrece la mejor compresión para la web.",
+      },
+      {
+        q: "¿Puedo convertir varios archivos a la vez?",
+        a: "Sí. Selecciona varios archivos HEIC y conviértelos todos de una vez. Descárgalos por separado o en un ZIP.",
+      },
+    ],
+  },
+  de: {
+    back: "Alle Tools",
+    title: "HEIC-zu-JPG/PNG-Konverter",
+    noLimit: "Keine Größenbeschränkung",
+    subtitle:
+      "Konvertieren Sie HEIC/HEIF-Fotos vom iPhone in JPG, PNG oder WebP. Stapelverarbeitung möglich. Alles läuft im Browser – kein Upload.",
+    dropTitle: "HEIC/HEIF-Dateien hierher klicken oder ziehen",
+    dropHint: "iPhone-Fotos (.heic, .heif) — beliebige Größe",
+    outputFormat: "Ausgabeformat",
+    quality: "Qualität",
+    smallerFile: "Kleinere Datei",
+    bestQuality: "Beste Qualität",
+    converting: "Konvertierung läuft...",
+    convertN: (n: number) => `${n} Datei${n > 1 ? "en" : ""} konvertieren`,
+    convertedFiles: "Konvertierte Dateien",
+    downloadZip: "Alle als ZIP herunterladen",
+    convertMore: "Weitere konvertieren",
+    download: "Herunterladen",
+    smaller: "kleiner",
+    errorSelect: "Bitte HEIC- oder HEIF-Dateien auswählen.",
+    errorFailed: "Konvertierung fehlgeschlagen",
+    faqTitle: "Häufig gestellte Fragen",
+    faq: [
+      {
+        q: "Was ist eine HEIC-Datei?",
+        a: "HEIC ist das Standard-Fotoformat auf iPhones (iOS 11+). Es bietet sehr gute Kompression, wird aber unter Windows und im Web kaum unterstützt.",
+      },
+      {
+        q: "Werden meine Fotos auf einen Server geladen?",
+        a: "Niemals. Die gesamte Konvertierung erfolgt lokal in Ihrem Browser. Ihre Fotos verlassen Ihr Gerät nicht.",
+      },
+      {
+        q: "Welches Format soll ich wählen?",
+        a: "JPG eignet sich am besten für Fotos und zum Teilen. PNG ist verlustfrei und ideal für Screenshots. WebP bietet die beste Kompression fürs Web.",
+      },
+      {
+        q: "Kann ich mehrere Dateien gleichzeitig konvertieren?",
+        a: "Ja. Wählen Sie mehrere HEIC-Dateien aus und konvertieren Sie alle auf einmal. Download einzeln oder als ZIP-Archiv.",
+      },
+    ],
+  },
+  pt: {
+    back: "Todas as ferramentas",
+    title: "Conversor de HEIC para JPG / PNG",
+    noLimit: "Sem limite de tamanho",
+    subtitle:
+      "Converta fotos HEIC/HEIF do iPhone para JPG, PNG ou WebP. Converta vários arquivos de uma vez. Tudo acontece no seu navegador — sem uploads.",
+    dropTitle: "Clique ou arraste arquivos HEIC/HEIF aqui",
+    dropHint: "Fotos de iPhone (.heic, .heif) — qualquer tamanho",
+    outputFormat: "Formato de saída",
+    quality: "Qualidade",
+    smallerFile: "Arquivo menor",
+    bestQuality: "Melhor qualidade",
+    converting: "Convertendo...",
+    convertN: (n: number) => `Converter ${n} arquivo${n > 1 ? "s" : ""}`,
+    convertedFiles: "Arquivos convertidos",
+    downloadZip: "Baixar tudo em ZIP",
+    convertMore: "Converter mais",
+    download: "Baixar",
+    smaller: "menor",
+    errorSelect: "Selecione arquivos HEIC ou HEIF.",
+    errorFailed: "A conversão falhou",
+    faqTitle: "Perguntas frequentes",
+    faq: [
+      {
+        q: "O que é um arquivo HEIC?",
+        a: "HEIC é o formato de foto padrão dos iPhones (iOS 11+). Oferece ótima compressão, mas tem pouco suporte no Windows e na web.",
+      },
+      {
+        q: "Minhas fotos são enviadas para um servidor?",
+        a: "Nunca. Toda a conversão acontece localmente no seu navegador. Suas fotos não saem do seu dispositivo.",
+      },
+      {
+        q: "Qual formato devo escolher?",
+        a: "JPG é o melhor para fotos e compartilhamento. PNG é sem perdas e ideal para capturas de tela. WebP oferece a melhor compressão para a web.",
+      },
+      {
+        q: "Posso converter vários arquivos de uma vez?",
+        a: "Sim. Selecione vários arquivos HEIC e converta todos de uma vez. Baixe individualmente ou como um arquivo ZIP.",
+      },
+    ],
+  },
+  fr: {
+    back: "Tous les outils",
+    title: "Convertisseur HEIC vers JPG / PNG",
+    noLimit: "Aucune limite de taille",
+    subtitle:
+      "Convertissez vos photos HEIC/HEIF d'iPhone en JPG, PNG ou WebP. Conversion par lot. Tout se passe dans votre navigateur — aucun envoi.",
+    dropTitle: "Cliquez ou glissez vos fichiers HEIC/HEIF ici",
+    dropHint: "Photos iPhone (.heic, .heif) — toute taille",
+    outputFormat: "Format de sortie",
+    quality: "Qualité",
+    smallerFile: "Fichier plus léger",
+    bestQuality: "Meilleure qualité",
+    converting: "Conversion...",
+    convertN: (n: number) => `Convertir ${n} fichier${n > 1 ? "s" : ""}`,
+    convertedFiles: "Fichiers convertis",
+    downloadZip: "Tout télécharger en ZIP",
+    convertMore: "Convertir d'autres",
+    download: "Télécharger",
+    smaller: "de moins",
+    errorSelect: "Veuillez sélectionner des fichiers HEIC ou HEIF.",
+    errorFailed: "Échec de la conversion",
+    faqTitle: "Questions fréquentes",
+    faq: [
+      {
+        q: "Qu'est-ce qu'un fichier HEIC ?",
+        a: "HEIC est le format photo par défaut des iPhone (iOS 11+). Il offre une excellente compression mais reste peu pris en charge sous Windows et sur le web.",
+      },
+      {
+        q: "Mes photos sont-elles envoyées à un serveur ?",
+        a: "Jamais. Toute la conversion se fait localement dans votre navigateur. Vos photos ne quittent pas votre appareil.",
+      },
+      {
+        q: "Quel format choisir ?",
+        a: "JPG convient le mieux aux photos et au partage. PNG est sans perte, idéal pour les captures d'écran. WebP offre la meilleure compression pour le web.",
+      },
+      {
+        q: "Puis-je convertir plusieurs fichiers à la fois ?",
+        a: "Oui. Sélectionnez plusieurs fichiers HEIC et convertissez-les en une fois. Téléchargez-les séparément ou dans une archive ZIP.",
+      },
+    ],
+  },
+};
+
 export default function HeicConvertPage() {
-  const { locale } = useLanguage();
+  const { locale, localePath } = useLanguage();
+  const l = pick(labels, locale);
   const [files, setFiles] = useState<File[]>([]);
   const [outputFormat, setOutputFormat] = useState<OutputFormat>("image/jpeg");
   const [quality, setQuality] = useState(0.92);
@@ -33,8 +283,6 @@ export default function HeicConvertPage() {
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const tr = (en: string, tr: string) => locale === "tr" ? tr : en;
-
   const addFiles = (fl: FileList | null) => {
     if (!fl) return;
     const heics = Array.from(fl).filter(f =>
@@ -42,7 +290,7 @@ export default function HeicConvertPage() {
       f.name.toLowerCase().endsWith(".heic") || f.name.toLowerCase().endsWith(".heif")
     );
     if (heics.length === 0) {
-      setError(tr("Please select HEIC or HEIF files.", "Lütfen HEIC veya HEIF dosyaları seçin."));
+      setError(l.errorSelect);
       return;
     }
     setFiles(prev => [...prev, ...heics]);
@@ -121,7 +369,7 @@ export default function HeicConvertPage() {
           size: 0,
           originalSize: file.size,
           status: "error",
-          error: tr("Conversion failed", "Dönüştürme başarısız") + (err instanceof Error ? `: ${err.message}` : ""),
+          error: l.errorFailed + (err instanceof Error ? `: ${err.message}` : ""),
         });
       }
     }
@@ -168,25 +416,18 @@ export default function HeicConvertPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-6">
-        <Link href="/#tools" className="text-primary-600 hover:text-primary-700 text-sm">
-          &larr; {tr("All Tools", "Tüm Araçlar")}
+        <Link href={localePath("/") + "#tools"} className="text-primary-600 hover:text-primary-700 text-sm">
+          &larr; {l.back}
         </Link>
       </div>
 
       <div className="flex items-start justify-between mb-2">
-        <h1 className="text-3xl font-bold text-gray-900">
-          {tr("HEIC to JPG / PNG Converter", "HEIC'den JPG / PNG Dönüştürücü")}
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900">{l.title}</h1>
         <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-medium px-3 py-1 rounded-full border border-green-200">
-          {tr("No file size limit", "Boyut sınırı yok")}
+          {l.noLimit}
         </span>
       </div>
-      <p className="text-gray-600 mb-8">
-        {tr(
-          "Convert iPhone HEIC/HEIF photos to JPG, PNG or WebP. Batch convert multiple files. Processed entirely in your browser — no uploads.",
-          "iPhone HEIC/HEIF fotoğraflarını JPG, PNG veya WebP'ye dönüştürün. Toplu dönüştürme desteklenir. Tüm işlem tarayıcınızda — yükleme yok."
-        )}
-      </p>
+      <p className="text-gray-600 mb-8">{l.subtitle}</p>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 text-sm">{error}</div>
@@ -202,12 +443,8 @@ export default function HeicConvertPage() {
             onDrop={e => { e.preventDefault(); addFiles(e.dataTransfer.files); }}
           >
             <div className="text-5xl mb-4">📱</div>
-            <p className="text-gray-700 font-semibold text-lg">
-              {tr("Click or drag HEIC/HEIF files here", "HEIC/HEIF dosyalarını buraya tıklayın veya sürükleyin")}
-            </p>
-            <p className="text-gray-400 text-sm mt-2">
-              {tr("iPhone photos (.heic, .heif) — any size", "iPhone fotoğrafları (.heic, .heif) — herhangi bir boyut")}
-            </p>
+            <p className="text-gray-700 font-semibold text-lg">{l.dropTitle}</p>
+            <p className="text-gray-400 text-sm mt-2">{l.dropHint}</p>
             <input
               ref={inputRef}
               type="file"
@@ -239,7 +476,7 @@ export default function HeicConvertPage() {
               <div className="bg-gray-50 rounded-2xl p-6 mb-6 space-y-5">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    {tr("Output Format", "Çıkış Formatı")}
+                    {l.outputFormat}
                   </label>
                   <div className="flex gap-3">
                     {(["image/jpeg", "image/png", "image/webp"] as OutputFormat[]).map(fmt => (
@@ -261,7 +498,7 @@ export default function HeicConvertPage() {
                 {outputFormat !== "image/png" && (
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      {tr("Quality", "Kalite")}: {Math.round(quality * 100)}%
+                      {l.quality}: {Math.round(quality * 100)}%
                     </label>
                     <input
                       type="range" min="0.5" max="1" step="0.01"
@@ -270,8 +507,8 @@ export default function HeicConvertPage() {
                       className="w-full accent-primary-600"
                     />
                     <div className="flex justify-between text-xs text-gray-400 mt-1">
-                      <span>{tr("Smaller file", "Küçük dosya")}</span>
-                      <span>{tr("Best quality", "En iyi kalite")}</span>
+                      <span>{l.smallerFile}</span>
+                      <span>{l.bestQuality}</span>
                     </div>
                   </div>
                 )}
@@ -280,7 +517,7 @@ export default function HeicConvertPage() {
               {converting && (
                 <div className="mb-6">
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>{tr("Converting...", "Dönüştürülüyor...")}</span>
+                    <span>{l.converting}</span>
                     <span>{progress}%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2.5">
@@ -290,9 +527,7 @@ export default function HeicConvertPage() {
               )}
 
               <button onClick={convertAll} disabled={converting} className="btn-primary text-sm disabled:opacity-50">
-                {converting
-                  ? tr("Converting...", "Dönüştürülüyor...")
-                  : tr(`Convert ${files.length} file${files.length > 1 ? "s" : ""}`, `${files.length} dosyayı dönüştür`)}
+                {converting ? l.converting : l.convertN(files.length)}
               </button>
             </>
           )}
@@ -304,16 +539,16 @@ export default function HeicConvertPage() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">
-              {tr("Converted Files", "Dönüştürülen Dosyalar")} ({results.filter(r => r.status === "done").length}/{results.length})
+              {l.convertedFiles} ({results.filter(r => r.status === "done").length}/{results.length})
             </h2>
             <div className="flex gap-3">
               {results.filter(r => r.status === "done").length > 1 && (
                 <button onClick={downloadAll} className="btn-primary text-sm">
-                  {tr("Download All as ZIP", "Tümünü ZIP İndir")}
+                  {l.downloadZip}
                 </button>
               )}
               <button onClick={reset} className="btn-secondary text-sm">
-                {tr("Convert More", "Daha Fazla Dönüştür")}
+                {l.convertMore}
               </button>
             </div>
           </div>
@@ -329,7 +564,7 @@ export default function HeicConvertPage() {
                   {r.status === "done" ? (
                     <p className="text-xs text-gray-500">
                       {formatSize(r.originalSize)} → {formatSize(r.size)}
-                      {" "}({Math.round((1 - r.size / r.originalSize) * 100)}% {tr("smaller", "küçük")})
+                      {" "}({Math.round((1 - r.size / r.originalSize) * 100)}% {l.smaller})
                     </p>
                   ) : (
                     <p className="text-xs text-red-500">{r.error}</p>
@@ -337,7 +572,7 @@ export default function HeicConvertPage() {
                 </div>
                 {r.status === "done" && (
                   <a href={r.url} download={r.name} className="btn-primary text-xs !py-1.5 !px-3">
-                    {tr("Download", "İndir")}
+                    {l.download}
                   </a>
                 )}
               </div>
@@ -348,40 +583,9 @@ export default function HeicConvertPage() {
 
       {/* FAQ */}
       <div className="mt-16 border-t border-gray-100 pt-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {locale === "tr" ? "Sık Sorulan Sorular" : "Frequently Asked Questions"}
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">{l.faqTitle}</h2>
         <div className="space-y-5">
-          {[
-            {
-              q: tr("What is a HEIC file?", "HEIC dosyası nedir?"),
-              a: tr(
-                "HEIC is the default photo format on iPhones (iOS 11+). It offers great compression but is not widely supported on Windows or web platforms.",
-                "HEIC, iPhone'larda (iOS 11+) varsayılan fotoğraf formatıdır. Mükemmel sıkıştırma sunar ancak Windows ve web platformlarında yaygın olarak desteklenmez."
-              ),
-            },
-            {
-              q: tr("Are my photos uploaded to a server?", "Fotoğraflarım sunucuya yükleniyor mu?"),
-              a: tr(
-                "Never. All conversion happens locally in your browser. Your photos never leave your device.",
-                "Kesinlikle hayır. Tüm dönüştürme tarayıcınızda yerel olarak gerçekleşir. Fotoğraflarınız cihazınızdan ayrılmaz."
-              ),
-            },
-            {
-              q: tr("Which format should I choose?", "Hangi formatı seçmeliyim?"),
-              a: tr(
-                "JPG is best for photos and sharing. PNG is lossless and ideal for screenshots. WebP offers the best compression for the web.",
-                "JPG fotoğraflar ve paylaşım için en iyisidir. PNG kayıpsız olup ekran görüntüleri için idealdir. WebP web için en iyi sıkıştırmayı sunar."
-              ),
-            },
-            {
-              q: tr("Can I convert multiple files at once?", "Birden fazla dosyayı aynı anda dönüştürebilir miyim?"),
-              a: tr(
-                "Yes. Select multiple HEIC files and convert them all at once. Download individually or as a ZIP archive.",
-                "Evet. Birden fazla HEIC dosyası seçip hepsini aynı anda dönüştürebilirsiniz. Tek tek veya ZIP olarak indirebilirsiniz."
-              ),
-            },
-          ].map(({ q, a }, i) => (
+          {l.faq.map(({ q, a }, i) => (
             <div key={i} className="bg-gray-50 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-2">{q}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{a}</p>
