@@ -3,7 +3,14 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage, pick } from "@/lib/language-context";
-import { trackToolUse } from "@/lib/track";
+import {
+  getBatchSizeBucket,
+  getDurationBucket,
+  getFileSizeBucket,
+  trackToolEvent,
+  trackToolUse,
+  useTrackToolView,
+} from "@/lib/track";
 
 const labels = {
   en: {
@@ -168,6 +175,7 @@ function formatBytes(bytes: number) {
 export default function ExifCleanerPage() {
   const { locale, localePath } = useLanguage();
   const l = pick(labels, locale);
+  useTrackToolView("exif-cleaner", locale);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [files, setFiles] = useState<File[]>([]);
@@ -183,9 +191,23 @@ export default function ExifCleanerPage() {
     }
     setFiles((prev) => [...prev, ...images]);
     setResults([]);
+    trackToolEvent("input_selected", "exif-cleaner", {
+      locale,
+      batch_size_bucket: getBatchSizeBucket(images.length),
+      file_size_bucket: getFileSizeBucket(images.reduce((sum, file) => sum + file.size, 0)),
+    });
   };
 
   const cleanAll = async () => {
+    const startedAt = performance.now();
+    const batchSizeBucket = getBatchSizeBucket(files.length);
+    const fileSizeBucket = getFileSizeBucket(files.reduce((sum, file) => sum + file.size, 0));
+    trackToolEvent("processing_started", "exif-cleaner", {
+      locale,
+      batch_size_bucket: batchSizeBucket,
+      file_size_bucket: fileSizeBucket,
+      mode: "canvas_reencode",
+    });
     setProcessing(true);
     const out: CleanResult[] = [];
     try {
@@ -215,7 +237,30 @@ export default function ExifCleanerPage() {
         });
       }
       setResults(out);
-      if (out.length > 0) void trackToolUse("exif-cleaner");
+      if (out.length > 0) {
+        void trackToolUse("exif-cleaner", {
+          locale,
+          batch_size_bucket: batchSizeBucket,
+          file_size_bucket: fileSizeBucket,
+          output_size_bucket: getFileSizeBucket(out.reduce((sum, result) => sum + result.newSize, 0)),
+          duration_bucket: getDurationBucket(performance.now() - startedAt),
+          mode: "canvas_reencode",
+        });
+      } else {
+        trackToolEvent("processing_error", "exif-cleaner", {
+          locale,
+          batch_size_bucket: batchSizeBucket,
+          duration_bucket: getDurationBucket(performance.now() - startedAt),
+          error_code: "no_output",
+        });
+      }
+    } catch {
+      trackToolEvent("processing_error", "exif-cleaner", {
+        locale,
+        batch_size_bucket: batchSizeBucket,
+        duration_bucket: getDurationBucket(performance.now() - startedAt),
+        error_code: "cleaning_failed",
+      });
     } finally {
       setProcessing(false);
     }
@@ -228,6 +273,7 @@ export default function ExifCleanerPage() {
       a.download = r.name;
       a.click();
     }
+    trackToolEvent("output_action", "exif-cleaner", { locale, action: "download" });
   };
 
   const clearAll = () => {
@@ -304,7 +350,12 @@ export default function ExifCleanerPage() {
                   <span className="text-green-600 font-medium">✓ {l.done}</span>
                 </p>
               </div>
-              <a href={r.url} download={r.name} className="btn-primary text-sm !py-2">
+              <a
+                href={r.url}
+                download={r.name}
+                onClick={() => trackToolEvent("output_action", "exif-cleaner", { locale, action: "download" })}
+                className="btn-primary text-sm !py-2"
+              >
                 {l.download}
               </a>
             </div>

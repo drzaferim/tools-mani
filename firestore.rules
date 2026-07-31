@@ -2,19 +2,82 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'drzaferhabip@gmail.com';
+    }
+
+    function isSupportedLocale(locale) {
+      return locale in ['en', 'tr', 'es', 'de', 'pt', 'fr'];
+    }
+
+    function isTrackedTool(toolId) {
+      return toolId in [
+        'age-calculator', 'base64', 'case-converter', 'color-picker',
+        'csv-json', 'exif-cleaner', 'favicon-generator', 'heic-convert',
+        'image-compress', 'image-convert', 'image-resize', 'image-to-pdf',
+        'json-formatter', 'jwt-decoder', 'lorem-ipsum', 'markdown-preview',
+        'number-to-words', 'ocr', 'password-generator', 'pdf-compress',
+        'pdf-merge', 'pdf-pagenumber', 'pdf-pages', 'pdf-rotate', 'pdf-sign',
+        'pdf-split', 'pdf-to-image', 'pdf-watermark', 'percentage-calculator',
+        'qr-generator', 'regex-tester', 'text-counter', 'text-diff',
+        'timestamp-converter', 'unit-converter', 'url-encode', 'uuid-generator',
+        'vat-calculator', 'video-to-mp3'
+      ];
+    }
+
     // Feedback: anyone can create, only admin can read/delete
     match /feedback/{feedbackId} {
-      allow create: if true;
-      allow read, delete: if request.auth != null
-        && request.auth.token.email == 'drzaferhabip@gmail.com';
+      allow create: if request.resource.data.keys().hasAll([
+          'type', 'message', 'page', 'locale', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'type', 'message', 'page', 'locale', 'createdAt'
+        ])
+        && request.resource.data.type in ['bug', 'feature', 'general']
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 3
+        && request.resource.data.message.size() <= 2000
+        && request.resource.data.page is string
+        && request.resource.data.page.size() >= 1
+        && request.resource.data.page.size() <= 300
+        && request.resource.data.page.matches('^/[a-zA-Z0-9/_-]*$')
+        && request.resource.data.locale is string
+        && isSupportedLocale(request.resource.data.locale)
+        && request.resource.data.createdAt == request.time;
+      allow read, delete: if isAdmin();
       allow update: if false;
     }
 
-    // Tool usage stats: anonim sayaç (kişisel veri yok), only admin can read
-    match /toolStats/{dateId} {
-      allow create, update: if true;
-      allow read: if request.auth != null
-        && request.auth.token.email == 'drzaferhabip@gmail.com';
+    // Başarılı işlemler: YYYY-MM-DD__tool-id kimlikli sabit şema.
+    // Public istemci yalnızca bilinen bir sayacı 1 artırabilir.
+    match /toolStats/{statId} {
+      allow create: if request.resource.data.keys().hasAll([
+          'date', 'toolId', 'count', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'date', 'toolId', 'count', 'updatedAt'
+        ])
+        && request.resource.data.date is string
+        && request.resource.data.date.matches('^\\d{4}-\\d{2}-\\d{2}$')
+        && request.resource.data.toolId is string
+        && isTrackedTool(request.resource.data.toolId)
+        && statId == request.resource.data.date + '__' + request.resource.data.toolId
+        && request.resource.data.count == 1
+        && request.resource.data.updatedAt == request.time;
+      allow update: if request.resource.data.keys().hasAll([
+          'date', 'toolId', 'count', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'date', 'toolId', 'count', 'updatedAt'
+        ])
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['count', 'updatedAt'])
+        && request.resource.data.date == resource.data.date
+        && request.resource.data.toolId == resource.data.toolId
+        && request.resource.data.count == resource.data.count + 1
+        && request.resource.data.updatedAt == request.time;
+      allow read: if isAdmin();
       allow delete: if false;
     }
 

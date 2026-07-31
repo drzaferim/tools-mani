@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage, pick } from "@/lib/language-context";
-import { useTrackToolUseOnce } from "@/lib/track";
+import { trackToolEvent, trackToolUse, useTrackToolView } from "@/lib/track";
 import { ToolContent } from "@/components/ToolContent";
 import { textDiffContent } from "@/content/tools/text-diff";
 
@@ -130,7 +130,10 @@ const MAX_LINES = 5000;
 export default function TextDiffPage() {
   const { locale, localePath } = useLanguage();
   const l = pick(labels, locale);
-  const markToolUsed = useTrackToolUseOnce("text-diff");
+  useTrackToolView("text-diff", locale);
+  const inputTrackedRef = useRef(false);
+  const startedTrackedRef = useRef(false);
+  const completionTrackedRef = useRef(false);
 
   const [textA, setTextA] = useState("");
   const [textB, setTextB] = useState("");
@@ -144,6 +147,24 @@ export default function TextDiffPage() {
 
   const added = diff?.filter((d) => d.type === "add").length ?? 0;
   const removed = diff?.filter((d) => d.type === "del").length ?? 0;
+
+  const handleTextInput = () => {
+    if (inputTrackedRef.current) return;
+    inputTrackedRef.current = true;
+    trackToolEvent("input_selected", "text-diff", { locale, mode: "text" });
+  };
+
+  useEffect(() => {
+    if (!textA || !textB || !diff) return;
+    if (!startedTrackedRef.current) {
+      startedTrackedRef.current = true;
+      trackToolEvent("processing_started", "text-diff", { locale, mode: "line_diff" });
+    }
+    if (!completionTrackedRef.current) {
+      completionTrackedRef.current = true;
+      void trackToolUse("text-diff", { locale, mode: "line_diff" });
+    }
+  }, [diff, locale, textA, textB]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -161,7 +182,7 @@ export default function TextDiffPage() {
           <label className="block text-sm font-medium text-gray-700 mb-2">{l.original}</label>
           <textarea
             value={textA}
-            onChange={(e) => { setTextA(e.target.value); markToolUsed(); }}
+            onChange={(e) => { setTextA(e.target.value); handleTextInput(); }}
             placeholder={l.phA}
             spellCheck={false}
             className="w-full h-56 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -171,7 +192,7 @@ export default function TextDiffPage() {
           <label className="block text-sm font-medium text-gray-700 mb-2">{l.changed}</label>
           <textarea
             value={textB}
-            onChange={(e) => { setTextB(e.target.value); markToolUsed(); }}
+            onChange={(e) => { setTextB(e.target.value); handleTextInput(); }}
             placeholder={l.phB}
             spellCheck={false}
             className="w-full h-56 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500"

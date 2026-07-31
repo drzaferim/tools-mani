@@ -104,12 +104,31 @@ export default function AdminPage() {
       collection(db, "toolStats"),
       orderBy(documentId()),
       startAt(dateKeys[0]),
-      endAt(dateKeys[dateKeys.length - 1])
+      endAt(`${dateKeys[dateKeys.length - 1]}\uf8ff`)
     );
     const snap = await getDocs(q);
-    const rowsByDate = new Map(
-      snap.docs.map(d => [d.id, { date: d.id, ...d.data() } as DailyStat])
-    );
+    const rowsByDate = new Map<string, DailyStat>();
+
+    for (const statDoc of snap.docs) {
+      const data = statDoc.data();
+
+      // Yeni sabit şema: YYYY-MM-DD__tool-id → { date, toolId, count }.
+      if (
+        statDoc.id.includes("__") &&
+        typeof data.date === "string" &&
+        typeof data.toolId === "string" &&
+        typeof data.count === "number"
+      ) {
+        const row = rowsByDate.get(data.date) ?? { date: data.date };
+        row[data.toolId] = data.count;
+        rowsByDate.set(data.date, row);
+        continue;
+      }
+
+      // Eski günlük belgeleri okumaya devam et; yeni istemciler artık yazmaz.
+      rowsByDate.set(statDoc.id, { date: statDoc.id, ...data } as DailyStat);
+    }
+
     const rows: DailyStat[] = dateKeys.map((date) => rowsByDate.get(date) ?? { date });
     setDailyStats(rows);
   }, []);
