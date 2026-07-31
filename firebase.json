@@ -13,6 +13,21 @@
     "cleanUrls": true,
     "redirects": [
       {
+        "source": "/blog/resim-sikistirma-rehberi{,/**}",
+        "destination": "/tr/blog/resim-sikistirma-rehberi/",
+        "type": 301
+      },
+      {
+        "source": "/blog/pdf-birlestirme-nasil-yapilir{,/**}",
+        "destination": "/tr/blog/pdf-birlestirme-nasil-yapilir/",
+        "type": 301
+      },
+      {
+        "source": "/blog/pdf-imzalama-nasil-yapilir{,/**}",
+        "destination": "/tr/blog/pdf-imzalama-nasil-yapilir/",
+        "type": 301
+      },
+      {
         "source": "/imprint{,/**}",
         "destination": "/about/",
         "type": 301

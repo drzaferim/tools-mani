@@ -40,7 +40,7 @@ export function Header() {
               {t("nav.allTools")}
             </Link>
             <Link
-              href="/blog"
+              href={localePath("/blog")}
               className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
             >
               {t("nav.blog")}
@@ -122,7 +122,7 @@ export function Header() {
                 {t("nav.allTools")}
               </Link>
               <Link
-                href="/blog"
+                href={localePath("/blog")}
                 className="px-4 py-2.5 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
                 onClick={() => setMenuOpen(false)}
               >

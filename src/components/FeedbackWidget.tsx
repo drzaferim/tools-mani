@@ -120,6 +120,8 @@ export function FeedbackWidget() {
                   <textarea
                     name="message"
                     rows={4}
+                    minLength={3}
+                    maxLength={2000}
                     placeholder={l.placeholder}
                     required
                     className="w-full p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"

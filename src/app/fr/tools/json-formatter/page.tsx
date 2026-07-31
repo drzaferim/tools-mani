@@ -5,7 +5,7 @@ export { default } from "@/app/tools/json-formatter/page";
 export const metadata: Metadata = {
   title: "Formateur JSON - Gratuit en Ligne | ToolsMani",
   description:
-    "Formatez, validez et embellissez vos données JSON. Minification et vue arborescente incluses.",
+    "Formatez, validez, embellissez et minifiez du JSON directement dans votre navigateur.",
   alternates: {
     canonical: "/fr/tools/json-formatter/",
     languages: {

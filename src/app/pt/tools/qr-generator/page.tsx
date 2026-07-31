@@ -5,7 +5,7 @@ export { default } from "@/app/tools/qr-generator/page";
 export const metadata: Metadata = {
   title: "Gerador de QR Code - Grátis Online | ToolsMani",
   description:
-    "Gere códigos QR para URLs, texto, Wi-Fi e mais. Baixe em PNG ou SVG.",
+    "Gere QR codes para URLs, texto, Wi-Fi e mais. Baixe em PNG.",
   alternates: {
     canonical: "/pt/tools/qr-generator/",
     languages: {

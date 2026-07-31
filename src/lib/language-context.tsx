@@ -84,7 +84,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // Dil, URL'den belirlenir — sunucuda üretilen HTML ile istemci aynı dili gösterir.
   const { locale, base } = splitLocalePath(pathname);
 
-  // <html lang> kök layout'ta statik "en"; diğer dillerde istemcide düzelt.
+  // Kök layout dili ilk HTML ayrıştırılırken ayarlar; istemci geçişlerinde de güncel tut.
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
@@ -97,10 +97,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         router.push(base);
         return;
       }
-      // TR'de blog/admin aynası yok; diğer dillerde yalnızca / ve /tools/* var.
+      // Admin hiçbir dilde aynalanmaz; blog yalnızca Türkçede aynalanır.
       const target =
         next === "tr"
-          ? base.startsWith("/blog") || base.startsWith("/admin")
+          ? base.startsWith("/admin")
             ? base
             : base === "/"
             ? "/tr/"
@@ -128,7 +128,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         if (href === `/${loc}` || href.startsWith(`/${loc}/`)) return href;
       }
       if (locale === "tr") {
-        if (href.startsWith("/blog") || href.startsWith("/admin")) return href;
+        if (href.startsWith("/admin")) return href;
         return href === "/" ? "/tr/" : `/tr${href}`;
       }
       // es/de/pt/fr: yalnızca aynalanan rotaları öne ekle

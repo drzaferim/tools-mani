@@ -13,7 +13,7 @@ interface PostPageProps {
 
 // Next.js static export requires this to know which pages to build
 export function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = getAllPosts().filter((post) => post.language === "en");
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -30,7 +30,10 @@ export function generateMetadata({ params }: PostPageProps): Metadata {
     title: `${post.title} | ToolsMani`,
     description: post.description,
     alternates: {
-      canonical: `/blog/${post.slug}/`,
+      canonical:
+        post.language === "tr"
+          ? `/tr/blog/${post.slug}/`
+          : `/blog/${post.slug}/`,
     },
     openGraph: {
       title: post.title,
@@ -55,13 +58,13 @@ export default function BlogPostPage({ params }: PostPageProps) {
         
         {/* Back link */}
         <Link 
-          href="/blog" 
+          href={post.language === "tr" ? "/tr/blog" : "/blog"}
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary-600 transition-colors mb-8 group"
         >
           <svg className="w-4 h-4 mr-1.5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Back to Guides
+          {post.language === "tr" ? "Rehberlere Dön" : "Back to Guides"}
         </Link>
         
         {/* Article Header */}

@@ -48,7 +48,7 @@ Reddedilenler: sponsor köşesi (teknik olarak reklamdır), affiliate linkler (g
 | Framework | Next.js 14 (App Router) | `output: "export"` — tamamen statik |
 | Dil | TypeScript | **tsconfig hedefi es5**: `u` bayraklı regex derlenmez, karakter aralığı kullan |
 | Stil | Tailwind CSS 3.4 | `primary` (mavi) + `accent` (yeşil) paleti |
-| Barındırma | Firebase Hosting | Proje `thelectura-1`, site adı `toolsmani` |
+| Barındırma | Firebase Hosting | Proje `gorev-takip-8242b`, site adı `toolsmani` |
 | Veri | Firestore | Yalnızca anonim araç sayaçları + geri bildirim |
 | Analitik | GA4 | `G-L78B8VTFP9` |
 | DNS | Cloudflare | A kaydı + TXT doğrulama |
@@ -126,9 +126,8 @@ yoksa aynı sayfada iki FAQPage oluşur ve Google hangisini kullanacağını bil
 Hâlâ layout-FAQ'ı olan araçlar: `pdf-merge`, `pdf-split`, `pdf-rotate`, `pdf-pages`,
 `pdf-watermark`, `pdf-pagenumber`, `pdf-to-image`, `image-to-pdf`, `heic-convert`.
 
-Ayrıca site geneli FAQPage artık kök layout'ta **değil** (261 sayfaya basılıyordu ve
-araç FAQ'larıyla çakışıyordu); `src/app/page.tsx` içinde ve yalnızca `locale === "en"`
-iken üretilir.
+Ayrıca site geneli FAQPage artık kök layout'ta veya ana sayfada **değil**. Yalnızca
+görünür SSS içeriği olan ilgili araç sayfaları kendi FAQ şemasını üretir.
 
 ---
 
@@ -351,7 +350,7 @@ tools-mani/
 └── src/
     ├── app/
     │   ├── layout.tsx         # kök layout (site geneli FAQ BURADA DEĞİL)
-    │   ├── page.tsx           # ana sayfa + EN-only FAQ schema
+    │   ├── page.tsx           # ana sayfa
     │   ├── tools/<slug>/      # 39 araç (page.tsx + layout.tsx)
     │   ├── tr|es|de|pt|fr/    # üretilmiş ayna sayfalar (elle düzenlemeyin)
     │   ├── about|contact|privacy|terms/
