@@ -50,11 +50,11 @@ export const textDiffContent: ToolContentMap = {
       },
       {
         q: "Does it show differences within a line?",
-        a: "The current version highlights differences at line level: a modified line appears as one deletion plus one addition. This keeps large diffs readable. Word-level highlighting inside a line is on the roadmap.",
+        a: "Yes. Choose Line for paragraph and code changes, or Word to highlight the exact words and punctuation that were added or removed.",
       },
       {
         q: "Is there a limit on text length?",
-        a: "Comparison is capped at 5,000 lines per side to keep the browser responsive, which covers virtually all documents and source files. Character length per line is unlimited.",
+        a: "There is no artificial line limit. For very large inputs, the tool automatically switches to a memory-bounded comparison strategy so the browser stays responsive; practical limits depend on your device.",
       },
       {
         q: "Is my text sent to a server?",
@@ -126,11 +126,11 @@ export const textDiffContent: ToolContentMap = {
       },
       {
         q: "Satır içindeki farkları gösteriyor mu?",
-        a: "Mevcut sürüm farkları satır düzeyinde vurgular: değiştirilmiş bir satır, bir silme artı bir ekleme olarak görünür. Bu, büyük farkların okunabilir kalmasını sağlar. Satır içi kelime düzeyinde vurgulama yol haritasındadır.",
+        a: "Evet. Paragraf ve kod değişiklikleri için Satır'ı, eklenen veya silinen kelime ve noktalama işaretlerini görmek için Kelime'yi seçin.",
       },
       {
         q: "Metin uzunluğu sınırı var mı?",
-        a: "Tarayıcının akıcı kalması için karşılaştırma her taraf başına 5.000 satırla sınırlıdır; bu neredeyse tüm belgeleri ve kaynak dosyaları kapsar. Satır başına karakter sayısı sınırsızdır.",
+        a: "Yapay bir satır sınırı yoktur. Çok büyük metinlerde araç, tarayıcıyı akıcı tutmak için otomatik olarak bellek sınırlı karşılaştırmaya geçer; pratik sınır cihazınıza bağlıdır.",
       },
       {
         q: "Metnim bir sunucuya gönderiliyor mu?",
@@ -202,11 +202,11 @@ export const textDiffContent: ToolContentMap = {
       },
       {
         q: "¿Muestra diferencias dentro de una línea?",
-        a: "La versión actual resalta diferencias a nivel de línea: una línea modificada aparece como una eliminación más un añadido. Esto mantiene legibles las comparaciones grandes. El resaltado por palabras dentro de la línea está en la hoja de ruta.",
+        a: "Sí. Elige Línea para cambios de párrafos y código, o Palabra para resaltar las palabras y signos exactos añadidos o eliminados.",
       },
       {
         q: "¿Hay límite de longitud del texto?",
-        a: "La comparación está limitada a 5.000 líneas por lado para que el navegador siga respondiendo, lo que cubre prácticamente todos los documentos y archivos fuente. La longitud de caracteres por línea es ilimitada.",
+        a: "No hay un límite artificial de líneas. Con textos muy grandes, la herramienta cambia automáticamente a una estrategia de memoria limitada para mantener el navegador fluido; el límite práctico depende del dispositivo.",
       },
       {
         q: "¿Se envía mi texto a un servidor?",
@@ -278,11 +278,11 @@ export const textDiffContent: ToolContentMap = {
       },
       {
         q: "Zeigt es Unterschiede innerhalb einer Zeile?",
-        a: "Die aktuelle Version hebt Unterschiede auf Zeilenebene hervor: eine geänderte Zeile erscheint als eine Löschung plus eine Ergänzung. Das hält große Vergleiche lesbar. Wortgenaue Hervorhebung innerhalb der Zeile ist geplant.",
+        a: "Ja. Wählen Sie Zeile für Absatz- und Codeänderungen oder Wort, um exakt hinzugefügte und entfernte Wörter und Satzzeichen hervorzuheben.",
       },
       {
         q: "Gibt es eine Längenbegrenzung?",
-        a: "Der Vergleich ist auf 5.000 Zeilen pro Seite begrenzt, damit der Browser flüssig bleibt – das deckt praktisch alle Dokumente und Quelldateien ab. Die Zeichenanzahl pro Zeile ist unbegrenzt.",
+        a: "Es gibt kein künstliches Zeilenlimit. Bei sehr großen Texten wechselt das Tool automatisch zu einer speicherbegrenzten Strategie; die praktische Grenze hängt vom Gerät ab.",
       },
       {
         q: "Wird mein Text an einen Server gesendet?",
@@ -354,11 +354,11 @@ export const textDiffContent: ToolContentMap = {
       },
       {
         q: "Mostra diferenças dentro de uma linha?",
-        a: "A versão atual destaca diferenças no nível da linha: uma linha modificada aparece como uma remoção mais uma adição. Isso mantém comparações grandes legíveis. Destaque por palavra dentro da linha está no roteiro.",
+        a: "Sim. Escolha Linha para mudanças em parágrafos e código ou Palavra para destacar exatamente palavras e pontuação adicionadas ou removidas.",
       },
       {
         q: "Existe limite de tamanho do texto?",
-        a: "A comparação é limitada a 5.000 linhas por lado para manter o navegador responsivo, o que cobre praticamente todos os documentos e arquivos-fonte. O número de caracteres por linha é ilimitado.",
+        a: "Não há limite artificial de linhas. Em textos muito grandes, a ferramenta muda automaticamente para uma estratégia com memória limitada; o limite prático depende do dispositivo.",
       },
       {
         q: "Meu texto é enviado a um servidor?",
@@ -430,11 +430,11 @@ export const textDiffContent: ToolContentMap = {
       },
       {
         q: "Affiche-t-il les différences à l'intérieur d'une ligne ?",
-        a: "La version actuelle surligne les différences au niveau de la ligne : une ligne modifiée apparaît comme une suppression plus un ajout. Cela garde les grandes comparaisons lisibles. Le surlignage mot à mot est prévu.",
+        a: "Oui. Choisissez Ligne pour les paragraphes et le code, ou Mot pour surligner précisément les mots et signes de ponctuation ajoutés ou supprimés.",
       },
       {
         q: "Y a-t-il une limite de longueur ?",
-        a: "La comparaison est plafonnée à 5 000 lignes par côté pour garder le navigateur réactif, ce qui couvre pratiquement tous les documents et fichiers sources. Le nombre de caractères par ligne est illimité.",
+        a: "Il n'y a pas de limite artificielle de lignes. Pour les très grands textes, l'outil passe automatiquement à une stratégie à mémoire limitée ; la limite pratique dépend de l'appareil.",
       },
       {
         q: "Mon texte est-il envoyé à un serveur ?",
