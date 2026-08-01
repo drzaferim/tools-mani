@@ -8,22 +8,22 @@ import type { ToolContentMap } from "@/components/ToolContent";
 export const pdfCompressContent: ToolContentMap = {
   en: {
     intro: [
-      "PDF compression reduces file size so a document fits an email attachment limit or an upload form. This tool rewrites the PDF structure: it removes unused objects, drops redundant metadata and re-serializes the file with object streams, which is the safest kind of compression because it never touches your text or images.",
-      "That safety has a trade-off worth stating plainly: if your PDF is large because it contains high-resolution scans or photos, structural compression alone will only save a modest amount. Files heavy with metadata, form fields, revision history or embedded fonts shrink much more.",
+      "PDF compression reduces file size so a document fits an email attachment limit or upload form. Choose Lossless to optimize the original structure, Balanced for readable scans and photos, or Smallest file when stronger reduction matters most.",
+      "Lossless preserves selectable text, links, forms and original images. Balanced and Smallest file rebuild pages as compressed images, which usually saves more on scans but flattens interactive content; the tool shows this trade-off before processing.",
       "Everything happens in your browser. Contracts, invoices, medical reports and ID scans are exactly the documents people compress most often, and they are also the ones you should never upload to an unknown server.",
     ],
     howToTitle: "How to compress a PDF",
     howToSteps: [
       "Drop your PDF onto the upload area, or click it to pick a file. Nothing is uploaded — the file is opened by your browser.",
-      "Click Compress. Processing time depends on your device and the document's size, usually a second or two.",
+      "Choose Lossless to preserve selectable text and original image quality, Balanced for everyday scans, or Smallest file for stronger reduction, then click Compress.",
       "Compare the before and after sizes shown on screen to see how much was saved.",
       "Download the compressed PDF. If the saving was minimal, your file is probably image-heavy — see the FAQ below.",
     ],
     featuresTitle: "What this tool does",
     features: [
       {
-        title: "Lossless structural compression",
-        desc: "Removes unused objects and redundant metadata, then rewrites the file efficiently. Your text stays sharp and your images keep their original resolution.",
+        title: "Three compression modes",
+        desc: "Pick lossless structural optimization or two image-based modes tuned for balanced quality and the smallest practical output.",
       },
       {
         title: "No file size limit",
@@ -42,11 +42,11 @@ export const pdfCompressContent: ToolContentMap = {
     faq: [
       {
         q: "How much smaller will my PDF get?",
-        a: "It depends entirely on what is inside. Text-based documents, exported reports and files with lots of metadata or form data often shrink noticeably. PDFs whose size comes from scanned pages or high-resolution photos will shrink much less, because this tool deliberately does not degrade image quality.",
+        a: "It depends on the mode and content. Lossless mode usually saves most on exported documents; Balanced and Smallest file can substantially reduce scans and photo-heavy PDFs by re-encoding each page.",
       },
       {
         q: "Does compressing reduce the quality of my PDF?",
-        a: "No. This is structural compression only: text, fonts and images come out identical to the original. Nothing is downsampled or re-encoded, which is why the result is always safe to send or archive.",
+        a: "Lossless mode preserves text, fonts, vectors and original images. Balanced and Smallest file trade some image quality for stronger savings and flatten selectable text, links and form fields; the tool warns you before processing.",
       },
       {
         q: "My file barely got smaller. Why?",
@@ -76,22 +76,22 @@ export const pdfCompressContent: ToolContentMap = {
   },
   tr: {
     intro: [
-      "PDF sıkıştırma, bir belgenin e-posta eki sınırına veya yükleme formuna sığması için dosya boyutunu küçültür. Bu araç PDF'in yapısını yeniden yazar: kullanılmayan nesneleri kaldırır, gereksiz meta verileri atar ve dosyayı nesne akışlarıyla yeniden serileştirir. Bu, metninize ve görsellerinize hiç dokunmadığı için en güvenli sıkıştırma türüdür.",
-      "Bu güvenliğin açıkça söylenmesi gereken bir bedeli var: PDF'iniz yüksek çözünürlüklü tarama veya fotoğraf içerdiği için büyükse, yalnızca yapısal sıkıştırma mütevazı bir kazanç sağlar. Meta veri, form alanı, revizyon geçmişi veya gömülü yazı tipi ağırlıklı dosyalar çok daha fazla küçülür.",
+      "PDF sıkıştırma, belgenin e-posta eki sınırına veya yükleme formuna sığması için dosya boyutunu küçültür. Özgün yapıyı korumak için Kayıpsız, okunaklı tarama ve fotoğraflar için Dengeli, en güçlü küçültme için En küçük dosya modunu seçebilirsiniz.",
+      "Kayıpsız mod seçilebilir metin, bağlantı, form ve özgün görselleri korur. Dengeli ve En küçük dosya sayfaları sıkıştırılmış görsel olarak yeniden kurar; taramalarda daha çok kazandırır ancak etkileşimli içeriği düzleştirir. Bu fark işlemden önce açıkça gösterilir.",
       "Her şey tarayıcınızda olur. Sözleşmeler, faturalar, tıbbi raporlar ve kimlik taramaları en sık sıkıştırılan belgelerdir — ve aynı zamanda bilinmeyen bir sunucuya asla yüklenmemesi gerekenlerdir.",
     ],
     howToTitle: "PDF nasıl sıkıştırılır",
     howToSteps: [
       "PDF'inizi yükleme alanına bırakın veya tıklayıp dosya seçin. Hiçbir şey yüklenmez — dosya tarayıcınız tarafından açılır.",
-      "Sıkıştır düğmesine basın. İşlem süresi cihazınıza ve belgenin boyutuna bağlıdır, genellikle bir iki saniyedir.",
+      "Seçilebilir metni ve özgün görselleri korumak için Kayıpsız, günlük taramalar için Dengeli veya daha güçlü küçültme için En küçük dosya modunu seçip Sıkıştır'a basın.",
       "Ne kadar kazanç sağlandığını görmek için ekranda gösterilen önce/sonra boyutlarını karşılaştırın.",
       "Sıkıştırılmış PDF'i indirin. Kazanç çok azsa dosyanız büyük olasılıkla görsel ağırlıklıdır — aşağıdaki SSS'e bakın.",
     ],
     featuresTitle: "Bu araç ne yapar",
     features: [
       {
-        title: "Kayıpsız yapısal sıkıştırma",
-        desc: "Kullanılmayan nesneleri ve gereksiz meta verileri kaldırır, ardından dosyayı verimli biçimde yeniden yazar. Metniniz net kalır, görselleriniz orijinal çözünürlüğünü korur.",
+        title: "Üç sıkıştırma modu",
+        desc: "Kayıpsız yapısal optimizasyonu veya kalite ve küçük dosya için ayarlanmış iki görsel tabanlı modu seçin.",
       },
       {
         title: "Dosya boyutu sınırı yok",
@@ -110,11 +110,11 @@ export const pdfCompressContent: ToolContentMap = {
     faq: [
       {
         q: "PDF'im ne kadar küçülür?",
-        a: "Tamamen içeriğine bağlıdır. Metin tabanlı belgeler, dışa aktarılmış raporlar ve bol meta veri veya form verisi taşıyan dosyalar genellikle belirgin şekilde küçülür. Boyutu taranmış sayfalardan veya yüksek çözünürlüklü fotoğraflardan gelen PDF'ler çok daha az küçülür; çünkü bu araç bilinçli olarak görsel kalitesini düşürmez.",
+        a: "Moda ve içeriğe bağlıdır. Kayıpsız mod dışa aktarılmış belgelerde daha etkilidir; Dengeli ve En küçük dosya modları her sayfayı yeniden kodlayarak tarama ve fotoğraf ağırlıklı PDF'leri belirgin biçimde küçültebilir.",
       },
       {
         q: "Sıkıştırma PDF'imin kalitesini düşürür mü?",
-        a: "Hayır. Bu yalnızca yapısal bir sıkıştırmadır: metin, yazı tipleri ve görseller orijinaliyle birebir aynı çıkar. Hiçbir şey yeniden örneklenmez veya yeniden kodlanmaz; bu yüzden sonuç her zaman gönderilmeye ve arşivlenmeye uygundur.",
+        a: "Kayıpsız mod metin, yazı tipi, vektör ve özgün görselleri korur. Dengeli ve En küçük dosya modları daha fazla kazanç için görsel kalitesinden bir miktar ödün verir; seçilebilir metin, bağlantı ve form alanlarını düzleştirir. Araç işlemden önce bunu açıkça bildirir.",
       },
       {
         q: "Dosyam neredeyse hiç küçülmedi, neden?",
@@ -144,22 +144,22 @@ export const pdfCompressContent: ToolContentMap = {
   },
   es: {
     intro: [
-      "Comprimir un PDF reduce su tamaño para que quepa en el límite de un adjunto de correo o en un formulario de subida. Esta herramienta reescribe la estructura del PDF: elimina objetos sin usar, descarta metadatos redundantes y vuelve a serializar el archivo con flujos de objetos. Es el tipo de compresión más seguro porque nunca toca tu texto ni tus imágenes.",
-      "Esa seguridad tiene una contrapartida que conviene decir claramente: si tu PDF es grande porque contiene escaneos o fotos de alta resolución, la compresión estructural por sí sola ahorrará poco. Los archivos con muchos metadatos, campos de formulario, historial de revisiones o fuentes incrustadas se reducen mucho más.",
+      "Comprimir un PDF reduce su tamaño para adjuntos y formularios. Elige Sin pérdida para optimizar la estructura, Equilibrado para escaneos legibles o Archivo mínimo para la mayor reducción.",
+      "Sin pérdida conserva texto, enlaces, formularios e imágenes originales. Los otros modos reconstruyen las páginas como imágenes comprimidas: ahorran más en escaneos, pero aplanan el contenido interactivo.",
       "Todo ocurre en tu navegador. Contratos, facturas, informes médicos y escaneos de documentos de identidad son justo los archivos que más se comprimen, y también los que nunca deberías subir a un servidor desconocido.",
     ],
     howToTitle: "Cómo comprimir un PDF",
     howToSteps: [
       "Arrastra tu PDF al área de carga o haz clic para elegir un archivo. Nada se sube: el archivo lo abre tu navegador.",
-      "Pulsa Comprimir. El tiempo depende de tu dispositivo y del tamaño del documento, normalmente uno o dos segundos.",
+      "Elige Sin pérdida para conservar el texto, Equilibrado para escaneos cotidianos o Archivo mínimo para una reducción mayor, y pulsa Comprimir.",
       "Compara los tamaños antes y después que aparecen en pantalla para ver cuánto se ha ahorrado.",
       "Descarga el PDF comprimido. Si el ahorro fue mínimo, tu archivo probablemente tiene muchas imágenes: mira las preguntas frecuentes.",
     ],
     featuresTitle: "Qué hace esta herramienta",
     features: [
       {
-        title: "Compresión estructural sin pérdidas",
-        desc: "Elimina objetos sin usar y metadatos redundantes, y reescribe el archivo de forma eficiente. Tu texto sigue nítido y tus imágenes conservan su resolución original.",
+        title: "Tres modos de compresión",
+        desc: "Elige optimización sin pérdida o dos modos de imagen ajustados para equilibrar calidad y tamaño.",
       },
       {
         title: "Sin límite de tamaño",
@@ -178,11 +178,11 @@ export const pdfCompressContent: ToolContentMap = {
     faq: [
       {
         q: "¿Cuánto se reducirá mi PDF?",
-        a: "Depende por completo de su contenido. Los documentos de texto, los informes exportados y los archivos con muchos metadatos o datos de formulario suelen reducirse de forma notable. Los PDF cuyo peso viene de páginas escaneadas o fotos de alta resolución se reducirán mucho menos, porque esta herramienta deliberadamente no degrada la calidad de imagen.",
+        a: "Depende del modo y del contenido. Sin pérdida funciona mejor con documentos exportados; Equilibrado y Archivo mínimo reducen más los PDF con escaneos o fotos al recodificar cada página.",
       },
       {
         q: "¿Comprimir reduce la calidad de mi PDF?",
-        a: "No. Es solo compresión estructural: el texto, las fuentes y las imágenes salen idénticos al original. Nada se reescala ni se recodifica, y por eso el resultado siempre es seguro para enviar o archivar.",
+        a: "Sin pérdida conserva texto, fuentes, vectores e imágenes originales. Equilibrado y Archivo mínimo sacrifican algo de calidad para ahorrar más y aplanan texto seleccionable, enlaces y formularios; la herramienta avisa antes de procesar.",
       },
       {
         q: "Mi archivo apenas se redujo, ¿por qué?",
@@ -212,22 +212,22 @@ export const pdfCompressContent: ToolContentMap = {
   },
   de: {
     intro: [
-      "PDF-Komprimierung reduziert die Dateigröße, damit ein Dokument in ein E-Mail-Anhangslimit oder ein Upload-Formular passt. Dieses Tool schreibt die PDF-Struktur neu: es entfernt unbenutzte Objekte, verwirft überflüssige Metadaten und serialisiert die Datei mit Objektströmen neu. Das ist die sicherste Art der Komprimierung, weil Ihr Text und Ihre Bilder unangetastet bleiben.",
-      "Diese Sicherheit hat einen Preis, den man klar benennen sollte: Ist Ihr PDF groß, weil es hochauflösende Scans oder Fotos enthält, bringt die strukturelle Komprimierung allein nur wenig. Dateien mit vielen Metadaten, Formularfeldern, Revisionsverlauf oder eingebetteten Schriften schrumpfen deutlich stärker.",
+      "PDF-Komprimierung verkleinert Dokumente für Anhänge und Formulare. Wählen Sie Verlustfrei für die Originalstruktur, Ausgewogen für lesbare Scans oder Kleinste Datei für maximale Reduktion.",
+      "Verlustfrei erhält Text, Links, Formulare und Originalbilder. Die anderen Modi bauen Seiten als komprimierte Bilder neu auf: bei Scans meist kleiner, aber interaktive Inhalte werden abgeflacht.",
       "Alles passiert in Ihrem Browser. Verträge, Rechnungen, Arztberichte und Ausweis-Scans sind genau die Dokumente, die am häufigsten komprimiert werden – und genau die, die man niemals auf einen unbekannten Server laden sollte.",
     ],
     howToTitle: "PDF komprimieren – so geht's",
     howToSteps: [
       "Ziehen Sie Ihr PDF in den Upload-Bereich oder klicken Sie, um eine Datei zu wählen. Nichts wird hochgeladen – die Datei wird von Ihrem Browser geöffnet.",
-      "Klicken Sie auf Komprimieren. Die Dauer hängt von Ihrem Gerät und der Dokumentgröße ab, meist eine bis zwei Sekunden.",
+      "Wählen Sie Verlustfrei für auswählbaren Text, Ausgewogen für alltägliche Scans oder Kleinste Datei für stärkere Reduktion und starten Sie die Komprimierung.",
       "Vergleichen Sie die angezeigten Größen vor und nach der Komprimierung, um die Einsparung zu sehen.",
       "Laden Sie das komprimierte PDF herunter. Fiel die Einsparung gering aus, ist Ihre Datei wahrscheinlich bildlastig – siehe FAQ unten.",
     ],
     featuresTitle: "Was dieses Tool kann",
     features: [
       {
-        title: "Verlustfreie strukturelle Komprimierung",
-        desc: "Entfernt unbenutzte Objekte und überflüssige Metadaten und schreibt die Datei effizient neu. Ihr Text bleibt scharf, Ihre Bilder behalten ihre Originalauflösung.",
+        title: "Drei Komprimierungsmodi",
+        desc: "Wählen Sie verlustfreie Optimierung oder zwei Bildmodi für ausgewogene Qualität beziehungsweise kleinste Dateien.",
       },
       {
         title: "Keine Größenbeschränkung",
@@ -246,11 +246,11 @@ export const pdfCompressContent: ToolContentMap = {
     faq: [
       {
         q: "Wie viel kleiner wird mein PDF?",
-        a: "Das hängt vollständig vom Inhalt ab. Textbasierte Dokumente, exportierte Berichte und Dateien mit vielen Metadaten oder Formulardaten schrumpfen oft deutlich. PDFs, deren Größe von gescannten Seiten oder hochauflösenden Fotos kommt, schrumpfen viel weniger – denn dieses Tool verschlechtert die Bildqualität bewusst nicht.",
+        a: "Das hängt von Modus und Inhalt ab. Verlustfrei eignet sich besonders für exportierte Dokumente; Ausgewogen und Kleinste Datei reduzieren Scans und fotolastige PDFs durch Neukodierung jeder Seite stärker.",
       },
       {
         q: "Verringert das Komprimieren die Qualität meines PDFs?",
-        a: "Nein. Es handelt sich ausschließlich um strukturelle Komprimierung: Text, Schriften und Bilder kommen identisch zum Original heraus. Nichts wird herunterskaliert oder neu kodiert – deshalb ist das Ergebnis immer sicher zum Versenden und Archivieren.",
+        a: "Verlustfrei erhält Text, Schriften, Vektoren und Originalbilder. Ausgewogen und Kleinste Datei tauschen etwas Bildqualität gegen stärkere Reduktion und flachen auswählbaren Text, Links und Formulare ab; das Tool warnt vorher.",
       },
       {
         q: "Meine Datei wurde kaum kleiner. Warum?",
@@ -280,22 +280,22 @@ export const pdfCompressContent: ToolContentMap = {
   },
   pt: {
     intro: [
-      "Comprimir PDF reduz o tamanho do arquivo para que o documento caiba no limite de um anexo de e-mail ou em um formulário de envio. Esta ferramenta reescreve a estrutura do PDF: remove objetos não usados, descarta metadados redundantes e serializa o arquivo novamente com fluxos de objetos. É o tipo mais seguro de compressão, porque nunca mexe no seu texto nem nas suas imagens.",
-      "Essa segurança tem um custo que vale dizer com clareza: se o seu PDF é grande porque contém digitalizações ou fotos em alta resolução, a compressão estrutural sozinha economizará pouco. Arquivos cheios de metadados, campos de formulário, histórico de revisões ou fontes incorporadas diminuem muito mais.",
+      "Comprimir PDF reduz documentos para anexos e formulários. Escolha Sem perdas para otimizar a estrutura, Equilibrado para digitalizações legíveis ou Menor arquivo para a maior redução.",
+      "Sem perdas preserva texto, links, formulários e imagens originais. Os outros modos recriam páginas como imagens comprimidas: economizam mais em digitalizações, mas achatam conteúdo interativo.",
       "Tudo acontece no seu navegador. Contratos, notas fiscais, laudos médicos e digitalizações de documentos são justamente os arquivos que as pessoas mais comprimem — e também os que nunca deveriam ser enviados a um servidor desconhecido.",
     ],
     howToTitle: "Como comprimir um PDF",
     howToSteps: [
       "Arraste seu PDF para a área de upload ou clique para escolher um arquivo. Nada é enviado — o arquivo é aberto pelo seu navegador.",
-      "Clique em Comprimir. O tempo depende do seu dispositivo e do tamanho do documento, normalmente um ou dois segundos.",
+      "Escolha Sem perdas para preservar o texto, Equilibrado para digitalizações comuns ou Menor arquivo para maior redução, e clique em Comprimir.",
       "Compare os tamanhos antes e depois mostrados na tela para ver quanto foi economizado.",
       "Baixe o PDF comprimido. Se a economia foi mínima, seu arquivo provavelmente tem muitas imagens — veja as perguntas frequentes.",
     ],
     featuresTitle: "O que esta ferramenta faz",
     features: [
       {
-        title: "Compressão estrutural sem perdas",
-        desc: "Remove objetos não usados e metadados redundantes, e reescreve o arquivo de forma eficiente. Seu texto continua nítido e suas imagens mantêm a resolução original.",
+        title: "Três modos de compressão",
+        desc: "Escolha otimização sem perdas ou dois modos de imagem ajustados para qualidade equilibrada e menor arquivo.",
       },
       {
         title: "Sem limite de tamanho",
@@ -314,11 +314,11 @@ export const pdfCompressContent: ToolContentMap = {
     faq: [
       {
         q: "Quanto o meu PDF vai diminuir?",
-        a: "Depende inteiramente do conteúdo. Documentos de texto, relatórios exportados e arquivos com muitos metadados ou dados de formulário costumam diminuir de forma perceptível. PDFs cujo peso vem de páginas digitalizadas ou fotos em alta resolução diminuirão muito menos, porque esta ferramenta deliberadamente não degrada a qualidade das imagens.",
+        a: "Depende do modo e do conteúdo. Sem perdas funciona melhor em documentos exportados; Equilibrado e Menor arquivo reduzem mais digitalizações e PDFs com fotos ao recodificar cada página.",
       },
       {
         q: "Comprimir reduz a qualidade do meu PDF?",
-        a: "Não. É apenas compressão estrutural: texto, fontes e imagens saem idênticos ao original. Nada é redimensionado ou recodificado, e é por isso que o resultado é sempre seguro para enviar ou arquivar.",
+        a: "Sem perdas preserva texto, fontes, vetores e imagens originais. Equilibrado e Menor arquivo trocam um pouco de qualidade por maior redução e achatam texto selecionável, links e formulários; a ferramenta avisa antes.",
       },
       {
         q: "Meu arquivo quase não diminuiu. Por quê?",
@@ -348,22 +348,22 @@ export const pdfCompressContent: ToolContentMap = {
   },
   fr: {
     intro: [
-      "La compression PDF réduit la taille du fichier pour qu'un document tienne dans la limite d'une pièce jointe ou d'un formulaire d'envoi. Cet outil réécrit la structure du PDF : il supprime les objets inutilisés, élimine les métadonnées redondantes et ré-sérialise le fichier avec des flux d'objets. C'est le type de compression le plus sûr, car il ne touche jamais à votre texte ni à vos images.",
-      "Cette sûreté a une contrepartie qu'il faut dire clairement : si votre PDF est volumineux parce qu'il contient des scans ou des photos haute résolution, la compression structurelle seule n'économisera que peu. Les fichiers chargés de métadonnées, de champs de formulaire, d'historique de révisions ou de polices intégrées se réduisent beaucoup plus.",
+      "La compression PDF réduit les documents pour les pièces jointes et formulaires. Choisissez Sans perte pour la structure d'origine, Équilibré pour des scans lisibles ou Fichier minimal pour la réduction maximale.",
+      "Sans perte conserve texte, liens, formulaires et images d'origine. Les autres modes reconstruisent les pages en images compressées : ils réduisent davantage les scans mais aplatissent le contenu interactif.",
       "Tout se passe dans votre navigateur. Contrats, factures, comptes rendus médicaux et scans de pièces d'identité sont précisément les documents que l'on compresse le plus — et ceux qu'il ne faut jamais envoyer sur un serveur inconnu.",
     ],
     howToTitle: "Comment compresser un PDF",
     howToSteps: [
       "Déposez votre PDF dans la zone d'envoi ou cliquez pour choisir un fichier. Rien n'est envoyé — le fichier est ouvert par votre navigateur.",
-      "Cliquez sur Compresser. La durée dépend de votre appareil et de la taille du document, généralement une à deux secondes.",
+      "Choisissez Sans perte pour préserver le texte, Équilibré pour les scans courants ou Fichier minimal pour une réduction plus forte, puis lancez la compression.",
       "Comparez les tailles avant et après affichées à l'écran pour voir le gain obtenu.",
       "Téléchargez le PDF compressé. Si le gain est faible, votre fichier contient probablement beaucoup d'images — voir la FAQ ci-dessous.",
     ],
     featuresTitle: "Ce que fait cet outil",
     features: [
       {
-        title: "Compression structurelle sans perte",
-        desc: "Supprime les objets inutilisés et les métadonnées redondantes, puis réécrit le fichier efficacement. Votre texte reste net et vos images conservent leur résolution d'origine.",
+        title: "Trois modes de compression",
+        desc: "Choisissez l'optimisation sans perte ou deux modes image réglés pour la qualité équilibrée et la taille minimale.",
       },
       {
         title: "Aucune limite de taille",
@@ -382,11 +382,11 @@ export const pdfCompressContent: ToolContentMap = {
     faq: [
       {
         q: "De combien mon PDF va-t-il diminuer ?",
-        a: "Cela dépend entièrement de son contenu. Les documents textuels, les rapports exportés et les fichiers riches en métadonnées ou en données de formulaire diminuent souvent nettement. Les PDF dont le poids vient de pages scannées ou de photos haute résolution diminueront beaucoup moins, car cet outil ne dégrade volontairement pas la qualité des images.",
+        a: "Cela dépend du mode et du contenu. Sans perte convient surtout aux documents exportés ; Équilibré et Fichier minimal réduisent davantage les scans et PDF riches en photos en réencodant chaque page.",
       },
       {
         q: "La compression réduit-elle la qualité de mon PDF ?",
-        a: "Non. Il s'agit uniquement de compression structurelle : texte, polices et images ressortent identiques à l'original. Rien n'est sous-échantillonné ni ré-encodé, c'est pourquoi le résultat est toujours sûr à envoyer ou à archiver.",
+        a: "Sans perte conserve texte, polices, vecteurs et images d'origine. Équilibré et Fichier minimal sacrifient un peu de qualité pour réduire davantage et aplatissent texte sélectionnable, liens et formulaires ; l'outil vous avertit avant.",
       },
       {
         q: "Mon fichier a à peine diminué. Pourquoi ?",
