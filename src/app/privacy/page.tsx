@@ -5,7 +5,7 @@ import { useLanguage, pick } from "@/lib/language-context";
 const content = {
   en: {
     title: "Privacy Policy",
-    updated: "Last updated: July 14, 2026",
+    updated: "Last updated: August 1, 2026",
     sections: [
       {
         h: "The short version",
@@ -24,7 +24,7 @@ const content = {
         h: "What we do collect",
         p: [
           "Analytics: we use Google Analytics 4 to measure page visits and tool usage (for example, that the PDF merge tool was used, never what was in the PDF). Google Analytics sets cookies and may process your IP address and device information according to Google's own privacy policy.",
-          "Anonymous tool counters: when a tool is used we increase a daily counter (e.g. \"pdf-merge: +1\") in our database. This number contains no personal data whatsoever.",
+          "Anonymous product measurement: we record funnel steps such as opening a tool, selecting an input, starting or completing processing, errors, and download or copy actions. Events may include coarse file-size, batch-size, duration, and reduction buckets, plus the tool, language, mode, and a generic error code. We never record file names, exact sizes, file contents, entered text, or an account identifier. Successful uses also increment an aggregate daily counter in our database.",
           "Feedback: if you use the feedback or contact form, we store the message you write, the page it was sent from and your language preference. The form is anonymous unless you choose to include contact details in your message.",
         ],
       },
@@ -37,7 +37,7 @@ const content = {
       {
         h: "Third-party services",
         p: [
-          "Google Analytics (usage measurement), Google Fonts (font delivery), and Firebase Hosting and Firestore by Google (site hosting and storage of anonymous counters and feedback). Each processes data under its own privacy policy. No tool sends your content to any third-party service — all processing, including QR code generation, happens locally in your browser.",
+          "Google Analytics (usage measurement) and Firebase Hosting and Firestore by Google (site hosting and storage of anonymous counters and feedback). Each processes data under its own privacy policy. Site text uses your device's local system fonts. No tool sends your content to any third-party service — all processing, including QR code generation, happens locally in your browser.",
         ],
       },
       {
@@ -56,7 +56,7 @@ const content = {
   },
   tr: {
     title: "Gizlilik Politikası",
-    updated: "Son güncelleme: 14 Temmuz 2026",
+    updated: "Son güncelleme: 1 Ağustos 2026",
     sections: [
       {
         h: "Kısa özet",
@@ -75,7 +75,7 @@ const content = {
         h: "Topladıklarımız",
         p: [
           "Analitik: sayfa ziyaretlerini ve araç kullanımını ölçmek için Google Analytics 4 kullanırız (örneğin PDF birleştirme aracının kullanıldığını görürüz; PDF'in içinde ne olduğunu asla göremeyiz). Google Analytics çerez kullanır ve IP adresinizi ve cihaz bilgilerinizi Google'ın kendi gizlilik politikasına göre işleyebilir.",
-          "Anonim araç sayaçları: bir araç kullanıldığında veritabanımızdaki günlük bir sayacı artırırız (örn. \"pdf-merge: +1\"). Bu sayı hiçbir kişisel veri içermez.",
+          "Anonim ürün ölçümü: bir aracı açma, girdi seçme, işlemi başlatma veya tamamlama, hata ve indirme ya da kopyalama gibi huni adımlarını kaydederiz. Olaylar araç, dil, kip ve genel hata kodunun yanında yalnızca yaklaşık dosya boyutu, toplu dosya sayısı, süre ve küçülme aralıklarını içerebilir. Dosya adı, kesin boyut, dosya içeriği, girilen metin veya hesap kimliği kaydetmeyiz. Başarılı işlemler ayrıca veritabanımızdaki toplu günlük sayacı artırır.",
           "Geri bildirim: geri bildirim veya iletişim formunu kullanırsanız yazdığınız mesajı, gönderildiği sayfayı ve dil tercihinizi saklarız. Mesajınıza iletişim bilgisi eklemediğiniz sürece form anonimdir.",
         ],
       },
@@ -88,7 +88,7 @@ const content = {
       {
         h: "Üçüncü taraf servisler",
         p: [
-          "Google Analytics (kullanım ölçümü), Google Fonts (yazı tipi) ve Google Firebase Hosting ile Firestore (site barındırma, anonim sayaçların ve geri bildirimlerin saklanması). Her biri veriyi kendi gizlilik politikasına göre işler. Hiçbir araç içeriğinizi üçüncü taraf bir servise göndermez — QR kod üretimi dahil tüm işlemler tarayıcınızda yerel olarak yapılır.",
+          "Google Analytics (kullanım ölçümü) ile Google Firebase Hosting ve Firestore (site barındırma, anonim sayaçların ve geri bildirimlerin saklanması). Her biri veriyi kendi gizlilik politikasına göre işler. Site yazıları cihazınızdaki yerel sistem fontlarını kullanır. Hiçbir araç içeriğinizi üçüncü taraf bir servise göndermez — QR kod üretimi dahil tüm işlemler tarayıcınızda yerel olarak yapılır.",
         ],
       },
       {
@@ -108,7 +108,7 @@ const content = {
 
   es: {
     title: "Política de privacidad",
-    updated: "Última actualización: 14 de julio de 2026",
+    updated: "Última actualización: 1 de agosto de 2026",
     sections: [
       {
         h: "La versión corta",
@@ -127,7 +127,7 @@ const content = {
         h: "Lo que sí recopilamos",
         p: [
           "Analítica: usamos Google Analytics 4 para medir las visitas de página y el uso de las herramientas (por ejemplo, que se usó la herramienta de unir PDF, nunca qué contenía el PDF). Google Analytics instala cookies y puede tratar tu dirección IP e información del dispositivo conforme a la propia política de privacidad de Google.",
-          "Contadores anónimos de uso: cuando se usa una herramienta, incrementamos un contador diario (p. ej. «pdf-merge: +1») en nuestra base de datos. Ese número no contiene ningún dato personal.",
+          "Medición anónima del producto: registramos pasos del embudo como abrir una herramienta, seleccionar una entrada, iniciar o completar el proceso, errores y acciones de descarga o copia. Los eventos pueden incluir intervalos aproximados de tamaño, cantidad de archivos, duración y reducción, además de la herramienta, el idioma, el modo y un código de error genérico. Nunca registramos nombres de archivo, tamaños exactos, contenido, texto introducido ni identificadores de cuenta. Los usos correctos también incrementan un contador diario agregado.",
           "Comentarios: si usas el formulario de contacto o de comentarios, guardamos el mensaje que escribes, la página desde la que se envió y tu preferencia de idioma. El formulario es anónimo salvo que decidas incluir datos de contacto en el mensaje.",
         ],
       },
@@ -140,7 +140,7 @@ const content = {
       {
         h: "Servicios de terceros",
         p: [
-          "Google Analytics (medición de uso), Google Fonts (entrega de tipografías) y Firebase Hosting y Firestore de Google (alojamiento del sitio y almacenamiento de contadores anónimos y comentarios). Cada uno trata los datos conforme a su propia política de privacidad. Ninguna herramienta envía tu contenido a un servicio externo: todo el procesamiento, incluida la generación de códigos QR, ocurre localmente en tu navegador.",
+          "Google Analytics (medición de uso) y Firebase Hosting y Firestore de Google (alojamiento del sitio y almacenamiento de contadores anónimos y comentarios). Cada uno trata los datos conforme a su propia política de privacidad. El sitio usa las fuentes del sistema instaladas en tu dispositivo. Ninguna herramienta envía tu contenido a un servicio externo: todo el procesamiento, incluida la generación de códigos QR, ocurre localmente en tu navegador.",
         ],
       },
       {
@@ -159,7 +159,7 @@ const content = {
   },
   de: {
     title: "Datenschutzerklärung",
-    updated: "Zuletzt aktualisiert: 14. Juli 2026",
+    updated: "Zuletzt aktualisiert: 1. August 2026",
     sections: [
       {
         h: "Die Kurzfassung",
@@ -178,7 +178,7 @@ const content = {
         h: "Was wir erheben",
         p: [
           "Analyse: Wir verwenden Google Analytics 4, um Seitenaufrufe und die Tool-Nutzung zu messen (zum Beispiel, dass das PDF-Zusammenführen genutzt wurde – niemals, was im PDF stand). Google Analytics setzt Cookies und verarbeitet ggf. Ihre IP-Adresse und Geräteinformationen gemäß der eigenen Datenschutzerklärung von Google.",
-          "Anonyme Tool-Zähler: Wird ein Tool genutzt, erhöhen wir einen Tageszähler (z. B. „pdf-merge: +1“) in unserer Datenbank. Diese Zahl enthält keinerlei personenbezogene Daten.",
+          "Anonyme Produktmessung: Wir erfassen Funnel-Schritte wie das Öffnen eines Tools, die Auswahl einer Eingabe, Start oder Abschluss der Verarbeitung, Fehler sowie Download- oder Kopieraktionen. Ereignisse können grobe Größen-, Mengen-, Dauer- und Reduktionsbereiche sowie Tool, Sprache, Modus und einen allgemeinen Fehlercode enthalten. Dateinamen, exakte Größen, Inhalte, eingegebenen Text oder Konto-IDs erfassen wir nie. Erfolgreiche Nutzungen erhöhen zusätzlich einen aggregierten Tageszähler.",
           "Feedback: Wenn Sie das Feedback- oder Kontaktformular nutzen, speichern wir die von Ihnen verfasste Nachricht, die Seite, von der sie gesendet wurde, und Ihre Spracheinstellung. Das Formular ist anonym, sofern Sie nicht selbst Kontaktdaten in die Nachricht schreiben.",
         ],
       },
@@ -191,7 +191,7 @@ const content = {
       {
         h: "Dienste von Drittanbietern",
         p: [
-          "Google Analytics (Nutzungsmessung), Google Fonts (Bereitstellung von Schriftarten) sowie Firebase Hosting und Firestore von Google (Hosting der Website und Speicherung anonymer Zähler und Feedback). Jeder Dienst verarbeitet Daten nach seiner eigenen Datenschutzerklärung. Kein Tool sendet Ihre Inhalte an einen Drittanbieter – die gesamte Verarbeitung, einschließlich der QR-Code-Erzeugung, erfolgt lokal in Ihrem Browser.",
+          "Google Analytics (Nutzungsmessung) sowie Firebase Hosting und Firestore von Google (Hosting der Website und Speicherung anonymer Zähler und Feedback). Jeder Dienst verarbeitet Daten nach seiner eigenen Datenschutzerklärung. Die Website verwendet lokale Systemschriften Ihres Geräts. Kein Tool sendet Ihre Inhalte an einen Drittanbieter – die gesamte Verarbeitung, einschließlich der QR-Code-Erzeugung, erfolgt lokal in Ihrem Browser.",
         ],
       },
       {
@@ -210,7 +210,7 @@ const content = {
   },
   pt: {
     title: "Política de privacidade",
-    updated: "Última atualização: 14 de julho de 2026",
+    updated: "Última atualização: 1 de agosto de 2026",
     sections: [
       {
         h: "A versão curta",
@@ -229,7 +229,7 @@ const content = {
         h: "O que coletamos",
         p: [
           "Análise: usamos o Google Analytics 4 para medir visitas às páginas e uso das ferramentas (por exemplo, que a ferramenta de juntar PDF foi usada, nunca o que havia no PDF). O Google Analytics define cookies e pode tratar seu endereço IP e informações do dispositivo conforme a política de privacidade do próprio Google.",
-          "Contadores anônimos de uso: quando uma ferramenta é usada, incrementamos um contador diário (ex.: «pdf-merge: +1») no nosso banco de dados. Esse número não contém nenhum dado pessoal.",
+          "Medição anônima do produto: registramos etapas do funil, como abrir uma ferramenta, selecionar uma entrada, iniciar ou concluir o processamento, erros e ações de download ou cópia. Os eventos podem incluir faixas aproximadas de tamanho, quantidade de arquivos, duração e redução, além da ferramenta, idioma, modo e um código de erro genérico. Nunca registramos nomes de arquivo, tamanhos exatos, conteúdo, texto digitado ou identificador de conta. Usos concluídos também incrementam um contador diário agregado.",
           "Feedback: se você usar o formulário de contato ou de feedback, guardamos a mensagem escrita, a página de onde ela foi enviada e sua preferência de idioma. O formulário é anônimo, a menos que você opte por incluir dados de contato na mensagem.",
         ],
       },
@@ -242,7 +242,7 @@ const content = {
       {
         h: "Serviços de terceiros",
         p: [
-          "Google Analytics (medição de uso), Google Fonts (entrega de fontes) e Firebase Hosting e Firestore, do Google (hospedagem do site e armazenamento de contadores anônimos e feedback). Cada um trata os dados sob sua própria política de privacidade. Nenhuma ferramenta envia seu conteúdo para serviços de terceiros — todo o processamento, inclusive a geração de QR codes, acontece localmente no seu navegador.",
+          "Google Analytics (medição de uso) e Firebase Hosting e Firestore, do Google (hospedagem do site e armazenamento de contadores anônimos e feedback). Cada um trata os dados sob sua própria política de privacidade. O site usa as fontes locais do sistema do seu dispositivo. Nenhuma ferramenta envia seu conteúdo para serviços de terceiros — todo o processamento, inclusive a geração de QR codes, acontece localmente no seu navegador.",
         ],
       },
       {
@@ -261,7 +261,7 @@ const content = {
   },
   fr: {
     title: "Politique de confidentialité",
-    updated: "Dernière mise à jour : 14 juillet 2026",
+    updated: "Dernière mise à jour : 1 août 2026",
     sections: [
       {
         h: "En bref",
@@ -280,7 +280,7 @@ const content = {
         h: "Ce que nous collectons",
         p: [
           "Mesure d'audience : nous utilisons Google Analytics 4 pour mesurer les visites de pages et l'utilisation des outils (par exemple, que l'outil de fusion de PDF a été utilisé, jamais ce que contenait le PDF). Google Analytics dépose des cookies et peut traiter votre adresse IP et des informations sur votre appareil conformément à sa propre politique de confidentialité.",
-          "Compteurs anonymes d'utilisation : lorsqu'un outil est utilisé, nous incrémentons un compteur quotidien (par ex. « pdf-merge : +1 ») dans notre base de données. Ce nombre ne contient aucune donnée personnelle.",
+          "Mesure anonyme du produit : nous enregistrons les étapes du parcours, telles que l'ouverture d'un outil, la sélection d'une entrée, le démarrage ou la réussite du traitement, les erreurs et les actions de téléchargement ou de copie. Les événements peuvent inclure des tranches approximatives de taille, de nombre de fichiers, de durée et de réduction, ainsi que l'outil, la langue, le mode et un code d'erreur générique. Nous n'enregistrons jamais les noms de fichiers, les tailles exactes, le contenu, le texte saisi ou un identifiant de compte. Les utilisations réussies incrémentent aussi un compteur quotidien agrégé.",
           "Retours : si vous utilisez le formulaire de contact ou de retour, nous conservons le message que vous rédigez, la page depuis laquelle il a été envoyé et votre préférence de langue. Le formulaire est anonyme, sauf si vous choisissez d'y indiquer des coordonnées.",
         ],
       },
@@ -293,7 +293,7 @@ const content = {
       {
         h: "Services tiers",
         p: [
-          "Google Analytics (mesure d'usage), Google Fonts (fourniture des polices), ainsi que Firebase Hosting et Firestore de Google (hébergement du site et stockage des compteurs anonymes et des retours). Chacun traite les données selon sa propre politique de confidentialité. Aucun outil n'envoie votre contenu à un service tiers : tout le traitement, y compris la génération de QR codes, se fait localement dans votre navigateur.",
+          "Google Analytics (mesure d'usage), ainsi que Firebase Hosting et Firestore de Google (hébergement du site et stockage des compteurs anonymes et des retours). Chacun traite les données selon sa propre politique de confidentialité. Le site utilise les polices système locales de votre appareil. Aucun outil n'envoie votre contenu à un service tiers : tout le traitement, y compris la génération de QR codes, se fait localement dans votre navigateur.",
         ],
       },
       {

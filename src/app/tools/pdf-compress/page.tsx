@@ -1,5 +1,12 @@
 "use client";
-import { trackToolUse } from "@/lib/track";
+import {
+  getDurationBucket,
+  getFileSizeBucket,
+  getReductionBucket,
+  trackToolEvent,
+  trackToolUse,
+  useTrackToolView,
+} from "@/lib/track";
 
 import { useState, useRef } from "react";
 import Link from "next/link";
@@ -14,7 +21,8 @@ export default function PdfCompressPage() {
   const [result, setResult] = useState<{ originalSize: number; compressedSize: number; url: string } | null>(null);
   const [progress, setProgress] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { t, localePath } = useLanguage();
+  const { t, locale, localePath } = useLanguage();
+  useTrackToolView("pdf-compress", locale);
 
   const formatSize = (bytes: number) => {
     if (bytes < 1024) return bytes + " B";
@@ -22,10 +30,33 @@ export default function PdfCompressPage() {
     return (bytes / 1048576).toFixed(1) + " MB";
   };
 
-  const loadFile = (f: File) => { if (f.type !== "application/pdf") { setError(t("error.selectPdf")); return; } setFile(f); setResult(null); setError(""); };
+  const loadFile = (f: File) => {
+    if (f.type !== "application/pdf") {
+      setError(t("error.selectPdf"));
+      trackToolEvent("processing_error", "pdf-compress", {
+        locale,
+        error_code: "invalid_file_type",
+      });
+      return;
+    }
+    setFile(f);
+    setResult(null);
+    setError("");
+    trackToolEvent("input_selected", "pdf-compress", {
+      locale,
+      file_size_bucket: getFileSizeBucket(f.size),
+    });
+  };
 
   const compressPdf = async () => {
     if (!file) return;
+    const startedAt = performance.now();
+    const fileSizeBucket = getFileSizeBucket(file.size);
+    trackToolEvent("processing_started", "pdf-compress", {
+      locale,
+      file_size_bucket: fileSizeBucket,
+      mode: "structure_optimization",
+    });
     setProcessing(true); setError(""); setProgress(10);
     try {
       const { PDFDocument } = await import("pdf-lib");
@@ -44,13 +75,29 @@ export default function PdfCompressPage() {
       const blob = new Blob([compressedBytes as BlobPart], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       setResult({ originalSize: file.size, compressedSize: compressedBytes.length, url }); setProgress(100);
-      void trackToolUse("pdf-compress");
-    } catch { setError(t("error.failedCompress")); } finally { setProcessing(false); }
+      void trackToolUse("pdf-compress", {
+        locale,
+        file_size_bucket: fileSizeBucket,
+        output_size_bucket: getFileSizeBucket(compressedBytes.length),
+        duration_bucket: getDurationBucket(performance.now() - startedAt),
+        reduction_bucket: getReductionBucket(file.size, compressedBytes.length),
+        mode: "structure_optimization",
+      });
+    } catch {
+      setError(t("error.failedCompress"));
+      trackToolEvent("processing_error", "pdf-compress", {
+        locale,
+        file_size_bucket: fileSizeBucket,
+        duration_bucket: getDurationBucket(performance.now() - startedAt),
+        error_code: "compression_failed",
+      });
+    } finally { setProcessing(false); }
   };
 
   const download = () => {
     if (!result || !file) return;
     const a = document.createElement("a"); a.href = result.url; a.download = `compressed_${file.name}`; a.click();
+    trackToolEvent("output_action", "pdf-compress", { locale, action: "download" });
   };
 
   const reset = () => { if (result?.url) URL.revokeObjectURL(result.url); setFile(null); setResult(null); setProgress(0); setError(""); };

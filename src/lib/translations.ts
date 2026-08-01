@@ -53,8 +53,8 @@ const translations = {
   "privacy.title1": { en: "Your files stay on your device.", tr: "Dosyalarınız cihazınızda kalır." },
   "privacy.title2": { en: "Always.", tr: "Her zaman." },
   "privacy.subtitle": {
-    en: "Unlike other tools, we never upload your files to any server. All processing happens locally in your browser using modern Web APIs. No tracking, no cookies, no data collection.",
-    tr: "Diğer araçların aksine, dosyalarınız asla bir sunucuya yüklenmez. Tüm işlemler modern Web API'leri kullanılarak tarayıcınızda gerçekleşir. İzleme, çerez veya veri toplama yoktur.",
+    en: "Unlike many tools, we never upload your files to a processing server. Everything runs locally with modern Web APIs. We measure anonymous usage steps, never file content.",
+    tr: "Birçok aracın aksine dosyalarınızı işlem için bir sunucuya yüklemeyiz. Her şey modern Web API'leriyle yerel olarak çalışır. Yalnızca anonim kullanım adımlarını ölçer, dosya içeriğini asla kaydetmeyiz.",
   },
   "privacy.noUpload": { en: "No file uploads", tr: "Dosya yükleme yok" },
   "privacy.noData": { en: "No data stored", tr: "Veri depolanmaz" },
@@ -92,8 +92,8 @@ const translations = {
   },
   "pdfHub.why2Title": { en: "Complete privacy", tr: "Tam gizlilik" },
   "pdfHub.why2Desc": {
-    en: "Your files never leave your device. All processing happens locally in your browser. No servers, no cloud, no tracking.",
-    tr: "Dosyalarınız cihazınızdan asla çıkmaz. Tüm işlemler tarayıcınızda gerçekleşir. Sunucu yok, bulut yok, izleme yok.",
+    en: "Your files never leave your device. All processing happens locally in your browser. No file uploads, no cloud processing, no content tracking.",
+    tr: "Dosyalarınız cihazınızdan asla çıkmaz. Tüm işlemler tarayıcınızda gerçekleşir. Dosya yükleme, bulutta işleme veya içerik takibi yoktur.",
   },
   "pdfHub.why3Title": { en: "Instant processing", tr: "Anında işleme" },
   "pdfHub.why3Desc": {
@@ -156,12 +156,12 @@ const translations = {
     tr: "Kelimeleri, karakterleri, cümleleri ve paragrafları anında sayın. Makaleler ve sosyal medya gönderileri için idealdir.",
   },
   "tool.jsonFormatter.desc": {
-    en: "Format, validate, and beautify your JSON data. Supports minification and tree view.",
-    tr: "JSON verilerinizi biçimlendirin, doğrulayın ve güzelleştirin. Küçültme ve ağaç görünümünü destekler.",
+    en: "Format, validate, beautify, and minify JSON data directly in your browser.",
+    tr: "JSON verilerinizi doğrudan tarayıcınızda biçimlendirin, doğrulayın ve küçültün.",
   },
   "tool.qrGenerator.desc": {
-    en: "Generate QR codes for URLs, text, Wi-Fi credentials, and more. Download as PNG or SVG.",
-    tr: "URL'ler, metinler, Wi-Fi bilgileri ve daha fazlası için QR kodlar oluşturun. PNG veya SVG olarak indirin.",
+    en: "Generate QR codes for URLs, text, Wi-Fi credentials, and more. Download as PNG.",
+    tr: "URL'ler, metinler, Wi-Fi bilgileri ve daha fazlası için QR kodlar oluşturun. PNG olarak indirin.",
   },
   "tool.passwordGenerator.desc": {
     en: "Create strong, secure passwords with customizable length and character types.",
@@ -603,10 +603,10 @@ const extra: Partial<Record<TranslationKey, Partial<Record<Locale, string>>>> = 
     fr: "Toujours.",
   },
   "privacy.subtitle": {
-    es: "A diferencia de otras herramientas, nunca subimos tus archivos a ningún servidor. Todo el procesamiento ocurre localmente en tu navegador con APIs web modernas. Sin rastreo ni recopilación de datos.",
-    de: "Im Gegensatz zu anderen Tools laden wir Ihre Dateien niemals auf einen Server hoch. Die gesamte Verarbeitung erfolgt lokal in Ihrem Browser mit modernen Web-APIs. Kein Tracking, keine Datensammlung.",
-    pt: "Ao contrário de outras ferramentas, nunca enviamos seus arquivos a nenhum servidor. Todo o processamento acontece localmente no seu navegador com APIs web modernas. Sem rastreamento nem coleta de dados.",
-    fr: "Contrairement à d'autres outils, nous n'envoyons jamais vos fichiers vers un serveur. Tout le traitement s'effectue localement dans votre navigateur grâce aux API web modernes. Pas de pistage ni de collecte de données.",
+    es: "A diferencia de muchas herramientas, nunca subimos tus archivos a un servidor de procesamiento. Todo funciona localmente con APIs web modernas. Medimos pasos de uso anónimos, nunca el contenido.",
+    de: "Anders als viele Tools laden wir Ihre Dateien nie auf einen Verarbeitungsserver. Alles läuft lokal mit modernen Web-APIs. Wir messen anonyme Nutzungsschritte, niemals Dateiinhalte.",
+    pt: "Ao contrário de muitas ferramentas, nunca enviamos seus arquivos a um servidor de processamento. Tudo roda localmente com APIs web modernas. Medimos etapas anônimas de uso, nunca o conteúdo.",
+    fr: "Contrairement à de nombreux outils, nous n'envoyons jamais vos fichiers à un serveur de traitement. Tout fonctionne localement avec les API web modernes. Nous mesurons des étapes d'usage anonymes, jamais le contenu.",
   },
   "privacy.noUpload": {
     es: "Sin subida de archivos",
@@ -723,10 +723,10 @@ const extra: Partial<Record<TranslationKey, Partial<Record<Locale, string>>>> = 
     fr: "Confidentialité totale",
   },
   "pdfHub.why2Desc": {
-    es: "Tus archivos nunca salen de tu dispositivo. Todo se procesa localmente en tu navegador. Sin servidores, sin nube, sin rastreo.",
-    de: "Ihre Dateien verlassen niemals Ihr Gerät. Alles wird lokal in Ihrem Browser verarbeitet. Keine Server, keine Cloud, kein Tracking.",
-    pt: "Seus arquivos nunca saem do seu dispositivo. Tudo é processado localmente no navegador. Sem servidores, sem nuvem, sem rastreamento.",
-    fr: "Vos fichiers ne quittent jamais votre appareil. Tout est traité localement dans votre navigateur. Pas de serveurs, pas de cloud, pas de pistage.",
+    es: "Tus archivos nunca salen de tu dispositivo. Todo se procesa localmente en el navegador. Sin subir archivos, sin procesamiento en la nube y sin rastrear el contenido.",
+    de: "Ihre Dateien verlassen nie Ihr Gerät. Alles wird lokal im Browser verarbeitet. Keine Datei-Uploads, keine Cloud-Verarbeitung und kein Inhalts-Tracking.",
+    pt: "Seus arquivos nunca saem do dispositivo. Tudo é processado localmente no navegador. Sem upload, processamento na nuvem ou rastreamento de conteúdo.",
+    fr: "Vos fichiers ne quittent jamais votre appareil. Tout est traité localement dans le navigateur. Aucun envoi, traitement cloud ou suivi du contenu.",
   },
   "pdfHub.why3Title": {
     es: "Procesamiento instantáneo",
@@ -927,10 +927,10 @@ const extra: Partial<Record<TranslationKey, Partial<Record<Locale, string>>>> = 
     fr: "Formateur JSON",
   },
   "tool.jsonFormatter.desc": {
-    es: "Formatea, valida y embellece tus datos JSON. Admite minificación y vista de árbol.",
-    de: "JSON-Daten formatieren, validieren und verschönern. Mit Minifizierung und Baumansicht.",
-    pt: "Formate, valide e embeleze seus dados JSON. Suporta minificação e visão em árvore.",
-    fr: "Formatez, validez et embellissez vos données JSON. Minification et vue arborescente incluses.",
+    es: "Formatea, valida, embellece y minifica JSON directamente en tu navegador.",
+    de: "JSON direkt im Browser formatieren, validieren, verschönern und minifizieren.",
+    pt: "Formate, valide, embeleze e minifique JSON diretamente no navegador.",
+    fr: "Formatez, validez, embellissez et minifiez du JSON directement dans votre navigateur.",
   },
   "tool.qrGenerator": {
     es: "Generador de Códigos QR",
@@ -939,10 +939,10 @@ const extra: Partial<Record<TranslationKey, Partial<Record<Locale, string>>>> = 
     fr: "Générateur de QR code",
   },
   "tool.qrGenerator.desc": {
-    es: "Genera códigos QR para URLs, texto, Wi-Fi y más. Descarga en PNG o SVG.",
-    de: "QR-Codes für URLs, Text, WLAN und mehr erstellen. Als PNG oder SVG herunterladen.",
-    pt: "Gere códigos QR para URLs, texto, Wi-Fi e mais. Baixe em PNG ou SVG.",
-    fr: "Générez des QR codes pour URL, texte, Wi-Fi et plus. Téléchargez en PNG ou SVG.",
+    es: "Genera códigos QR para URLs, texto, Wi-Fi y más. Descarga en PNG.",
+    de: "QR-Codes für URLs, Text, WLAN und mehr erstellen. Als PNG herunterladen.",
+    pt: "Gere QR codes para URLs, texto, Wi-Fi e mais. Baixe em PNG.",
+    fr: "Générez des QR codes pour URL, texte, Wi-Fi et plus. Téléchargez-les en PNG.",
   },
   "tool.passwordGenerator": {
     es: "Generador de Contraseñas",

@@ -136,7 +136,7 @@ export const tools: Tool[] = [
     id: "json-formatter",
     name: "JSON Formatter",
     description:
-      "Format, validate, and beautify your JSON data. Supports minification and tree view.",
+      "Format, validate, beautify, and minify JSON data directly in your browser.",
     category: "developer",
     href: "/tools/json-formatter",
     icon: "Braces",
@@ -167,7 +167,7 @@ export const tools: Tool[] = [
     id: "qr-generator",
     name: "QR Code Generator",
     description:
-      "Generate QR codes for URLs, text, Wi-Fi credentials, and more. Download as PNG or SVG.",
+      "Generate QR codes for URLs, text, Wi-Fi credentials, and more. Download as PNG.",
     category: "generator",
     href: "/tools/qr-generator",
     icon: "QrCode",

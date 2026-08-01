@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage, pick } from "@/lib/language-context";
-import { trackToolUse } from "@/lib/track";
+import {
+  getDurationBucket,
+  trackToolEvent,
+  trackToolUse,
+  useTrackToolView,
+} from "@/lib/track";
 import { ToolContent } from "@/components/ToolContent";
 import { jsonFormatterContent } from "@/content/tools/json-formatter";
 
@@ -127,6 +132,8 @@ const labels = {
 export default function JsonFormatterPage() {
   const { locale, localePath } = useLanguage();
   const l = pick(labels, locale);
+  useTrackToolView("json-formatter", locale);
+  const inputTrackedRef = useRef(false);
 
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -135,21 +142,34 @@ export default function JsonFormatterPage() {
   const [copied, setCopied] = useState(false);
 
   const run = (mode: "format" | "minify" | "validate") => {
+    const startedAt = performance.now();
+    trackToolEvent("processing_started", "json-formatter", { locale, mode });
     try {
       const parsed = JSON.parse(input);
       if (mode === "format") setOutput(JSON.stringify(parsed, null, indentSize));
       else if (mode === "minify") setOutput(JSON.stringify(parsed));
       else setOutput(l.valid);
       setError("");
-      void trackToolUse("json-formatter");
+      void trackToolUse("json-formatter", {
+        locale,
+        mode,
+        duration_bucket: getDurationBucket(performance.now() - startedAt),
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : l.invalid);
       setOutput("");
+      trackToolEvent("processing_error", "json-formatter", {
+        locale,
+        mode,
+        duration_bucket: getDurationBucket(performance.now() - startedAt),
+        error_code: "invalid_json",
+      });
     }
   };
 
   const copy = async () => {
     await navigator.clipboard.writeText(output);
+    trackToolEvent("output_action", "json-formatter", { locale, action: "copy" });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -207,7 +227,13 @@ export default function JsonFormatterPage() {
           <label className="block text-sm font-medium text-gray-700 mb-2">{l.input}</label>
           <textarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value);
+              if (!inputTrackedRef.current && e.target.value.length > 0) {
+                inputTrackedRef.current = true;
+                trackToolEvent("input_selected", "json-formatter", { locale, mode: "text" });
+              }
+            }}
             placeholder={l.placeholder}
             spellCheck={false}
             className="w-full h-96 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"

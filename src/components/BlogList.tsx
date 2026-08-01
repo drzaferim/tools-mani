@@ -5,6 +5,31 @@ import { useLanguage } from "@/lib/language-context";
 import type { BlogPost } from "@/lib/blog";
 import { useMemo } from "react";
 
+const blogHeadings = {
+  en: {
+    title: "Guides & Blog",
+    subtitle: "Discover practical guides for handling digital files with privacy and speed.",
+  },
+  tr: {
+    title: "Rehberler ve Blog",
+    subtitle: "Dijital dosyalarınızı gizli ve hızlı biçimde yönetmek için uygulamalı rehberler.",
+  },
+};
+
+export function BlogHeading() {
+  const { locale } = useLanguage();
+  const heading = locale === "tr" ? blogHeadings.tr : blogHeadings.en;
+
+  return (
+    <div className="text-center mb-12">
+      <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl mb-4">
+        {heading.title}
+      </h1>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto">{heading.subtitle}</p>
+    </div>
+  );
+}
+
 export function BlogList({ posts }: { posts: BlogPost[] }) {
   const { locale, t } = useLanguage();
 
@@ -17,7 +42,11 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
     <>
       <div className="grid gap-6 md:grid-cols-2">
         {filteredPosts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
+          <Link
+            key={post.slug}
+            href={locale === "tr" ? `/tr/blog/${post.slug}` : `/blog/${post.slug}`}
+            className="group"
+          >
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 h-full transition-all duration-300 hover:shadow-md hover:border-primary-200 hover:-translate-y-1">
               <div className="flex items-center gap-3 mb-4">
                 <span className="inline-flex items-center rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-semibold text-primary-700">

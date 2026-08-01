@@ -65,9 +65,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Not: site geneli FAQPage schema'sı bilinçli olarak burada DEĞİL — kök layout
-// her sayfaya basıldığı için araç sayfalarının kendi FAQPage'leriyle çakışıyordu.
-// Ana sayfaya özel FAQ schema'sı src/app/page.tsx içinde üretilir.
+// FAQPage schema'sı kök layout'ta ve ana sayfada bilinçli olarak yoktur.
+// Yalnızca görünür SSS içeriği olan ilgili araç sayfaları kendi şemasını üretir.
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -77,7 +76,7 @@ const jsonLd = [
     description: "Free online PDF tools, image converter, text utilities and developer tools. 100% browser-based, no file uploads.",
     applicationCategory: "UtilityApplication",
     operatingSystem: "All",
-    inLanguage: ["en", "tr"],
+    inLanguage: ["en", "tr", "es", "de", "pt", "fr"],
     offers: {
       "@type": "Offer",
       price: "0",
@@ -108,31 +107,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
+    <html lang="en" suppressHydrationWarning>
+      <Script id="set-document-language" strategy="beforeInteractive">
+        {`(function(){var s=location.pathname.split('/')[1];document.documentElement.lang=['tr','es','de','pt','fr'].includes(s)?s:'en';})();`}
+      </Script>
+      <body className="font-sans">
         <script
+          id="toolsmani-structured-data"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga-init" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
-            </Script>
-          </>
-        )}
-      </head>
-      <body className="font-sans">
         <LanguageProvider>
           <div className="min-h-screen flex flex-col">
             <Header />
@@ -141,6 +125,17 @@ export default function RootLayout({
             <FeedbackWidget />
           </div>
         </LanguageProvider>
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}',{'anonymize_ip':true});`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
