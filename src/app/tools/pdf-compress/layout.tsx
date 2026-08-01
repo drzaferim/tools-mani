@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "PDF Compress - Reduce PDF File Size Online Free | ToolsMani",
   description:
-    "Compress PDF files online for free. Reduce file size by stripping metadata and optimizing structure. No upload limits, 100% browser-based.",
+    "Compress PDF files online for free. Choose lossless optimization or stronger image compression. Private, 100% browser-based processing.",
   alternates: {
     canonical: "/tools/pdf-compress/",
     languages: {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "PDF Compress - Reduce PDF File Size Free",
-    description: "Compress PDFs instantly in your browser. No file size limits.",
+    description: "Choose lossless, balanced or smallest-file PDF compression. Everything stays in your browser.",
     images: ["/og-image.png"],
   },
 };
@@ -30,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     name: "PDF Compress - Reduce PDF File Size Online Free",
     url: "https://toolsmani.com/tools/pdf-compress/",
     description:
-      "Compress PDF files online for free. Reduce file size by stripping metadata and optimizing structure. No upload limits, 100% browser-based.",
+      "Compress PDF files online for free with lossless, balanced and smallest-file modes. Processing stays entirely in your browser.",
     applicationCategory: "UtilityApplication",
     operatingSystem: "All",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },

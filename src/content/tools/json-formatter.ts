@@ -14,10 +14,10 @@ export const jsonFormatterContent: ToolContentMap = {
     ],
     howToTitle: "How to format JSON",
     howToSteps: [
-      "Paste your JSON into the input box on the left — minified, pretty-printed or copied straight from a network tab.",
+      "Paste JSON into the input box or open a local .json file — minified, pretty-printed or copied straight from a network tab.",
       "Choose an indentation width: 2 spaces (the most common convention), 4 spaces, or 8 for tab-like output.",
       "Click Format to beautify, Minify to strip all whitespace, or Validate to check syntax only.",
-      "Copy the result with the Copy Output button, or fix any reported error and run it again.",
+      "Read the result as formatted text or switch to the collapsible Tree view, then copy the output when needed.",
     ],
     featuresTitle: "What this tool does",
     features: [
@@ -90,10 +90,10 @@ export const jsonFormatterContent: ToolContentMap = {
     ],
     howToTitle: "JSON nasıl biçimlendirilir",
     howToSteps: [
-      "JSON'unuzu soldaki alana yapıştırın — sıkıştırılmış, biçimli ya da doğrudan ağ sekmesinden kopyalanmış olabilir.",
+      "JSON'u alana yapıştırın veya yerel bir .json dosyası açın — sıkıştırılmış, biçimli ya da doğrudan ağ sekmesinden kopyalanmış olabilir.",
       "Girinti genişliğini seçin: 2 boşluk (en yaygın kural), 4 boşluk veya sekme benzeri çıktı için 8.",
       "Güzelleştirmek için Format, tüm boşlukları kaldırmak için Minify, yalnızca sözdizimini denetlemek için Validate düğmesine basın.",
-      "Sonucu Copy Output ile kopyalayın veya bildirilen hatayı düzeltip yeniden çalıştırın.",
+      "Sonucu biçimli metin olarak okuyun veya açılır-kapanır Ağaç görünümüne geçin; gerektiğinde çıktıyı kopyalayın.",
     ],
     featuresTitle: "Bu araç ne yapar",
     features: [
@@ -166,7 +166,7 @@ export const jsonFormatterContent: ToolContentMap = {
     ],
     howToTitle: "Cómo formatear JSON",
     howToSteps: [
-      "Pega tu JSON en el cuadro de la izquierda: minificado, formateado o copiado directamente de la pestaña de red.",
+      "Pega el JSON en el cuadro o abre un archivo .json local: minificado, formateado o copiado de la pestaña de red.",
       "Elige el ancho de sangría: 2 espacios (la convención más común), 4 espacios u 8 para una salida tipo tabulación.",
       "Pulsa Format para embellecer, Minify para eliminar los espacios o Validate para comprobar solo la sintaxis.",
       "Copia el resultado con Copy Output o corrige el error indicado y vuelve a ejecutarlo.",
@@ -242,7 +242,7 @@ export const jsonFormatterContent: ToolContentMap = {
     ],
     howToTitle: "JSON formatieren – so geht's",
     howToSteps: [
-      "Fügen Sie Ihr JSON in das linke Eingabefeld ein – minifiziert, formatiert oder direkt aus dem Netzwerk-Tab kopiert.",
+      "Fügen Sie JSON in das Eingabefeld ein oder öffnen Sie eine lokale .json-Datei – minifiziert, formatiert oder aus dem Netzwerk-Tab kopiert.",
       "Wählen Sie die Einrückungsbreite: 2 Leerzeichen (die häufigste Konvention), 4 Leerzeichen oder 8 für tabulatorähnliche Ausgabe.",
       "Klicken Sie auf Format zum Verschönern, Minify zum Entfernen aller Leerzeichen oder Validate, um nur die Syntax zu prüfen.",
       "Kopieren Sie das Ergebnis mit Copy Output oder korrigieren Sie den gemeldeten Fehler und starten Sie erneut.",
@@ -318,7 +318,7 @@ export const jsonFormatterContent: ToolContentMap = {
     ],
     howToTitle: "Como formatar JSON",
     howToSteps: [
-      "Cole seu JSON na caixa à esquerda — minificado, formatado ou copiado direto da aba de rede.",
+      "Cole o JSON na caixa ou abra um arquivo .json local — minificado, formatado ou copiado da aba de rede.",
       "Escolha a largura de indentação: 2 espaços (a convenção mais comum), 4 espaços ou 8 para saída semelhante a tabulação.",
       "Clique em Format para embelezar, Minify para remover todos os espaços ou Validate para checar apenas a sintaxe.",
       "Copie o resultado com Copy Output ou corrija o erro apontado e execute novamente.",
@@ -394,7 +394,7 @@ export const jsonFormatterContent: ToolContentMap = {
     ],
     howToTitle: "Comment formater du JSON",
     howToSteps: [
-      "Collez votre JSON dans le champ de gauche — minifié, formaté ou copié directement depuis l'onglet réseau.",
+      "Collez le JSON dans le champ ou ouvrez un fichier .json local — minifié, formaté ou copié depuis l'onglet réseau.",
       "Choisissez la largeur d'indentation : 2 espaces (la convention la plus répandue), 4 espaces ou 8 pour une sortie de type tabulation.",
       "Cliquez sur Format pour embellir, Minify pour supprimer les espaces ou Validate pour vérifier seulement la syntaxe.",
       "Copiez le résultat avec Copy Output, ou corrigez l'erreur signalée et relancez.",

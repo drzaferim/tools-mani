@@ -1,243 +1,176 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage, pick } from "@/lib/language-context";
+import { diffLines, diffWords, type DiffPart } from "@/lib/text-diff";
 import { trackToolEvent, trackToolUse, useTrackToolView } from "@/lib/track";
 import { ToolContent } from "@/components/ToolContent";
 import { textDiffContent } from "@/content/tools/text-diff";
 
+type DiffMode = "line" | "word";
+
 const labels = {
   en: {
-    back: "← Back to Tools",
-    title: "Text Compare (Diff Checker)",
-    subtitle:
-      "Paste two texts and see the differences line by line. Comparison happens in your browser — nothing is uploaded.",
-    original: "Original text",
-    changed: "Changed text",
-    phA: "Paste the first version here...",
-    phB: "Paste the second version here...",
-    identical: "The two texts are identical.",
-    added: "added",
-    removed: "removed",
-    stats: (a: number, r: number) => `${a} line(s) added, ${r} line(s) removed`,
+    back: "← Back to Tools", title: "Text Compare (Diff Checker)", subtitle: "Compare two versions by line or word. Everything stays in your browser.", original: "Original text", changed: "Changed text", phA: "Paste the first version here...", phB: "Paste the second version here...", line: "Line diff", word: "Word diff", ignoreCase: "Ignore case", ignoreWhitespace: "Ignore whitespace", swap: "Swap", clear: "Clear", identical: "The two texts are identical with these settings.", added: "added", removed: "removed", lineNumbers: "Old / new line", largeNotice: "Large comparisons use a memory-safe matching strategy.",
   },
   tr: {
-    back: "← Araçlara Dön",
-    title: "Metin Karşılaştırma (Fark Bulucu)",
-    subtitle:
-      "İki metni yapıştırın, farkları satır satır görün. Karşılaştırma tarayıcınızda yapılır — hiçbir şey yüklenmez.",
-    original: "Orijinal metin",
-    changed: "Değişmiş metin",
-    phA: "İlk sürümü buraya yapıştırın...",
-    phB: "İkinci sürümü buraya yapıştırın...",
-    identical: "İki metin birebir aynı.",
-    added: "eklendi",
-    removed: "silindi",
-    stats: (a: number, r: number) => `${a} satır eklendi, ${r} satır silindi`,
+    back: "← Araçlara Dön", title: "Metin Karşılaştırma (Fark Bulucu)", subtitle: "İki sürümü satır veya kelime bazında karşılaştırın. Veriler tarayıcınızdan çıkmaz.", original: "Orijinal metin", changed: "Değişmiş metin", phA: "İlk sürümü buraya yapıştırın...", phB: "İkinci sürümü buraya yapıştırın...", line: "Satır farkı", word: "Kelime farkı", ignoreCase: "Büyük/küçük harfi yok say", ignoreWhitespace: "Boşlukları yok say", swap: "Yer değiştir", clear: "Temizle", identical: "Bu ayarlarla iki metin aynı.", added: "eklendi", removed: "silindi", lineNumbers: "Eski / yeni satır", largeNotice: "Büyük karşılaştırmalarda bellek dostu eşleştirme kullanılır.",
   },
   es: {
-    back: "← Volver a las herramientas",
-    title: "Comparar textos (diff)",
-    subtitle:
-      "Pega dos textos y ve las diferencias línea por línea. La comparación ocurre en tu navegador: nada se sube.",
-    original: "Texto original",
-    changed: "Texto modificado",
-    phA: "Pega aquí la primera versión...",
-    phB: "Pega aquí la segunda versión...",
-    identical: "Los dos textos son idénticos.",
-    added: "añadidas",
-    removed: "eliminadas",
-    stats: (a: number, r: number) => `${a} línea(s) añadida(s), ${r} línea(s) eliminada(s)`,
+    back: "← Volver a las herramientas", title: "Comparar textos (diff)", subtitle: "Compara dos versiones por línea o palabra, siempre en tu navegador.", original: "Texto original", changed: "Texto modificado", phA: "Pega la primera versión...", phB: "Pega la segunda versión...", line: "Por líneas", word: "Por palabras", ignoreCase: "Ignorar mayúsculas", ignoreWhitespace: "Ignorar espacios", swap: "Intercambiar", clear: "Limpiar", identical: "Los textos son idénticos con estos ajustes.", added: "añadido", removed: "eliminado", lineNumbers: "Línea anterior / nueva", largeNotice: "Las comparaciones grandes usan un método eficiente en memoria.",
   },
   de: {
-    back: "← Zurück zu den Tools",
-    title: "Textvergleich (Diff)",
-    subtitle:
-      "Zwei Texte einfügen und Unterschiede zeilenweise sehen. Der Vergleich läuft im Browser – nichts wird hochgeladen.",
-    original: "Originaltext",
-    changed: "Geänderter Text",
-    phA: "Erste Version hier einfügen ...",
-    phB: "Zweite Version hier einfügen ...",
-    identical: "Die beiden Texte sind identisch.",
-    added: "hinzugefügt",
-    removed: "entfernt",
-    stats: (a: number, r: number) => `${a} Zeile(n) hinzugefügt, ${r} Zeile(n) entfernt`,
+    back: "← Zurück zu den Tools", title: "Textvergleich (Diff)", subtitle: "Zwei Versionen zeilen- oder wortweise im Browser vergleichen.", original: "Originaltext", changed: "Geänderter Text", phA: "Erste Version einfügen...", phB: "Zweite Version einfügen...", line: "Zeilenvergleich", word: "Wortvergleich", ignoreCase: "Großschreibung ignorieren", ignoreWhitespace: "Leerzeichen ignorieren", swap: "Tauschen", clear: "Leeren", identical: "Die Texte sind mit diesen Einstellungen identisch.", added: "hinzugefügt", removed: "entfernt", lineNumbers: "Alte / neue Zeile", largeNotice: "Große Vergleiche verwenden eine speichersichere Strategie.",
   },
   pt: {
-    back: "← Voltar às ferramentas",
-    title: "Comparar textos (diff)",
-    subtitle:
-      "Cole dois textos e veja as diferenças linha por linha. A comparação acontece no seu navegador — nada é enviado.",
-    original: "Texto original",
-    changed: "Texto alterado",
-    phA: "Cole aqui a primeira versão...",
-    phB: "Cole aqui a segunda versão...",
-    identical: "Os dois textos são idênticos.",
-    added: "adicionadas",
-    removed: "removidas",
-    stats: (a: number, r: number) => `${a} linha(s) adicionada(s), ${r} linha(s) removida(s)`,
+    back: "← Voltar às ferramentas", title: "Comparar textos (diff)", subtitle: "Compare duas versões por linha ou palavra, tudo no navegador.", original: "Texto original", changed: "Texto alterado", phA: "Cole a primeira versão...", phB: "Cole a segunda versão...", line: "Por linha", word: "Por palavra", ignoreCase: "Ignorar maiúsculas", ignoreWhitespace: "Ignorar espaços", swap: "Trocar", clear: "Limpar", identical: "Os textos são idênticos com estas opções.", added: "adicionado", removed: "removido", lineNumbers: "Linha antiga / nova", largeNotice: "Comparações grandes usam uma estratégia econômica em memória.",
   },
   fr: {
-    back: "← Retour aux outils",
-    title: "Comparer des textes (diff)",
-    subtitle:
-      "Collez deux textes et voyez les différences ligne par ligne. La comparaison se fait dans votre navigateur — rien n'est envoyé.",
-    original: "Texte original",
-    changed: "Texte modifié",
-    phA: "Collez ici la première version...",
-    phB: "Collez ici la seconde version...",
-    identical: "Les deux textes sont identiques.",
-    added: "ajoutées",
-    removed: "supprimées",
-    stats: (a: number, r: number) => `${a} ligne(s) ajoutée(s), ${r} ligne(s) supprimée(s)`,
+    back: "← Retour aux outils", title: "Comparer des textes (diff)", subtitle: "Comparez deux versions par ligne ou par mot, dans le navigateur.", original: "Texte original", changed: "Texte modifié", phA: "Collez la première version...", phB: "Collez la seconde version...", line: "Par ligne", word: "Par mot", ignoreCase: "Ignorer la casse", ignoreWhitespace: "Ignorer les espaces", swap: "Permuter", clear: "Effacer", identical: "Les textes sont identiques avec ces réglages.", added: "ajouté", removed: "supprimé", lineNumbers: "Ancienne / nouvelle ligne", largeNotice: "Les grandes comparaisons utilisent une méthode économe en mémoire.",
   },
 };
 
-type DiffLine = { type: "same" | "add" | "del"; text: string };
-
-// Satır bazlı LCS diff
-function diffLines(a: string[], b: string[]): DiffLine[] {
-  const n = a.length, m = b.length;
-  // LCS tablosu
-  const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
-  for (let i = n - 1; i >= 0; i--) {
-    for (let j = m - 1; j >= 0; j--) {
-      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
-    }
-  }
-  const out: DiffLine[] = [];
-  let i = 0, j = 0;
-  while (i < n && j < m) {
-    if (a[i] === b[j]) {
-      out.push({ type: "same", text: a[i] });
-      i++; j++;
-    } else if (dp[i + 1][j] >= dp[i][j + 1]) {
-      out.push({ type: "del", text: a[i] });
-      i++;
-    } else {
-      out.push({ type: "add", text: b[j] });
-      j++;
-    }
-  }
-  while (i < n) out.push({ type: "del", text: a[i++] });
-  while (j < m) out.push({ type: "add", text: b[j++] });
-  return out;
+function WordDiff({ parts }: { parts: DiffPart[] }) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-5 font-mono text-sm leading-7 whitespace-pre-wrap break-words" style={{ contentVisibility: "auto" }}>
+      {parts.map((part, index) => (
+        <span
+          key={`${part.type}-${index}`}
+          className={part.type === "add" ? "bg-green-100 text-green-900" : part.type === "del" ? "bg-red-100 text-red-900 line-through decoration-red-500" : "text-gray-700"}
+        >
+          {part.value}
+        </span>
+      ))}
+    </div>
+  );
 }
 
-const MAX_LINES = 5000;
+function LineDiff({ parts, lineNumberLabel }: { parts: DiffPart[]; lineNumberLabel: string }) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-auto max-h-[36rem]">
+      <div className="sr-only">{lineNumberLabel}</div>
+      <div className="min-w-[42rem] font-mono text-sm leading-6">
+        {parts.map((part, index) => (
+          <div
+            key={`${part.type}-${part.leftNumber ?? "x"}-${part.rightNumber ?? "x"}-${index}`}
+            className={`grid grid-cols-[3.25rem_3.25rem_1.5rem_1fr] px-2 ${part.type === "add" ? "bg-green-50 text-green-900" : part.type === "del" ? "bg-red-50 text-red-900" : "text-gray-600"}`}
+            style={{ contentVisibility: "auto", containIntrinsicSize: "24px" }}
+          >
+            <span className="text-right pr-2 text-gray-400 select-none border-r border-gray-100">{part.leftNumber ?? ""}</span>
+            <span className="text-right pr-2 text-gray-400 select-none border-r border-gray-100">{part.rightNumber ?? ""}</span>
+            <span className="text-center select-none text-gray-400">{part.type === "add" ? "+" : part.type === "del" ? "−" : ""}</span>
+            <span className="whitespace-pre px-1">{part.value || " "}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function TextDiffPage() {
   const { locale, localePath } = useLanguage();
   const l = pick(labels, locale);
   useTrackToolView("text-diff", locale);
   const inputTrackedRef = useRef(false);
-  const startedTrackedRef = useRef(false);
-  const completionTrackedRef = useRef(false);
+  const completionKeyRef = useRef("");
 
   const [textA, setTextA] = useState("");
   const [textB, setTextB] = useState("");
+  const [mode, setMode] = useState<DiffMode>("line");
+  const [ignoreCase, setIgnoreCase] = useState(false);
+  const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
+  const deferredA = useDeferredValue(textA);
+  const deferredB = useDeferredValue(textB);
 
-  const diff = useMemo(() => {
-    if (!textA && !textB) return null;
-    const a = textA.split("\n").slice(0, MAX_LINES);
-    const b = textB.split("\n").slice(0, MAX_LINES);
-    return diffLines(a, b);
-  }, [textA, textB]);
+  const parts = useMemo(() => {
+    if (!deferredA && !deferredB) return null;
+    const options = { ignoreCase, ignoreWhitespace };
+    return mode === "line" ? diffLines(deferredA, deferredB, options) : diffWords(deferredA, deferredB, options);
+  }, [deferredA, deferredB, ignoreCase, ignoreWhitespace, mode]);
 
-  const added = diff?.filter((d) => d.type === "add").length ?? 0;
-  const removed = diff?.filter((d) => d.type === "del").length ?? 0;
+  const stats = useMemo(() => {
+    if (!parts) return { added: 0, removed: 0 };
+    let added = 0;
+    let removed = 0;
+    for (const part of parts) {
+      if (part.type === "add") added += 1;
+      else if (part.type === "del") removed += 1;
+    }
+    return { added, removed };
+  }, [parts]);
 
-  const handleTextInput = () => {
+  useEffect(() => {
+    if (!deferredA || !deferredB || !parts) return;
+    const completionKey = `${mode}:${ignoreCase}:${ignoreWhitespace}:${deferredA.length}:${deferredB.length}`;
+    if (completionKeyRef.current === completionKey) return;
+    completionKeyRef.current = completionKey;
+    trackToolEvent("processing_started", "text-diff", { locale, mode: `${mode}_diff` });
+    void trackToolUse("text-diff", { locale, mode: `${mode}_diff` });
+  }, [deferredA, deferredB, ignoreCase, ignoreWhitespace, locale, mode, parts]);
+
+  const handleInput = () => {
     if (inputTrackedRef.current) return;
     inputTrackedRef.current = true;
     trackToolEvent("input_selected", "text-diff", { locale, mode: "text" });
   };
 
-  useEffect(() => {
-    if (!textA || !textB || !diff) return;
-    if (!startedTrackedRef.current) {
-      startedTrackedRef.current = true;
-      trackToolEvent("processing_started", "text-diff", { locale, mode: "line_diff" });
-    }
-    if (!completionTrackedRef.current) {
-      completionTrackedRef.current = true;
-      void trackToolUse("text-diff", { locale, mode: "line_diff" });
-    }
-  }, [diff, locale, textA, textB]);
+  const swap = () => {
+    setTextA(textB);
+    setTextB(textA);
+  };
+
+  const clear = () => {
+    setTextA("");
+    setTextB("");
+    completionKeyRef.current = "";
+    inputTrackedRef.current = false;
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-6">
-        <Link href={localePath("/")} className="text-primary-600 hover:text-primary-700 text-sm">
-          {l.back}
-        </Link>
-      </div>
-
+      <div className="mb-6"><Link href={localePath("/")} className="text-primary-600 hover:text-primary-700 text-sm">{l.back}</Link></div>
       <h1 className="text-3xl font-bold text-gray-900 mb-2">{l.title}</h1>
-      <p className="text-gray-600 mb-8">{l.subtitle}</p>
+      <p className="text-gray-600 mb-7">{l.subtitle}</p>
+
+      <div className="flex flex-wrap items-center gap-2 mb-5">
+        <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1" role="group" aria-label="Diff mode">
+          {(["line", "word"] as DiffMode[]).map((option) => (
+            <button key={option} type="button" onClick={() => setMode(option)} aria-pressed={mode === option} className={`rounded-md px-3 py-1.5 text-sm font-medium ${mode === option ? "bg-primary-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}>{l[option]}</button>
+          ))}
+        </div>
+        <label className="inline-flex items-center gap-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox" checked={ignoreCase} onChange={(event) => setIgnoreCase(event.target.checked)} />{l.ignoreCase}</label>
+        <label className="inline-flex items-center gap-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox" checked={ignoreWhitespace} onChange={(event) => setIgnoreWhitespace(event.target.checked)} />{l.ignoreWhitespace}</label>
+        <button type="button" onClick={swap} className="btn-secondary text-sm" disabled={!textA && !textB}>{l.swap}</button>
+        <button type="button" onClick={clear} className="btn-secondary text-sm" disabled={!textA && !textB}>{l.clear}</button>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{l.original}</label>
-          <textarea
-            value={textA}
-            onChange={(e) => { setTextA(e.target.value); handleTextInput(); }}
-            placeholder={l.phA}
-            spellCheck={false}
-            className="w-full h-56 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
+          <label htmlFor="diff-original" className="block text-sm font-medium text-gray-700 mb-2">{l.original}</label>
+          <textarea id="diff-original" value={textA} onChange={(event) => { setTextA(event.target.value); handleInput(); }} placeholder={l.phA} spellCheck={false} className="w-full h-56 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{l.changed}</label>
-          <textarea
-            value={textB}
-            onChange={(e) => { setTextB(e.target.value); handleTextInput(); }}
-            placeholder={l.phB}
-            spellCheck={false}
-            className="w-full h-56 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
+          <label htmlFor="diff-changed" className="block text-sm font-medium text-gray-700 mb-2">{l.changed}</label>
+          <textarea id="diff-changed" value={textB} onChange={(event) => { setTextB(event.target.value); handleInput(); }} placeholder={l.phB} spellCheck={false} className="w-full h-56 p-4 bg-white border border-gray-200 rounded-xl font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary-500" />
         </div>
       </div>
 
-      {diff && (
-        <div>
-          {added === 0 && removed === 0 ? (
-            <div className="bg-accent-50 border border-accent-200 text-accent-800 rounded-xl px-4 py-3 text-sm font-medium">
-              {l.identical}
-            </div>
+      {parts ? (
+        <section aria-live="polite">
+          {stats.added === 0 && stats.removed === 0 ? (
+            <div className="bg-accent-50 border border-accent-200 text-accent-800 rounded-xl px-4 py-3 text-sm font-medium">{l.identical}</div>
           ) : (
             <>
-              <p className="text-sm text-gray-500 mb-3">
-                <span className="text-green-600 font-medium">+{added} {l.added}</span>
-                {" · "}
-                <span className="text-red-600 font-medium">−{removed} {l.removed}</span>
-              </p>
-              <div className="bg-white border border-gray-200 rounded-xl overflow-x-auto">
-                <pre className="text-sm font-mono leading-6 p-0 m-0">
-                  {diff.map((line, i) => (
-                    <div
-                      key={i}
-                      className={
-                        line.type === "add"
-                          ? "bg-green-50 text-green-800 px-4"
-                          : line.type === "del"
-                          ? "bg-red-50 text-red-800 px-4"
-                          : "text-gray-600 px-4"
-                      }
-                    >
-                      <span className="select-none inline-block w-5 text-gray-400">
-                        {line.type === "add" ? "+" : line.type === "del" ? "−" : " "}
-                      </span>
-                      {line.text || " "}
-                    </div>
-                  ))}
-                </pre>
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <p className="text-sm text-gray-500"><span className="text-green-700 font-medium">+{stats.added} {l.added}</span>{" · "}<span className="text-red-700 font-medium">−{stats.removed} {l.removed}</span></p>
+                {(deferredA.length + deferredB.length) > 100_000 ? <p className="text-xs text-gray-400">{l.largeNotice}</p> : null}
               </div>
+              {mode === "line" ? <LineDiff parts={parts} lineNumberLabel={l.lineNumbers} /> : <WordDiff parts={parts} />}
             </>
           )}
-        </div>
-      )}
+        </section>
+      ) : null}
 
       <ToolContent content={textDiffContent} />
     </div>
